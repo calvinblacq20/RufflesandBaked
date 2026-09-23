@@ -565,6 +565,39 @@ button.row:active, a.row:active { background: var(--ink-06); }
 /* The studio has two halves; the switch between them sits inline, not stretched across the page. */
 .line-switch { justify-self: start; grid-auto-columns: minmax(96px, auto); max-width: max-content; }
 
+/*
+ * Touch targets. A few controls are styled as text — "See all", "More about the studio", the
+ * rating row, an inline "Log in" — so they are only about 20px tall, well under Apple's 44pt
+ * and Material's 48dp minimum. On a touch screen we grow the hit area with a pseudo-element
+ * rather than the box, so the type, underline and layout stay exactly where they were.
+ * Pointer devices keep the tight boxes, where a big invisible target would only cause mis-hits.
+ */
+@media (pointer: coarse) {
+  .link,
+  .section-tab {
+    position: relative;
+  }
+  .link::after,
+  .section-tab::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 100%;
+    height: 100%;
+    min-width: 44px;
+    min-height: 44px;
+    transform: translate(-50%, -50%);
+  }
+  /* A full-width row has neighbours stacked right against it, and they would paint over a
+     pseudo-element. Growing the box itself wins the hit test; the negative margin cancels it,
+     so nothing moves. */
+  .tap-grow {
+    padding-block: 12px;
+    margin-block: -12px;
+  }
+}
+
 /* ---------- Bottom sheet ---------- */
 .sheet-root {
   position: fixed;

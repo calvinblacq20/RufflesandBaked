@@ -276,7 +276,7 @@ function StudioPage() {
             </span>
           </div>
         </div>
-        <button className="inline t-body" onClick={() => goTo("reviews")} style={{ gap: 6 }}>
+        <button className="inline t-body tap-grow" onClick={() => goTo("reviews")} style={{ gap: 6 }}>
           <Stars value={STUDIO.rating} />
           <strong style={{ fontWeight: 500 }}>{STUDIO.rating}</strong>
           <span className="subtle">({STUDIO.reviewCount})</span>
