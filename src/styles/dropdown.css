@@ -1,0 +1,87 @@
+/* ---------- Dropdown (custom listbox, same look on every browser) ---------- */
+.dd { position: relative; display: inline-block; min-width: 0; }
+.dd.is-block { display: block; width: 100%; }
+.dd-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  height: 40px;
+  padding: 0 12px 0 16px;
+  border-radius: var(--r-pill);
+  background: var(--surface);
+  box-shadow: var(--sh-soft);
+  font-size: 14px;
+  color: var(--ink);
+  white-space: nowrap;
+  transition: box-shadow 0.2s, background-color 0.2s;
+}
+.dd-btn:hover { box-shadow: var(--sh-float); }
+.dd-btn:focus-visible { border-radius: var(--r-pill); outline-offset: 3px; }
+.dd-btn.is-soft { height: 34px; padding: 0 10px 0 14px; background: var(--ground); box-shadow: none; font-size: 13px; }
+.dd-btn.is-soft:hover { background: #efe4de; }
+.dd-btn.is-field {
+  width: 100%;
+  min-height: 44px;
+  height: auto;
+  padding: 10px 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  border-bottom: 1px solid var(--ink-12);
+  font-size: 16px;
+  text-align: left;
+}
+.dd-btn.is-field:focus-visible { border-radius: 4px; outline-offset: 2px; }
+.dd.is-open .dd-btn.is-field { border-bottom-color: var(--ink); }
+.dd-value { overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.dd-value.is-placeholder { color: var(--ink-50); }
+.dd-chevron { flex: none; color: var(--ink-75); transition: transform 0.2s; }
+.dd.is-open .dd-chevron { transform: rotate(180deg); }
+.dd-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 30;
+  min-width: max(100%, 220px);
+  max-width: calc(100vw - 16px);
+  max-height: 320px;
+  margin: 0;
+  padding: 6px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  list-style: none;
+  border-radius: var(--r-12);
+  background: var(--surface);
+  box-shadow: var(--sh-deep);
+}
+.dd-menu.is-up { top: auto; bottom: calc(100% + 6px); }
+.dd-menu.is-end { left: auto; right: 0; }
+.dd-group { display: block; padding: 10px 10px 4px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-75); }
+.dd-opt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 38px;
+  padding: 8px 8px 8px 10px;
+  border-radius: var(--r-8);
+  font-size: 14px;
+  color: var(--ink);
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+}
+.dd-opt.is-active { background: var(--ground); }
+.dd-opt.is-selected { font-weight: 500; }
+.dd-label { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.dd-hint { font-size: 12px; font-weight: 400; color: var(--ink-75); font-variant-numeric: tabular-nums; }
+.dd-check { display: grid; place-items: center; width: 20px; height: 20px; flex: none; border-radius: 50%; }
+.dd-check.is-on { background: var(--gold); color: var(--ink); }
+.adm-searchbar .dd-btn.is-field { border-bottom: 0; min-height: 30px; padding: 2px 0; font-size: 15px; }
+@media (max-width: 809.98px) {
+  .dd-opt { min-height: 44px; font-size: 15px; }
+}
+/* iOS zooms the page when a field under 16px is tapped, on phones and iPads alike. */
+@media (pointer: coarse) {
+  .adm-search input { font-size: 16px; }
+}

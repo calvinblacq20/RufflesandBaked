@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" data-motion="off">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <script>
+      // Motion is resolved once, before first paint, into <html data-motion="full|calm|off">.
+      // Every device gets full motion, whatever its reduced-motion setting (iOS also turns that on
+      // in Low Power Mode). ?motion=full|calm|off overrides it for testing. Keep in step with
+      // src/lib/ambient.ts.
+      (function () {
+        var mode = "full";
+        try {
+          var pick = function (query) {
+            var match = /(?:^|[?&])motion=(full|calm|off)(?:&|$)/.exec(query);
+            return match ? match[1] : null;
+          };
+          var hash = location.hash;
+          var forced = pick(location.search) || (hash.indexOf("?") > -1 ? pick(hash.slice(hash.indexOf("?"))) : null);
+          if (forced) mode = forced;
+        } catch (error) {
+          mode = "full";
+        }
+        document.documentElement.setAttribute("data-motion", mode);
+      })();
+    </script>
+    <meta name="theme-color" content="#f7efe9" />
+    <meta name="description" content="Ruffles and Baked by H in Kasoa: bespoke handmade headpieces, hats, crowns and bridal sets, and celebration cakes baked to order. Order, pick your date and track it." />
+    <title>Ruffles and Baked by H: Headpieces &amp; Cakes in Kasoa</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/brand/rbh-app-icon-180.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&display=swap"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

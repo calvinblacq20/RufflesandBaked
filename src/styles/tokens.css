@@ -1,0 +1,80 @@
+/*
+ * Design tokens: the Makro layout system (docs/design-reference.md) in Ruffles and Baked by H
+ * colours, taken from the studio's own brand card — the wine of the @ruffles_byh wordmark, the
+ * champagne gold of "Baked by H" and the ivory the card is printed on. Wine is the brand and the
+ * primary action; gold is the one bright accent, always a fill under ink text. The pastel slots
+ * keep their Makro names but carry this studio's tones (lilac = the purple fascinator, sky = the
+ * crystal headbands, sand = sinamay straw, blush = the Classic Cake Menu pink). Light-only by design.
+ */
+:root {
+  color-scheme: light;
+
+  --ground: #f7efe9;
+  --surface: #ffffff;
+  --ink: #2a141c;
+  --ink-75: rgba(42, 20, 28, 0.75);
+  --ink-50: rgba(42, 20, 28, 0.5);
+  --ink-25: rgba(42, 20, 28, 0.25);
+  --ink-12: rgba(42, 20, 28, 0.12);
+  --ink-06: rgba(42, 20, 28, 0.06);
+  --charcoal: #3d1f29;
+  --graphite: #5c3c46;
+  --white-75: rgba(255, 255, 255, 0.75);
+  --white-50: rgba(255, 255, 255, 0.5);
+  --glass: rgba(255, 255, 255, 0.8);
+
+  /* The brand pair: wine from the @ruffles_byh wordmark, gold from "Baked by H". */
+  --wine: #7b0b33;
+  --wine-wash: #fbe3ec;
+  --gold: #e9c67e;
+  --gold-wash: #fbf0dc;
+  --lilac: #d6bde8;
+  --sky: #cadfef;
+  --blush: #fbdde4;
+  --sand: #e8d2ae;
+  --steel: #cbaab4;
+  --mist: #e9dfe1;
+  --slate: #8a5a6a;
+
+  /* Semantic, used only for state. */
+  --open: #3daa5c;
+  --danger: #c8412b;
+  --danger-wash: #fbe7e2;
+  --warning-ink: #8a4b1f;
+
+  --font: "Inter", "Inter Display", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: "Fragment Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+
+  /* Radius scale tightened at the client's request: crisper cards and image frames
+     than the Makro originals (4/8/10/12/16/20/24/40). Pills stay fully round. */
+  --r-4: 3px;
+  --r-8: 5px;
+  --r-10: 6px;
+  --r-12: 7px;
+  --r-16: 8px;
+  --r-20: 10px;
+  --r-24: 12px;
+  --r-40: 14px;
+  --r-pill: 500px;
+  --r-img: 8px;
+
+  --sh-soft: 0 0.6px 0.6px -1.25px rgba(0, 0, 0, 0.09), 0 2.29px 2.29px -2.5px rgba(0, 0, 0, 0.08), 0 10px 10px -3.75px rgba(0, 0, 0, 0.03);
+  --sh-float: 0 0.64px 1.15px -0.81px rgba(92, 46, 60, 0.11), 0 1.93px 3.48px -1.63px rgba(92, 46, 60, 0.11), 0 5.1px 9.19px -2.44px rgba(92, 46, 60, 0.1), 0 16px 28.8px -3.25px rgba(92, 46, 60, 0.06);
+  --sh-deep: 0 0.81px 0.81px -0.47px rgba(62, 36, 46, 0.19), 0 1.91px 1.91px -0.94px rgba(62, 36, 46, 0.18), 0 3.49px 3.49px -1.41px rgba(62, 36, 46, 0.18), 0 5.79px 5.79px -1.88px rgba(62, 36, 46, 0.17), 0 9.36px 9.36px -2.34px rgba(62, 36, 46, 0.16), 0 15.32px 15.32px -2.81px rgba(62, 36, 46, 0.15), 0 26.38px 26.38px -3.28px rgba(62, 36, 46, 0.12), 0 48px 48px -3.75px rgba(62, 36, 46, 0.06);
+  --sh-chip: 0 4px 8px rgba(0, 0, 0, 0.25);
+
+  --glow: radial-gradient(134% 100% at 50% 0%, #ffffff 0%, #f7efe9 100%);
+  --fade: linear-gradient(#ffffff 0%, #f7efe9 100%);
+
+  --z-sticky: 10;
+  --z-tabbar: 20;
+  --z-sheet: 40;
+  --z-toast: 50;
+  --z-overlay: 60;
+
+  --app-w: 480px;
+  /* Never less than the notch: in landscape iPhones report a side inset (viewport-fit=cover). */
+  --gutter: max(16px, env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px));
+  --nav-h: 0px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}

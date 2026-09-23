@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en" data-motion="off">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Motion Diagnostics</title>
+<script>
+(function () {
+  var mode = "full";
+  try {
+    var pick = function (query) {
+      var match = /(?:^|[?&])motion=(full|calm|off)(?:&|$)/.exec(query);
+      return match ? match[1] : null;
+    };
+    var hash = location.hash;
+    var forced = pick(location.search) || (hash.indexOf("?") > -1 ? pick(hash.slice(hash.indexOf("?"))) : null);
+    // Same rule as the app: full motion unless ?motion= asks for less. The device's
+    // reduced-motion setting is shown below for reference but no longer changes the mode.
+    if (forced) mode = forced;
+  } catch (e) {
+    mode = "full";
+  }
+  document.documentElement.setAttribute("data-motion", mode);
+})();
+</script>
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    padding: 24px 16px 64px;
+    max-width: 600px;
+    margin: 0 auto;
+    color: #1a1a1a;
+    background: #f5f5f7;
+    line-height: 1.5;
+  }
+  h1 { font-size: 22px; font-weight: 600; margin-bottom: 8px; }
+  h2 { font-size: 16px; font-weight: 600; margin: 24px 0 8px; }
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 14px;
+  }
+  .row:last-child { border-bottom: none; }
+  .label { color: #666; }
+  .value { font-weight: 500; font-variant-numeric: tabular-nums; }
+  .value.ok { color: #34a853; }
+  .value.warn { color: #ea8600; }
+  .value.bad { color: #d93025; }
+  .bar-wrap {
+    position: relative;
+    height: 32px;
+    background: #e8e8e8;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 6px 0;
+  }
+  .bar {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 40px;
+    border-radius: 8px;
+  }
+  .bar.css-bar {
+    background: #4285f4;
+    animation: css-slide 2s linear infinite;
+  }
+  .bar.js-bar {
+    background: #34a853;
+  }
+  @keyframes css-slide {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(calc(100vw - 120px)); }
+    100% { transform: translateX(0); }
+  }
+  .override-links { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+  .override-links a {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 8px;
+    background: #e8e8e8;
+    color: #1a1a1a;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .override-links a:hover { background: #d8d8d8; }
+  .override-links a.active { background: #1a1a1a; color: #fff; }
+  .fps-display { font-size: 28px; font-weight: 600; font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+
+<h1>🔍 Motion Diagnostics</h1>
+<p style="color:#666; font-size:14px; margin-bottom:16px;">Open this on any device to debug motion issues. Two seconds here beats an hour of theorising.</p>
+
+<h2>Environment</h2>
+<div class="card">
+  <div class="row">
+    <span class="label">data-motion</span>
+    <span class="value" id="dm">—</span>
+  </div>
+  <div class="row">
+    <span class="label">prefers-reduced-motion</span>
+    <span class="value" id="prm">—</span>
+  </div>
+  <div class="row">
+    <span class="label">?motion= override</span>
+    <span class="value" id="override">—</span>
+  </div>
+  <div class="row">
+    <span class="label">visibilityState</span>
+    <span class="value" id="vis">—</span>
+  </div>
+  <div class="row">
+    <span class="label">User-Agent</span>
+    <span class="value" id="ua" style="font-size:11px; max-width:60%; text-align:right; word-break:break-all;">—</span>
+  </div>
+  <div class="row">
+    <span class="label">Screen</span>
+    <span class="value" id="screen">—</span>
+  </div>
+  <div class="row">
+    <span class="label">devicePixelRatio</span>
+    <span class="value" id="dpr">—</span>
+  </div>
+</div>
+
+<h2>Frame Rate</h2>
+<div class="card">
+  <div class="row">
+    <span class="label">Delivered FPS</span>
+    <span class="fps-display" id="fps">—</span>
+  </div>
+  <div class="row">
+    <span class="label">rAF running</span>
+    <span class="value" id="raf">—</span>
+  </div>
+  <div class="row">
+    <span class="label">document.timeline</span>
+    <span class="value" id="timeline">—</span>
+  </div>
+  <div class="row">
+    <span class="label">CSS animation advancing</span>
+    <span class="value" id="cssanim">—</span>
+  </div>
+</div>
+
+<h2>Animation Test</h2>
+<p style="font-size:13px; color:#666; margin-bottom:8px;">CSS bar (blue) and JS bar (green) should both move. If only one moves, that engine is blocked.</p>
+<div class="card">
+  <p style="font-size:12px; color:#999; margin-bottom:4px;">CSS animation</p>
+  <div class="bar-wrap"><div class="bar css-bar"></div></div>
+  <p style="font-size:12px; color:#999; margin: 8px 0 4px;">JS animation (rAF)</p>
+  <div class="bar-wrap"><div class="bar js-bar" id="jsbar"></div></div>
+</div>
+
+<h2>Override Mode</h2>
+<p style="font-size:13px; color:#666; margin-bottom:4px;">Click to reload with a different motion mode:</p>
+<div class="override-links">
+  <a href="?motion=full" id="link-full">full</a>
+  <a href="?motion=calm" id="link-calm">calm</a>
+  <a href="?motion=off" id="link-off">off</a>
+  <a href="?" id="link-auto">auto (device)</a>
+</div>
+
+<script>
+(function () {
+  // --- Environment ---
+  var dm = document.documentElement.getAttribute("data-motion") || "not set";
+  document.getElementById("dm").textContent = dm;
+  document.getElementById("dm").className = "value " + (dm === "full" ? "ok" : dm === "calm" ? "warn" : "bad");
+
+  var prm = "unsupported";
+  if (window.matchMedia) {
+    prm = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "reduce" : "no-preference";
+  }
+  var prmEl = document.getElementById("prm");
+  prmEl.textContent = prm;
+  prmEl.className = "value " + (prm === "reduce" ? "warn" : "ok");
+
+  var params = new URLSearchParams(location.search);
+  var motionParam = params.get("motion");
+  var overrideEl = document.getElementById("override");
+  overrideEl.textContent = motionParam || "none";
+  overrideEl.className = "value " + (motionParam ? "warn" : "ok");
+
+  // Highlight active override link
+  var activeMode = motionParam || "auto";
+  var linkId = "link-" + (activeMode === "auto" ? "auto" : activeMode);
+  var activeLink = document.getElementById(linkId);
+  if (activeLink) activeLink.className = "active";
+
+  document.getElementById("ua").textContent = navigator.userAgent;
+  document.getElementById("screen").textContent = window.innerWidth + "×" + window.innerHeight + " (CSS px)";
+  document.getElementById("dpr").textContent = (window.devicePixelRatio || 1).toFixed(1);
+
+  // --- Visibility ---
+  function updateVis() {
+    var el = document.getElementById("vis");
+    el.textContent = document.visibilityState;
+    el.className = "value " + (document.visibilityState === "visible" ? "ok" : "warn");
+  }
+  updateVis();
+  document.addEventListener("visibilitychange", updateVis);
+
+  // --- FPS ---
+  var frames = 0;
+  var lastFps = performance.now();
+  var rafId = 0;
+  var rafRunning = false;
+
+  function countFrame(now) {
+    frames++;
+    rafRunning = true;
+    if (now - lastFps >= 1000) {
+      document.getElementById("fps").textContent = frames;
+      var fpsEl = document.getElementById("fps");
+      fpsEl.className = "fps-display " + (frames >= 55 ? "ok" : frames >= 30 ? "warn" : "bad");
+      frames = 0;
+      lastFps = now;
+    }
+    rafId = requestAnimationFrame(countFrame);
+  }
+  rafId = requestAnimationFrame(countFrame);
+
+  // Check rAF is running every second
+  setInterval(function () {
+    var el = document.getElementById("raf");
+    el.textContent = rafRunning ? "yes" : "STOPPED";
+    el.className = "value " + (rafRunning ? "ok" : "bad");
+    rafRunning = false;
+
+    // document.timeline: is it advancing, not just present?
+    var tlEl = document.getElementById("timeline");
+    if (document.timeline && typeof document.timeline.currentTime === "number") {
+      var tl = document.timeline.currentTime;
+      var moved = lastTimeline !== null && tl > lastTimeline;
+      tlEl.textContent = Math.round(tl) + "ms · " + (lastTimeline === null ? "checking" : moved ? "advancing" : "STUCK");
+      tlEl.className = "value " + (lastTimeline === null || moved ? "ok" : "bad");
+      lastTimeline = tl;
+    } else {
+      tlEl.textContent = "unavailable";
+      tlEl.className = "value warn";
+    }
+
+    // CSS keyframe animation: sampled from the Web Animations API, or from the computed transform.
+    var cssEl = document.getElementById("cssanim");
+    var cssBar = document.querySelector(".css-bar");
+    var anims = cssBar && cssBar.getAnimations ? cssBar.getAnimations() : [];
+    var sample = anims.length && typeof anims[0].currentTime === "number" ? anims[0].currentTime : cssBar ? getComputedStyle(cssBar).transform : null;
+    if (sample === null) {
+      cssEl.textContent = "no animation found";
+      cssEl.className = "value bad";
+    } else {
+      var advancing = lastCss !== null && sample !== lastCss;
+      cssEl.textContent = lastCss === null ? "checking" : advancing ? "yes" : "NO (frozen)";
+      cssEl.className = "value " + (lastCss === null || advancing ? "ok" : "bad");
+      lastCss = sample;
+    }
+  }, 1000);
+  var lastTimeline = null;
+  var lastCss = null;
+
+  // --- JS animation bar ---
+  var jsbar = document.getElementById("jsbar");
+  var barWrap = jsbar.parentElement;
+  var jsStart = performance.now();
+  // Measured on resize, never inside the loop: a layout read after a transform write forces a re-layout.
+  var maxX = 0;
+  function measureBar() { maxX = barWrap.clientWidth - 40; }
+  measureBar();
+  window.addEventListener("resize", measureBar);
+  function animateBar(now) {
+    var elapsed = (now - jsStart) % 2000;
+    var t = elapsed / 1000; // 0..2
+    var progress = t < 1 ? t : 2 - t; // triangle wave 0..1..0
+    jsbar.style.transform = "translateX(" + (progress * maxX) + "px)";
+    requestAnimationFrame(animateBar);
+  }
+  requestAnimationFrame(animateBar);
+})();
+</script>
+</body>
+</html>

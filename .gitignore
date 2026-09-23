@@ -1,0 +1,12 @@
+node_modules
+dist
+coverage
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+__pycache__
+
+# Upscaling intermediates (large PNGs; rebuild with scripts/upscale_photos.py)
+brand/photos-upscaled/
