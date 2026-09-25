@@ -26,12 +26,13 @@ PHOTOS: dict[str, tuple[str, tuple[int, int, int, int] | None]] = {
     "fascinator-purple": ("headbands-purple", None),
     "bridal-look": ("headpiece-flower-tiara", None),
     "tiara-gold": ("tiaras-gold-silver-hand", None),
-    "owner-gold": ("owner-portrait", None),
-    # Trims the reel's top bleed; the studio watermark stays.
-    "headband-crystal": ("headband-crystal-spray", (0, 30, 361, 610)),
-    "headpiece-blue": ("headpiece-cream", (0, 40, 361, 620)),
+    "owner-gold": ("hires-owner-gold", None),
+    # Trims the reel's top bleed; the studio watermark stays. These four come from the reel
+    # pages, which serve the cover at 640 wide — nearly twice the grid thumbnail.
+    "headband-crystal": ("hires-headband-crystal", (0, 53, 640, 1081)),
+    "headpiece-blue": ("hires-headpiece-blue", (0, 71, 640, 1099)),
     # Drops the burnt-in "23:10 2 DEC 2024" clock along the bottom.
-    "crown-crystal": ("crown-blue-crystal", (0, 0, 361, 460)),
+    "crown-crystal": ("hires-crown-crystal", (0, 0, 640, 816)),
     # Baked by H
     "cake-minnie": ("cake-minnie-themed", None),
     # Drops the "Introduction" sticker in the top-left corner.
