@@ -517,14 +517,14 @@ function YourDetails({ contact, setContact, errors, delivery, accountName, remem
         {field("name", "Full name", { autoComplete: "name", placeholder: "Ama Mensah" })}
         {field("phone", "WhatsApp number", { inputMode: "tel", autoComplete: "tel-national", placeholder: "024 123 4567", readOnly: Boolean(accountName) }, accountName ? "Your account number. Message the bakery to change it." : "Your price, order updates and receipts come here.")}
         {field("email", "Email", { type: "email", inputMode: "email", autoComplete: "email", placeholder: "ama@gmail.com" }, "Paystack sends your payment receipt here.")}
-        {field("town", "Town or area", { autoComplete: "address-level2", placeholder: "Adenta" })}
+        {field("town", "Town or area", { autoComplete: "address-level2", placeholder: "Kasoa" })}
       </section>
 
       {delivery === "delivery" && (
         <motion.section className="section" style={{ marginTop: 0 }} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={spring.small}>
           <h2 className="t-h3">Delivery address</h2>
           <div className="card card-pad stack gap-16">
-            {field("address", "Street or landmark", { autoComplete: "street-address", placeholder: "Behind the Shell filling station, Adenta Housing Down" })}
+            {field("address", "Street or landmark", { autoComplete: "street-address", placeholder: "Behind the Shell filling station, Ofaakor" })}
             {field("digitalAddress", "GhanaPost digital address (optional)", { autoCapitalize: "characters", placeholder: "GD-123-4567", style: { fontFamily: "var(--mono)" } }, "Find it in the GhanaPostGPS app. Helps the rider find you.")}
           </div>
           <p className="t-cap subtle">The delivery fee depends on distance and is paid to the rider on arrival.</p>

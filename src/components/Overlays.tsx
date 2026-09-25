@@ -58,7 +58,7 @@ export function Splash() {
                 {STUDIO.name}
               </motion.p>
               <motion.p className="splash-sub" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9, duration: 0.5 }}>
-                {STUDIO.tagline} · Adenta
+                {STUDIO.tagline} · {STUDIO.area}
               </motion.p>
             </div>
           </div>

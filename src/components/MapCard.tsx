@@ -22,8 +22,8 @@ export function MapCard() {
           <rect x="30" y="62" width="70" height="34" rx="6" fill="#e7ddd7" />
           <rect x="220" y="10" width="44" height="30" rx="6" fill="#e7ddd7" />
           <rect x="305" y="108" width="80" height="44" rx="6" fill="#d7eecf" />
-          <text x="18" y="114" fontSize="9" fill="#9a8a85" fontFamily="Inter, sans-serif">Adenta–Dodowa Road</text>
-          <text x="296" y="52" fontSize="9" fill="#9a8a85" fontFamily="Inter, sans-serif">Adenta</text>
+          <text x="18" y="114" fontSize="9" fill="#9a8a85" fontFamily="Inter, sans-serif">Kasoa–Winneba Road</text>
+          <text x="296" y="52" fontSize="9" fill="#9a8a85" fontFamily="Inter, sans-serif">Kasoa</text>
         </svg>
         <div className="map-pin">
           <AppIcon size={40} />
