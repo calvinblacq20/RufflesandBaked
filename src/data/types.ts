@@ -265,3 +265,65 @@ export interface Review {
   status: ReviewStatus;
   reply?: string;
 }
+
+/* ---------------- Money going out ---------------- */
+
+/**
+ * What the studio spends on. The owner picks which of these she actually wants to keep:
+ * switching one off hides it from the add form and the charts, and past expenses keep it,
+ * the same way a hidden menu item still names itself on old orders.
+ */
+export interface ExpenseCategory {
+  id: ID;
+  label: string;
+  /** Which half of the studio it usually belongs to, so Reports can split the cost. */
+  line: Line;
+  /**
+   * direct: bought for a particular job, so it can be tied to an order (a rider fare, a reel of ribbon).
+   * overhead: paid whatever she makes that month (rent, gas, data).
+   */
+  kind: "direct" | "overhead";
+  /** False hides it from the form and the charts. Past expenses keep showing it. */
+  active?: boolean;
+}
+
+export interface Expense {
+  id: ID;
+  /** The day the money went out. Day key, YYYY-MM-DD. */
+  on: string;
+  amount: number;
+  categoryId: ID;
+  /** "Two crates of eggs", "Rider to Weija". */
+  note?: string;
+  /** Set when the cost belongs to one order, so a wedding's true cost is visible. */
+  orderId?: ID;
+  method: PaymentMethod;
+  createdAt: string;
+}
+
+/* ---------------- Her own calendar ---------------- */
+
+/**
+ * An event read out of the calendar the owner already keeps on her phone. These are hers, not
+ * the studio's: they sit behind the diary as a faint layer so she can see a clash before she
+ * books a pickup, and nothing in the app ever edits or deletes them.
+ */
+export interface PersonalEvent {
+  /** The UID from the calendar file, so re-importing updates rather than duplicates. */
+  id: ID;
+  title: string;
+  /** Local ISO date-time, YYYY-MM-DDTHH:mm. All-day events use midnight. */
+  start: string;
+  minutes: number;
+  allDay: boolean;
+  /** Set for a yearly repeat (birthdays), which is most of what a personal calendar holds. */
+  repeats?: "yearly" | "monthly" | "weekly" | "daily";
+}
+
+/** Where the imported events came from, so Settings can say what is linked and when. */
+export interface CalendarLink {
+  /** What she called it, or the calendar's own name from the file. */
+  name: string;
+  importedAt: string;
+  eventCount: number;
+}

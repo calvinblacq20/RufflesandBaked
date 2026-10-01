@@ -1,24 +1,23 @@
 /*
- * Design tokens: the Makro layout system (docs/design-reference.md) in Ruffles and Baked by H
- * colours, taken from the studio's own brand card — the wine of the @ruffles_byh wordmark, the
- * champagne gold of "Baked by H" and the ivory the card is printed on. Wine is the brand and the
- * primary action; gold is the one bright accent, always a fill under ink text. The pastel slots
- * keep their Makro names but carry this studio's tones (lilac = the purple fascinator, sky = the
- * crystal headbands, sand = sinamay straw, blush = the Classic Cake Menu pink). Light-only by design.
+ * Design tokens: the house layout system (docs/design-reference.md), in the same neutrals as the
+ * other studios on this system — cool grey ground, near-black ink, shared pastel slots — with this
+ * studio's own brand colour in every accent slot. Gold is that accent: the champagne gold of
+ * "Baked by H" from the studio's brand card, always a fill under ink text. Wine, from the
+ * @ruffles_byh wordmark, stays for the logo. Light-only by design.
  */
 :root {
   color-scheme: light;
 
-  --ground: #f7efe9;
+  --ground: #ebeff5;
   --surface: #ffffff;
-  --ink: #2a141c;
-  --ink-75: rgba(42, 20, 28, 0.75);
-  --ink-50: rgba(42, 20, 28, 0.5);
-  --ink-25: rgba(42, 20, 28, 0.25);
-  --ink-12: rgba(42, 20, 28, 0.12);
-  --ink-06: rgba(42, 20, 28, 0.06);
-  --charcoal: #3d1f29;
-  --graphite: #5c3c46;
+  --ink: #242426;
+  --ink-75: rgba(36, 36, 38, 0.75);
+  --ink-50: rgba(36, 36, 38, 0.5);
+  --ink-25: rgba(36, 36, 38, 0.25);
+  --ink-12: rgba(36, 36, 38, 0.12);
+  --ink-06: rgba(36, 36, 38, 0.06);
+  --charcoal: #35363b;
+  --graphite: #4d4f57;
   --white-75: rgba(255, 255, 255, 0.75);
   --white-50: rgba(255, 255, 255, 0.5);
   --glass: rgba(255, 255, 255, 0.8);
@@ -28,13 +27,13 @@
   --wine-wash: #fbe3ec;
   --gold: #e9c67e;
   --gold-wash: #fbf0dc;
-  --lilac: #d6bde8;
-  --sky: #cadfef;
-  --blush: #fbdde4;
-  --sand: #e8d2ae;
-  --steel: #cbaab4;
-  --mist: #e9dfe1;
-  --slate: #8a5a6a;
+  --lilac: #c0adff;
+  --sky: #b8deff;
+  --blush: #fae9e6;
+  --sand: #e0c5b6;
+  --steel: #a5b2cf;
+  --mist: #d9d5dc;
+  --slate: #58718a;
 
   /* Semantic, used only for state. */
   --open: #3daa5c;
@@ -63,8 +62,8 @@
   --sh-deep: 0 0.81px 0.81px -0.47px rgba(62, 36, 46, 0.19), 0 1.91px 1.91px -0.94px rgba(62, 36, 46, 0.18), 0 3.49px 3.49px -1.41px rgba(62, 36, 46, 0.18), 0 5.79px 5.79px -1.88px rgba(62, 36, 46, 0.17), 0 9.36px 9.36px -2.34px rgba(62, 36, 46, 0.16), 0 15.32px 15.32px -2.81px rgba(62, 36, 46, 0.15), 0 26.38px 26.38px -3.28px rgba(62, 36, 46, 0.12), 0 48px 48px -3.75px rgba(62, 36, 46, 0.06);
   --sh-chip: 0 4px 8px rgba(0, 0, 0, 0.25);
 
-  --glow: radial-gradient(134% 100% at 50% 0%, #ffffff 0%, #f7efe9 100%);
-  --fade: linear-gradient(#ffffff 0%, #f7efe9 100%);
+  --glow: radial-gradient(134% 100% at 50% 0%, #ffffff 0%, #ebeff5 100%);
+  --fade: linear-gradient(#ffffff 0%, #ebeff5 100%);
 
   --z-sticky: 10;
   --z-tabbar: 20;
@@ -77,4 +76,18 @@
   --gutter: max(16px, env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px));
   --nav-h: 0px;
   --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/*
+ * Status, money and trend labels are coloured words, not pills. Each pill colour is deepened just
+ * enough to read on white and on the ground (4.5:1 or more). Dark surfaces switch back to the bright
+ * colours (ui.css), like the selected date's month.
+ */
+:root {
+  --label-gold: #85601a;
+  --label-sand: var(--warning-ink);
+  --label-sky: #1a63a8;
+  --label-lilac: #5a3ec8;
+  --label-mist: #6b6470;
+  --label-danger: #b83a26;
 }

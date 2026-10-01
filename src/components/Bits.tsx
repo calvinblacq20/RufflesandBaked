@@ -96,7 +96,7 @@ export function Stars({ value, size = 14 }: { value: number; size?: number }) {
   return (
     <span className="stars" aria-label={`${value} out of 5 stars`}>
       {Array.from({ length: 5 }, (_, i) => (
-        <Star key={i} size={size} strokeWidth={0} fill={i < Math.round(value) ? "currentColor" : "rgba(42, 20, 28,0.15)"} />
+        <Star key={i} size={size} strokeWidth={0} fill={i < Math.round(value) ? "currentColor" : "rgba(36, 36, 38,0.15)"} />
       ))}
     </span>
   );

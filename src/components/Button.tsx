@@ -53,7 +53,7 @@ interface CtaProps {
   tone?: "dark" | "gold";
 }
 
-const INK = "#2a141c";
+const INK = "#242426";
 const GOLD = "#e9c67e";
 
 /**
@@ -75,7 +75,7 @@ export function Cta({ children, onClick, loading, disabled, type = "button", cla
       onHoverStart={() => setHover(true)}
       onHoverEnd={() => setHover(false)}
       whileTap={{ scale: 0.98 }}
-      animate={{ backgroundColor: disabled ? "rgba(42, 20, 28,0.25)" : active ? flip : base, color: (active ? flip : base) === INK ? "#ffffff" : INK }}
+      animate={{ backgroundColor: disabled ? "rgba(36, 36, 38,0.25)" : active ? flip : base, color: (active ? flip : base) === INK ? "#ffffff" : INK }}
       transition={spring.press}
       style={{ flexDirection: active ? "row-reverse" : "row" }}
     >

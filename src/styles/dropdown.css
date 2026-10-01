@@ -19,7 +19,7 @@
 .dd-btn:hover { box-shadow: var(--sh-float); }
 .dd-btn:focus-visible { border-radius: var(--r-pill); outline-offset: 3px; }
 .dd-btn.is-soft { height: 34px; padding: 0 10px 0 14px; background: var(--ground); box-shadow: none; font-size: 13px; }
-.dd-btn.is-soft:hover { background: #efe4de; }
+.dd-btn.is-soft:hover { background: #e3e8ef; }
 .dd-btn.is-field {
   width: 100%;
   min-height: 44px;

@@ -22,8 +22,8 @@ import { MoneyTag } from "../orderActions";
 import { AdminPage, EmptyState, reminderDue } from "../Shell";
 
 const TODAY_METRICS: MetricId[] = ["cash", "newOrders", "owed", "collected"];
-export const INK = "#2a141c";
-export const PREVIOUS = "rgba(42, 20, 28,0.5)";
+export const INK = "#242426";
+export const PREVIOUS = "rgba(36, 36, 38,0.5)";
 
 export const PURPOSE_LABEL: Record<Appointment["purpose"], string> = { pickup: "Pickup", delivery: "Delivery", tasting: "Tasting", fitting: "Fitting" };
 

@@ -140,13 +140,13 @@ export function LineChart({ series, labels, format, axisFormat, ariaLabel, heigh
         <svg width={width} height={height} aria-hidden="true">
           <defs>
             <linearGradient id={gradientId} x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0%" stopColor="#d6bde8" stopOpacity="0.28" />
-              <stop offset="100%" stopColor="#d6bde8" stopOpacity="0" />
+              <stop offset="0%" stopColor="#c0adff" stopOpacity="0.28" />
+              <stop offset="100%" stopColor="#c0adff" stopOpacity="0" />
             </linearGradient>
           </defs>
           {ticks.map((t) => (
             <g key={t}>
-              <line x1={left} x2={width - right} y1={y(t)} y2={y(t)} style={{ stroke: "rgba(42, 20, 28,0.06)" }} />
+              <line x1={left} x2={width - right} y1={y(t)} y2={y(t)} style={{ stroke: "rgba(36, 36, 38,0.06)" }} />
               <text x={left - 8} y={y(t) + 4} textAnchor="end">
                 {axisFormat(t)}
               </text>
@@ -177,7 +177,7 @@ export function LineChart({ series, labels, format, axisFormat, ariaLabel, heigh
           )}
           {hover !== null && !empty && (
             <g>
-              <line x1={x(hover)} x2={x(hover)} y1={top} y2={top + innerH} style={{ stroke: "rgba(42, 20, 28,0.12)" }} />
+              <line x1={x(hover)} x2={x(hover)} y1={top} y2={top + innerH} style={{ stroke: "rgba(36, 36, 38,0.12)" }} />
               {series.map((s) => {
                 const v = s.values[hover];
                 return v === null || v === undefined ? null : <circle key={s.label} cx={x(hover)} cy={y(v)} r={s.dashed ? 3 : 4} style={{ fill: s.dashed ? "#fff" : s.color, stroke: s.color, strokeWidth: 2 }} />;
@@ -244,7 +244,7 @@ export function BarChart({ bars, ariaLabel, height = 150, animate = true, format
     <div ref={ref} className="chart" role="img" aria-label={ariaLabel} style={{ height }} onPointerLeave={() => setHover(null)}>
       {width > 0 && (
         <svg width={width} height={height} aria-hidden="true">
-          <line x1={0} x2={width} y1={top + innerH} y2={top + innerH} style={{ stroke: "rgba(42, 20, 28,0.06)" }} />
+          <line x1={0} x2={width} y1={top + innerH} y2={top + innerH} style={{ stroke: "rgba(36, 36, 38,0.06)" }} />
           {bars.map((b, i) => {
             const cx = slot * i + slot / 2;
             const h = b.closed ? 3 : b.value === 0 ? 3 : Math.max(4, (b.value / max) * innerH);
@@ -252,7 +252,7 @@ export function BarChart({ bars, ariaLabel, height = 150, animate = true, format
             const x0 = cx - barW / 2;
             const y0 = top + innerH - h;
             const d = `M${x0},${top + innerH}V${y0 + r}Q${x0},${y0} ${x0 + r},${y0}H${x0 + barW - r}Q${x0 + barW},${y0} ${x0 + barW},${y0 + r}V${top + innerH}Z`;
-            const color = b.closed || b.value === 0 ? "rgba(42, 20, 28,0.06)" : b.emphasis || hover === i ? "#2a141c" : "#8a5a6a";
+            const color = b.closed || b.value === 0 ? "rgba(36, 36, 38,0.06)" : b.emphasis || hover === i ? "#242426" : "#58718a";
             return (
               <g key={i} onPointerEnter={() => setHover(i)}>
                 <rect x={slot * i} y={0} width={slot} height={height} fill="transparent" />
@@ -264,7 +264,7 @@ export function BarChart({ bars, ariaLabel, height = 150, animate = true, format
                   style={{ fill: color, transformOrigin: `${cx}px ${top + innerH}px`, transition: "fill 0.15s" }}
                 />
                 {b.value > 0 && !b.closed && (
-                  <text x={cx} y={y0 - 5} textAnchor="middle" style={{ fontSize: 11, fill: "#2a141c", fontWeight: 500 }}>
+                  <text x={cx} y={y0 - 5} textAnchor="middle" style={{ fontSize: 11, fill: "#242426", fontWeight: 500 }}>
                     {format(b.value)}
                   </text>
                 )}
@@ -306,8 +306,8 @@ export function Sparkline({ values, width = 72, height = 28, label }: { values: 
   const end = last as [number, number] | null;
   return (
     <svg width={width} height={height} role="img" aria-label={label} style={{ flex: "none", overflow: "visible" }}>
-      <path d={d} style={{ fill: "none", stroke: "#8a5a6a", strokeWidth: 1.5, strokeLinejoin: "round", strokeLinecap: "round" }} />
-      {end && <circle cx={end[0]} cy={end[1]} r={2.5} style={{ fill: "#2a141c" }} />}
+      <path d={d} style={{ fill: "none", stroke: "#58718a", strokeWidth: 1.5, strokeLinejoin: "round", strokeLinecap: "round" }} />
+      {end && <circle cx={end[0]} cy={end[1]} r={2.5} style={{ fill: "#242426" }} />}
     </svg>
   );
 }

@@ -14,7 +14,7 @@ import { useFirstLoad, useFirstVisit, useNow } from "../hooks";
 import { AdminPage, EmptyState } from "../Shell";
 import { usePeriod } from "./Today";
 
-export const METHOD_COLOR: Record<PaymentMethod, string> = { momo: "#e9c67e", cash: "#cadfef", bank: "#d6bde8", card: "#e8d2ae" };
+export const METHOD_COLOR: Record<PaymentMethod, string> = { momo: "#e9c67e", cash: "#b8deff", bank: "#c0adff", card: "#e0c5b6" };
 const KIND = { full: "Full", part: "Part", final: "Final" } as const;
 
 export function Payments() {

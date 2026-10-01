@@ -218,66 +218,60 @@ button.row:active, a.row:active { background: var(--ink-06); }
 }
 .chip.is-active { background: var(--ink); color: #fff; box-shadow: none; }
 .chip-count {
-  display: grid;
-  place-items: center;
-  min-width: 20px;
-  height: 20px;
-  padding-inline: 5px;
-  border-radius: var(--r-pill);
-  background: var(--ground);
-  color: var(--ink);
-  font-size: 11px;
-  font-weight: 500;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-75);
+  font-variant-numeric: tabular-nums;
 }
-.chip.is-active .chip-count { background: var(--gold); }
+.chip.is-active .chip-count { color: var(--gold); }
 
 .badge {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  height: 28px;
-  padding: 2px 12px 2px 2px;
-  border-radius: var(--r-pill);
+  gap: 6px;
   font-size: 13px;
+  font-weight: 500;
+  line-height: 1.3;
   white-space: nowrap;
-  background: var(--surface);
+  color: var(--ink);
 }
-.badge-well {
-  display: grid;
-  place-items: center;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.7);
-}
-.badge.is-gold { background: var(--gold); }
-.badge.is-sand { background: var(--sand); }
-.badge.is-sky { background: var(--sky); }
-.badge.is-lilac { background: var(--lilac); }
-.badge.is-mist { background: var(--mist); }
-.badge.is-danger { background: var(--danger-wash); color: var(--danger); }
-.badge.is-wash { background: var(--ground); }
+.badge-well { display: inline-flex; flex: none; }
+.badge.is-gold { color: var(--label-gold); }
+.badge.is-sand { color: var(--label-sand); }
+.badge.is-sky { color: var(--label-sky); }
+.badge.is-lilac { color: var(--label-lilac); }
+.badge.is-mist { color: var(--label-mist); }
+.badge.is-danger { color: var(--label-danger); }
+.badge.is-wash { color: var(--ink-75); }
 
 .pill-tag {
   display: inline-flex;
   align-items: center;
-  height: 22px;
-  padding-inline: 8px;
-  border-radius: var(--r-pill);
-  background: var(--ground);
-  font-size: 11px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-75);
   letter-spacing: 0;
+}
+
+/* On dark surfaces labels take the bright pill colours, which read well there. */
+:is(.adm-dark, .act-card, .act-banner, .closing, .momo-card, .alert-foot, .desk-copy, .balance-card, .account-card, .option.is-selected, .btn-dark, .btn-cta, .chip.is-active, .date-cell.is-selected, .slot.is-selected, .success, .auth-top) {
+  --label-gold: var(--gold);
+  --label-sand: var(--sand);
+  --label-sky: var(--sky);
+  --label-lilac: var(--lilac);
+  --label-mist: var(--mist);
+  --label-danger: #ff9a87;
 }
 
 /* ---------- Skeleton ---------- */
 .sk {
   display: block;
   border-radius: var(--r-8);
-  background: linear-gradient(90deg, rgba(42, 20, 28, 0.06) 0%, rgba(42, 20, 28, 0.1) 40%, rgba(42, 20, 28, 0.06) 80%);
+  background: linear-gradient(90deg, rgba(36, 36, 38, 0.06) 0%, rgba(36, 36, 38, 0.1) 40%, rgba(36, 36, 38, 0.06) 80%);
   background-size: 300% 100%;
   animation: shimmer 1.3s linear infinite;
 }
-.sk.on-white { background-color: #f8f2ef; }
+.sk.on-white { background-color: #f3f5f8; }
 @keyframes shimmer {
   from { background-position: 100% 0; }
   to { background-position: -200% 0; }
@@ -311,18 +305,18 @@ button.row:active, a.row:active { background: var(--ink-06); }
   z-index: -1;
   background:
     radial-gradient(120% 90% at 18% 8%, rgba(255, 255, 255, 0.65), transparent 55%),
-    radial-gradient(circle at 1px 1px, rgba(42, 20, 28, 0.07) 1.1px, transparent 1.6px) 0 0 / 11px 11px,
+    radial-gradient(circle at 1px 1px, rgba(36, 36, 38, 0.07) 1.1px, transparent 1.6px) 0 0 / 11px 11px,
     linear-gradient(160deg, var(--tone-a), var(--tone-b));
 }
 .photo .photo-mark { opacity: 0.16; }
-.photo.tone-lilac { --tone-a: #d6bde8; --tone-b: #f7efe9; }
-.photo.tone-sky { --tone-a: #cadfef; --tone-b: #f7efe9; }
-.photo.tone-sand { --tone-a: #e8d2ae; --tone-b: #fbdde4; }
-.photo.tone-blush { --tone-a: #fbdde4; --tone-b: #e8d2ae; }
-.photo.tone-steel { --tone-a: #cbaab4; --tone-b: #f7efe9; }
-.photo.tone-mist { --tone-a: #e9dfe1; --tone-b: #f7efe9; }
-.photo.tone-gold { --tone-a: #e9c67e; --tone-b: #f7efe9; }
-.photo.tone-charcoal { --tone-a: #2a141c; --tone-b: #5c3c46; color: #fff; }
+.photo.tone-lilac { --tone-a: #c0adff; --tone-b: #ebeff5; }
+.photo.tone-sky { --tone-a: #b8deff; --tone-b: #ebeff5; }
+.photo.tone-sand { --tone-a: #e0c5b6; --tone-b: #fae9e6; }
+.photo.tone-blush { --tone-a: #fae9e6; --tone-b: #e0c5b6; }
+.photo.tone-steel { --tone-a: #a5b2cf; --tone-b: #ebeff5; }
+.photo.tone-mist { --tone-a: #d9d5dc; --tone-b: #ebeff5; }
+.photo.tone-gold { --tone-a: #e9c67e; --tone-b: #ebeff5; }
+.photo.tone-charcoal { --tone-a: #242426; --tone-b: #4d4f57; color: #fff; }
 .photo.tone-charcoal::before {
   background:
     radial-gradient(120% 90% at 18% 8%, rgba(255, 255, 255, 0.14), transparent 55%),
@@ -332,7 +326,7 @@ button.row:active, a.row:active { background: var(--ink-06); }
 .photo.tone-charcoal .photo-mark { opacity: 0.22; }
 /* Real photos: a quiet shimmer shows until the image has loaded, then it fades in. */
 .photo.has-img::before {
-  background: linear-gradient(90deg, #ece2dd 0%, #f6efeb 40%, #ece2dd 80%);
+  background: linear-gradient(90deg, #e2e6ed 0%, #eef1f6 40%, #e2e6ed 80%);
   background-size: 300% 100%;
   animation: shimmer 1.3s linear infinite;
 }
@@ -676,9 +670,9 @@ button.row:active, a.row:active { background: var(--ink-06); }
 
 .success { background: var(--charcoal); color: #fff; }
 .success-blob { position: absolute; border-radius: 50%; }
-.success::after { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 45% at 50% 50%, rgba(42, 20, 28, 0.35), transparent 70%); }
+.success::after { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 45% at 50% 50%, rgba(36, 36, 38, 0.35), transparent 70%); }
 .success-content { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; padding: 24px; }
-.success-content h1 { font-size: 44px; line-height: 1.1; letter-spacing: -0.04em; max-width: 9ch; text-shadow: 0 2px 24px rgba(42, 20, 28, 0.35); }
+.success-content h1 { font-size: 44px; line-height: 1.1; letter-spacing: -0.04em; max-width: 9ch; text-shadow: 0 2px 24px rgba(36, 36, 38, 0.35); }
 
 /* Launch screen: strictly black and white, matching the logo. */
 .splash { background: #000; color: #fff; }
@@ -723,7 +717,7 @@ button.row:active, a.row:active { background: var(--ink-06); }
   height: 168px;
   overflow: hidden;
   border-radius: var(--r-16) var(--r-16) 0 0;
-  background: #ede3de;
+  background: #e4e9f1;
 }
 .map svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 .map-pin { position: absolute; left: 50%; top: 46%; transform: translate(-50%, -100%); display: flex; flex-direction: column; align-items: center; }

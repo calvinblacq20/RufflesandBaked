@@ -12,7 +12,7 @@ import { INK, TrendCard, usePeriod } from "./Today";
 
 const REPORT_METRICS: MetricId[] = ["newOrders", "collected", "avgOrder", "onTime"];
 const SPARK_METRICS: MetricId[] = ["cash", "owed", "newOrders", "onTime"];
-const SLATE = "#8a5a6a";
+const SLATE = "#58718a";
 
 export function Reports() {
   const data = useAppData();
