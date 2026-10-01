@@ -164,7 +164,6 @@ export function Today() {
       title="Today"
       status={
         <>
-          <span className={`adm-dot ${open.open ? "is-open" : ""}`} aria-hidden="true" />
           {fmtDayLong(now)} · {open.label} · {shop.inProduction} in progress
         </>
       }

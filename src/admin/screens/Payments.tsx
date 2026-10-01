@@ -158,10 +158,7 @@ export function Payments() {
                       <td>{customerById(data, order.customerId)?.name}</td>
                       <td className="t-mono">{order.number}</td>
                       <td>
-                        <span className="inline" style={{ gap: 8 }}>
-                          <i className="swatch" style={{ background: METHOD_COLOR[payment.method] }} aria-hidden="true" />
-                          {METHOD_LABEL[payment.method]}
-                        </span>
+                        {METHOD_LABEL[payment.method]}
                       </td>
                       <td>{KIND[payment.kind]}</td>
                       <td className="num" style={{ fontWeight: 500 }}>
