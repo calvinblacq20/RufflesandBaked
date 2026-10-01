@@ -17,6 +17,10 @@ const OrderFlow = lazy(() => import("./client/OrderFlow").then((m) => ({ default
 const OrderDetail = lazy(() => import("./client/OrderDetail").then((m) => ({ default: m.OrderDetail })));
 const ReceiptPage = lazy(() => import("./client/Receipt").then((m) => ({ default: m.ReceiptPage })));
 const Celebrations = lazy(() => import("./client/Celebrations").then((m) => ({ default: m.Celebrations })));
+const LoginPage = lazy(() => import("./client/Auth").then((m) => ({ default: m.LoginPage })));
+const SignUpPage = lazy(() => import("./client/Auth").then((m) => ({ default: m.SignUpPage })));
+const ForgotPasswordPage = lazy(() => import("./client/Auth").then((m) => ({ default: m.ForgotPasswordPage })));
+const ResetPasswordPage = lazy(() => import("./client/Auth").then((m) => ({ default: m.ResetPasswordPage })));
 // The owner side is its own download; clients never fetch it.
 const AdminApp = lazy(() => import("./admin/AdminApp").then((m) => ({ default: m.AdminApp })));
 
@@ -104,6 +108,10 @@ function ClientApp() {
               <Route path="profile" element={<Profile />} />
             </Route>
             <Route path="order/new" element={<OrderFlow />} />
+            <Route path="login" element={<LoginPage />} />
+            <Route path="signup" element={<SignUpPage />} />
+            <Route path="forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="reset-password" element={<ResetPasswordPage />} />
             <Route element={<NavLayout />}>
               <Route path="orders/:orderId" element={<OrderDetail />} />
               <Route path="orders/:orderId/receipts/:paymentId" element={<ReceiptPage />} />

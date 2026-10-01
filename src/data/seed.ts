@@ -24,8 +24,11 @@ export interface AppData {
   seededAt: string;
   /** Every customer record the studio holds, guests included. */
   customers: Customer[];
-  /** The account signed in on this phone. Accounts are optional, so this starts empty. */
-  session: { customerId: ID | null };
+  /**
+   * The account signed in on this phone. Accounts are optional, so this starts empty.
+   * `transient` sessions ("Remember me" unticked) end when the browser session does.
+   */
+  session: { customerId: ID | null; transient?: boolean };
   device: DeviceState;
   orders: Order[];
   /** Dates clients asked the studio to remember. */
@@ -41,8 +44,11 @@ export interface AppData {
   counters: Counters;
 }
 
-/** The sample account. Log in with its WhatsApp number to see order history. */
+/** The sample account. Log in with its email and password (or its WhatsApp number, to find an order) to see order history. */
 export const DEMO_ACCOUNT_PHONE = "024 555 0142";
+export const DEMO_ACCOUNT_EMAIL = "abena.owusu@gmail.com";
+/** Demo-only password for the sample account, shown on the log in page so the demo can be tried. */
+export const DEMO_ACCOUNT_PASSWORD = "Ruffles2026";
 const CUSTOMER_ID = "c-demo";
 
 /**

@@ -2,7 +2,7 @@ import { CakeSlice, CalendarDays, ChevronRight, ReceiptText, Smartphone } from "
 import { AnimatePresence, motion } from "motion/react";
 import { useMemo, useState, type ReactNode } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { AccountSheet, FindOrderSheet } from "../components/AccountSheets";
+import { FindOrderSheet } from "../components/AccountSheets";
 import { Photo, Skeleton, useSkeleton } from "../components/Bits";
 import { Button } from "../components/Button";
 import { STYLES, styleById } from "../data/catalog";
@@ -28,7 +28,8 @@ export function Orders() {
   const loading = useSkeleton(550);
   const data = useAppData();
   const now = new Date();
-  const [sheet, setSheet] = useState<"find" | "login" | null>(null);
+  const [sheet, setSheet] = useState<"find" | null>(null);
+  const navigate = useNavigate();
 
   // Guests see orders placed or found on this phone; accounts see all of theirs.
   const account = accountOf(data);
@@ -86,7 +87,7 @@ export function Orders() {
                   <button className="link" onClick={() => setSheet("find")}>
                     Find an order
                   </button>
-                  <button className="link" onClick={() => setSheet("login")}>
+                  <button className="link" onClick={() => navigate("/login?next=/orders")}>
                     Log in
                   </button>
                 </span>
@@ -171,7 +172,6 @@ export function Orders() {
       )}
 
       <FindOrderSheet open={sheet === "find"} onClose={() => setSheet(null)} />
-      <AccountSheet open={sheet === "login"} onClose={() => setSheet(null)} mode="login" />
     </main>
   );
 }

@@ -1,8 +1,7 @@
 import { Bell, BellOff, CakeSlice, CalendarHeart, Lock, Plus, Trash2 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { AccountSheet } from "../components/AccountSheets";
+import { Link, useNavigate } from "react-router-dom";
 import { Skeleton, useSkeleton } from "../components/Bits";
 import { Button } from "../components/Button";
 import { TopBar } from "../components/Chrome";
@@ -26,7 +25,7 @@ export function Celebrations() {
   const data = useAppData();
   const notify = useNotify();
   const account = accountOf(data);
-  const [loginOpen, setLoginOpen] = useState(false);
+  const navigate = useNavigate();
   const [addOpen, setAddOpen] = useState(false);
   const [dietaryOpen, setDietaryOpen] = useState(false);
   const now = new Date();
@@ -58,9 +57,9 @@ export function Celebrations() {
           </span>
           <p className="t-title">Log in to save your dates</p>
           <p className="muted" style={{ maxWidth: "38ch" }}>
-            Save the birthdays in your family once, and we'll remind you before each one. Log in with your WhatsApp number.
+            Save the birthdays in your family once, and we'll remind you before each one. Log in, or create a free account.
           </p>
-          <Button variant="dark" onClick={() => setLoginOpen(true)} style={{ marginTop: 8 }}>
+          <Button variant="dark" onClick={() => navigate("/login?next=/profile/dates")} style={{ marginTop: 8 }}>
             Log in
           </Button>
         </div>
@@ -144,7 +143,6 @@ export function Celebrations() {
 
       <AddDateSheet open={addOpen} onClose={() => setAddOpen(false)} />
       <DietarySheet open={dietaryOpen} onClose={() => setDietaryOpen(false)} initial={account?.dietary ?? ""} />
-      <AccountSheet open={loginOpen} onClose={() => setLoginOpen(false)} mode="login" />
     </main>
   );
 }

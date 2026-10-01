@@ -2,7 +2,7 @@ import { ArrowUp, CakeSlice, CalendarDays, Check, Clock, ImagePlus, Lock, Mail, 
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect, useMemo, useRef, useState, type InputHTMLAttributes, type ReactNode } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { AccountSheet } from "../components/AccountSheets";
+import { AccountSheet } from "../components/AccountSheet";
 import { AppIcon } from "../components/Brand";
 import { Photo, Skeleton, Stars, useSkeleton } from "../components/Bits";
 import { Button, Cta, Dots } from "../components/Button";

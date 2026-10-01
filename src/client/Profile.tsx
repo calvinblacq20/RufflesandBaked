@@ -3,13 +3,15 @@ import { InstagramIcon } from "../components/SocialIcons";
 import { motion } from "motion/react";
 import { useState, type ReactNode } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AccountSheet, FindOrderSheet } from "../components/AccountSheets";
+import { FindOrderSheet } from "../components/AccountSheets";
 import { Avatar, Skeleton, useSkeleton } from "../components/Bits";
 import { Button } from "../components/Button";
 import { useNotify } from "../components/Notify";
 import { Sheet } from "../components/Sheet";
 import { STUDIO } from "../data/business";
+import { prefillAuthDraft } from "../data/authDraft";
 import { accessOf, accountOf, actions, useAppData } from "../data/store";
+import { splitName } from "../lib/auth";
 import type { Customer } from "../data/types";
 import { amountDue, visibleOrders } from "../lib/checkout";
 import { formatGhPhone, whatsappLink } from "../lib/contact";
@@ -46,8 +48,14 @@ export function Profile() {
 function GuestProfile() {
   const data = useAppData();
   const notify = useNotify();
-  const [sheet, setSheet] = useState<"login" | "create" | "find" | "device" | null>(null);
+  const navigate = useNavigate();
+  const [sheet, setSheet] = useState<"find" | "device" | null>(null);
   const remembered = data.device.contact;
+  // Details from a past order on this phone start the sign-up form off.
+  const toAccount = (page: "/login" | "/signup") => {
+    if (remembered) prefillAuthDraft({ ...splitName(remembered.name), email: remembered.email, phone: remembered.phone });
+    navigate(`${page}?next=/profile`);
+  };
   const onPhone = visibleOrders(data.orders, accessOf(data));
 
   return (
@@ -66,12 +74,12 @@ function GuestProfile() {
 
           <motion.section className="account-card" style={{ marginTop: 24 }} {...enter(24, 0.05)}>
             <p className="t-title">Save your orders (optional)</p>
-            <p className="muted">Log in with your WhatsApp number to see every order, save family birthdays for reminders and collect loyalty points on any phone. No password.</p>
+            <p className="muted">Create an account to see every order, save family birthdays for reminders and collect loyalty points on any phone.</p>
             <div className="account-card-actions">
-              <Button variant="gold" size="sm" onClick={() => setSheet("create")}>
+              <Button variant="gold" size="sm" onClick={() => toAccount("/signup")}>
                 Create account
               </Button>
-              <Button variant="ghost-dark" size="sm" onClick={() => setSheet("login")}>
+              <Button variant="ghost-dark" size="sm" onClick={() => toAccount("/login")}>
                 Log in
               </Button>
             </div>
@@ -98,7 +106,6 @@ function GuestProfile() {
         </div>
       </div>
 
-      <AccountSheet open={sheet === "login" || sheet === "create"} onClose={() => setSheet(null)} mode={sheet === "create" ? "create" : "login"} defaultName={remembered?.name} defaultPhone={remembered?.phone} />
       <FindOrderSheet open={sheet === "find"} onClose={() => setSheet(null)} />
 
       <Sheet open={sheet === "device"} onClose={() => setSheet(null)} title="Details on this phone">
