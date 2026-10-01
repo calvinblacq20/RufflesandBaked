@@ -12,8 +12,8 @@ const CHIPS = [
   { label: "Weddings", icon: <Heart size={13} />, x: "40%", y: 0, r: -18, fr: 2 },
   { label: "Kids' parties", icon: <PartyPopper size={13} />, x: "0%", y: 44, r: 30, fr: 4 },
   { label: "Christenings", icon: <Baby size={13} />, x: "38%", y: 46, r: -26, fr: -2 },
-  { label: "Thanksgivings", icon: <Briefcase size={13} />, x: "10%", y: 86, r: 16, fr: -4 },
-  { label: "Engagements", icon: <Gem size={13} />, x: "40%", y: 90, r: -12, fr: 3 },
+  { label: "Thanksgivings", icon: <Briefcase size={13} />, x: "2%", y: 86, r: 16, fr: -4 },
+  { label: "Engagements", icon: <Gem size={13} />, x: "50%", y: 90, r: -12, fr: 3 },
   { label: "Just because", icon: <Sparkles size={13} />, x: "18%", y: 128, r: 24, fr: 0 },
 ];
 
