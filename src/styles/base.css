@@ -17,7 +17,9 @@ body {
   background: var(--glow) fixed, var(--ground);
   color: var(--ink);
   font-family: var(--font);
-  font-variation-settings: "opsz" 32;
+  /* Inter picks its optical size from the font size: sturdy text cuts for 12-16px copy, the
+     tighter display cut only for big headings. Forcing the display cut everywhere thinned small text. */
+  font-optical-sizing: auto;
   font-size: 14px;
   line-height: 1.5;
   letter-spacing: -0.01em;
@@ -33,7 +35,7 @@ ul, ol {
 }
 
 h1, h2, h3 {
-  font-weight: 400;
+  font-weight: 500;
   text-wrap: balance;
 }
 
@@ -80,8 +82,8 @@ a {
 }
 
 /* Type scale (Makro presets, tuned for phones) */
-.t-h1 { font-size: 32px; line-height: 1.25; letter-spacing: -0.03em; }
-.t-h2 { font-size: 28px; line-height: 1.3; letter-spacing: -0.03em; }
+.t-h1 { font-size: 32px; line-height: 1.25; letter-spacing: -0.03em; font-weight: 500; }
+.t-h2 { font-size: 28px; line-height: 1.3; letter-spacing: -0.03em; font-weight: 500; }
 .t-h3 { font-size: 20px; line-height: 1.4; letter-spacing: -0.02em; font-weight: 500; }
 .t-title { font-size: 16px; line-height: 1.45; letter-spacing: -0.01em; font-weight: 500; }
 .t-body { font-size: 14px; line-height: 1.5; }
