@@ -37,16 +37,6 @@
   letter-spacing: 0;
 }
 
-/* ---------- Hero parallax stages ---------- */
-.hero { overflow: hidden; }
-.hero-track { transform-origin: 50% 0; will-change: transform; }
-.gallery-cell { position: relative; min-height: 0; overflow: hidden; }
-.gallery-inner { position: absolute; inset: -8% 0 -8% 0; will-change: transform; }
-.gallery-inner .photo { height: 100% !important; border-radius: 0 !important; }
-.gallery-layer { position: absolute; inset: 0; }
-/* The incoming photo shows the one it is covering, not its placeholder, until its own image is in. */
-.gallery-layer + .gallery-layer .photo::before { display: none; }
-
 /* ---------- Statement (word-by-word reveal) ---------- */
 .about { gap: 16px; }
 .statement {

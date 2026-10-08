@@ -8,6 +8,7 @@ import "./styles/dropdown.css";
 import "./styles/screens.css";
 import "./styles/motion.css";
 import "./styles/responsive.css";
+import "./styles/hero.css";
 
 const root = document.getElementById("root");
 if (!root) throw new Error("Root element #root is missing from index.html");

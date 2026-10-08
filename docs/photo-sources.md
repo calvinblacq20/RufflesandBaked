@@ -1,6 +1,7 @@
 # Photo sources
 
-Every photo in the app is the studio's own, from its two Instagram accounts:
+Every photo in the app is the studio's own, except the four behind the home page's opening slideshow
+(see "The home hero" below). The studio's photos come from its two Instagram accounts:
 [@ruffles_byh](https://www.instagram.com/ruffles_byh/) (the workroom) and
 [@bakedbyh_gh](https://www.instagram.com/bakedbyh_gh/) (the kitchen). Downloaded 23 Sept 2026.
 
@@ -49,6 +50,30 @@ table above and run `python scripts/build_photos.py`. Nothing else has to change
 `scripts/upscale_photos.py` can AI-upscale in the meantime, but it needs the Real-ESRGAN ONNX
 weights, which Qualcomm distributes through AI Hub rather than the public Hugging Face repo. It
 invents detail rather than recovering it, so it is a stopgap, not a substitute for the originals.
+
+## The home hero
+
+The opening slideshow fills the whole hero, edge to edge on every screen, which needs photos far
+larger than the Instagram ones (the biggest is 1440px tall). It uses four professional photos from
+Unsplash instead, downloaded at full size on 8 Oct 2026 into `brand/internet/unsplash-*.jpg`. None
+of them shows a face: the [Unsplash License](https://unsplash.com/license) allows free commercial use
+with no credit required (it's given here anyway), but doesn't cover the likeness of recognisable
+people. They set the mood; they are not the studio's own work, so the slide copy only describes what
+the studio makes, and the products further down the page are all hers.
+
+| In the hero | Unsplash | Photographer | Original | Slide |
+|---|---|---|---|---|
+| `cake` | [_B7shfNUXEA](https://unsplash.com/photos/_B7shfNUXEA) | Alexandra Gornago | 2729×4083 | Baked by H (celebration cakes) |
+| `tiara` | [lCGXNCELlnU](https://unsplash.com/photos/lCGXNCELlnU) | Jordyn St. John | 4272×2848 | Ruffles by H (headpieces) |
+| `wedding` | [d4b5aqgFW7A](https://unsplash.com/photos/d4b5aqgFW7A) | Jonathan Borba | 5274×7907 | Wedding Day |
+| `beads` | [ZgdAGqdFDd0](https://unsplash.com/photos/ZgdAGqdFDd0) | Mads Eneqvist | 3648×5472 | Beaded by Hand (bridal bead work) |
+
+`scripts/build_hero_photos.py` cuts each into a tall 3:4 crop for portrait screens (720, 1080 and
+1440px wide) and a wide 3:2 crop for landscape ones (1280, 1920 and 2560px), straight from the
+originals, into `public/photos/hero/`. Every crop is scaled down, never up. The crop boxes are in
+the script. To change a hero photo, put the new original in `brand/internet/`, point the slide at it
+in the script and run `python scripts/build_hero_photos.py`; `src/client/home/EditorialHero.tsx`
+lists the slides.
 
 ## Getting more
 

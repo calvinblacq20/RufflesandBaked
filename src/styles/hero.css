@@ -1,0 +1,531 @@
+/* ---------- Editorial hero (home) ----------
+ * The Queens Wigs & Bundles hero (src/client/home/heroSlideshow.ts drives it). Title + copy sit in
+ * one centred column, so they can never collide. The title is sized by BOTH the hero's width and
+ * the screen height, and each slide's photo fills the hero behind it. --chrome-h is the screen height
+ * the hero leaves for everything else: on phones the "Book now" bar and tab bar at the bottom, less
+ * the 24px the intro sheet tucks over the hero; on wider screens the floating nav at the top.
+ */
+.hero {
+  --hero-serif: "Bodoni Moda", "Bodoni 72", Didot, Georgia, serif;
+  --hero-sans: var(--font);
+  /* Champagne gold from "Baked by H": the button hover sweep. */
+  --hero-accent: var(--gold);
+  --hero-sheet: 24px;
+  --chrome-h: 146px;
+  --hero-gutter: clamp(16px, 4vw, 48px);
+  --hero-ease: cubic-bezier(0.26, 0.54, 0.32, 1);
+  --hero-ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  /* 1% of the small viewport height; falls back to vh on browsers without svh. */
+  --vh: 1vh;
+  /* Set from the active slide. */
+  /* Deep wine, from the @ruffles_byh wordmark. */
+  --hero-bg: #3b0a1c;
+  --hero-ink: #f4f7fb;
+  /* Small text over the photo glows in the slide's own colour, so it reads over bright cakes as
+     well as dark backdrops. */
+  --hero-glow: 0 1px 12px rgb(0 0 0 / 0.45);
+
+  position: relative;
+  height: clamp(480px, calc(100 * var(--vh) - var(--chrome-h)), 940px);
+  background: var(--hero-bg);
+  color: var(--hero-ink);
+  overflow: hidden;
+  isolation: isolate;
+  container-type: inline-size;
+}
+
+@supports (height: 1svh) {
+  .hero {
+    --vh: 1svh;
+  }
+}
+
+@supports (color: color-mix(in srgb, red 50%, blue)) {
+  .hero {
+    --hero-glow:
+      0 0 2px color-mix(in srgb, var(--hero-bg) 90%, transparent),
+      0 0 10px color-mix(in srgb, var(--hero-bg) 85%, transparent),
+      0 0 22px color-mix(in srgb, var(--hero-bg) 70%, transparent);
+  }
+}
+
+/* Full width on phones, and edge to edge on wider screens too (below). The bar sits over the top. */
+.hero-wrap {
+  position: relative;
+  margin-inline: calc(var(--gutter) * -1);
+}
+
+.hero :focus-visible {
+  outline-color: var(--hero-ink);
+  outline-offset: 3px;
+}
+
+/* ---------- Bar across the top: name and page links (HeroBar.tsx) ----------
+   Laid out like a store header: name left, links centred. Every slide is wine-shaded, so it is
+   always white. The contact and share buttons float in the dock (screens.css). */
+.hero-bar {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  height: 64px;
+  padding-inline: var(--gutter);
+  color: #fff;
+  font-family: var(--font);
+}
+
+.hero-bar :focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+.hero-bar__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  justify-self: start;
+  min-width: 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-shadow: 0 1px 10px rgb(59 10 28 / 0.5);
+}
+
+.hero-bar__name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Page links only on wider screens. */
+.hero-bar__links {
+  display: none;
+}
+
+.hero__slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 0 calc(72px + var(--hero-sheet));
+  visibility: hidden;
+}
+
+.hero__slide.is-active {
+  visibility: visible;
+}
+
+/* The photo fills the hero edge to edge (GSAP owns `transform` and `clip-path` on this element,
+   so the shade below wipes in and out with it). */
+.hero__frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Wine shade so white text reads on the bright photos: deepest behind the name at the top and the
+   buttons and dots at the bottom, lightest around the title. */
+.hero__frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 70% at 50% 50%, rgb(59 10 28 / 0.18) 0%, rgb(59 10 28 / 0.42) 100%),
+    linear-gradient(180deg, rgb(59 10 28 / 0.55) 0%, rgb(59 10 28 / 0.22) 26%, rgb(59 10 28 / 0.26) 58%, rgb(59 10 28 / 0.72) 100%);
+  pointer-events: none;
+}
+
+.hero__picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hero__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero__title {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  margin: 0;
+  padding-inline: var(--hero-gutter);
+  font-family: var(--hero-serif);
+  font-weight: 400;
+  /* Bodoni's optical sizes run to 96, where the hairlines all but vanish over a photo at this size.
+     Pinned to a text-leaning cut so the thin strokes of the A, N and the italic still read. */
+  font-optical-sizing: none;
+  font-variation-settings: "opsz" 28;
+  font-size: clamp(52px, min(15.5vw, calc((100 * var(--vh) - var(--chrome-h) - 290px) / 1.75)), 250px);
+  line-height: 0.84;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+@supports (width: 1cqi) {
+  .hero__title {
+    font-size: clamp(52px, min(15.5cqi, calc((100 * var(--vh) - var(--chrome-h) - 290px) / 1.75)), 250px);
+  }
+}
+
+.hero__kicker {
+  display: block;
+  margin-bottom: 0.1em;
+  font-family: var(--hero-sans);
+  font-size: clamp(11px, 1.1vw, 15px);
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: 0.4em;
+  text-align: center;
+  text-shadow: var(--hero-glow);
+}
+
+/* The mask letters rise out of. Extra room below for descenders (g, p, y); the negative margin
+   keeps the lines as tight as the original. */
+.hero__line {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  padding-bottom: 0.16em;
+  margin-bottom: -0.12em;
+}
+
+.hero__line:first-of-type {
+  justify-content: flex-start;
+}
+
+.hero__line:last-of-type {
+  justify-content: flex-end;
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: -0.02em;
+}
+
+.hero__char {
+  display: inline-block;
+  will-change: transform;
+}
+
+/* Whole word for screen readers; the animated letters are hidden from them. */
+.hero__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.hero__copy {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  justify-items: center;
+  gap: clamp(12px, calc(2 * var(--vh)), 18px);
+  width: min(520px, 100% - 32px);
+  margin-top: clamp(14px, calc(3 * var(--vh)), 36px);
+  text-align: center;
+  font-family: var(--hero-sans);
+}
+
+.hero__copy p {
+  margin: 0;
+  font-size: clamp(14px, 1.3vw, 18px);
+  line-height: 1.5;
+  text-shadow: var(--hero-glow);
+}
+
+.hero__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* ---------- Buttons: the fill sweeps up from the bottom on hover ---------- */
+.hero-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 14px 30px;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  font-family: var(--hero-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  text-decoration: none;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    color 0.45s var(--hero-ease),
+    border-color 0.45s var(--hero-ease);
+}
+
+.hero-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.55s var(--hero-ease-expo);
+}
+
+.hero-btn:hover::before {
+  transform: scaleY(1);
+}
+
+.hero-btn--light {
+  background: #fff;
+  color: var(--wine);
+  border-color: #fff;
+}
+
+.hero-btn--light::before {
+  background: var(--hero-accent);
+}
+
+.hero-btn--ghost {
+  color: #fff;
+  border-color: rgb(255 255 255 / 0.7);
+}
+
+.hero-btn--ghost::before {
+  background: #fff;
+}
+
+.hero-btn--ghost:hover {
+  color: var(--wine);
+}
+
+/* ---------- Controls: arrows + progress dots ---------- */
+.hero__controls {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(16px + var(--hero-sheet));
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.hero__arrow {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  color: inherit;
+  transition: background-color 0.25s var(--hero-ease);
+}
+
+.hero__arrow:hover {
+  background: rgb(255 255 255 / 0.12);
+}
+
+.hero__dots {
+  display: flex;
+  gap: 8px;
+}
+
+.hero__dot {
+  position: relative;
+  width: 42px;
+  height: 44px;
+  color: inherit;
+}
+
+.hero__dot::before,
+.hero__dot-fill {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 2px;
+  background: currentColor;
+  opacity: 0.3;
+}
+
+.hero__dot-fill {
+  opacity: 1;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.hero__dot.is-active .hero__dot-fill {
+  transform: scaleX(0.02);
+}
+
+/* ---------- Badge (top right on wider screens) ---------- */
+.hero__badge {
+  position: absolute;
+  right: clamp(12px, 5vw, 80px);
+  top: clamp(16px, 7vh, 80px);
+  z-index: 3;
+  width: clamp(84px, 10vw, 140px);
+  aspect-ratio: 1;
+}
+
+.hero__badge svg {
+  width: 100%;
+  height: 100%;
+}
+
+.hero__badge text {
+  font-family: var(--hero-sans);
+  font-size: 10.5px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  fill: currentColor;
+}
+
+/* Phones: the bar holds the name and buttons, so there's no badge, and swiping changes slides. */
+@media (max-width: 809.98px) {
+  .hero__title {
+    font-size: clamp(48px, min(19vw, calc((100 * var(--vh) - var(--chrome-h) - 250px) / 1.75)), 120px);
+  }
+
+  .hero__controls [data-hero-prev],
+  .hero__controls [data-hero-next],
+  .hero__badge {
+    display: none;
+  }
+}
+
+@media (max-width: 479px) {
+  .hero .hero__ctas .hero-btn--ghost {
+    display: none;
+  }
+}
+
+/* Tablets and up: edge to edge (the page surface clips the scrollbar-width overhang, as for
+   .stack-list), starting at the very top. The bar is the header here; the floating nav waits until
+   the hero has scrolled away (end of this file). On tablets the "Book now" bar still floats at the
+   bottom, hence --chrome-h. */
+@media (min-width: 810px) {
+  .hero-wrap {
+    margin-inline: calc((100% - 100vw) / 2);
+  }
+
+  .hero {
+    --hero-sheet: 0px;
+    --chrome-h: 88px;
+  }
+
+  .hero-bar {
+    height: 76px;
+    padding-inline: max(var(--gutter), calc((100% - 1440px) / 2));
+  }
+
+  .hero-bar__brand {
+    gap: 12px;
+    font-size: 13px;
+  }
+
+  .hero__slide {
+    padding-top: 76px;
+  }
+
+  .hero__badge {
+    top: calc(76px + clamp(8px, 4vh, 40px));
+  }
+}
+
+/* Room for the page links, centred on the screen. */
+@media (min-width: 960px) {
+  .hero-bar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 24px;
+  }
+
+  .hero-bar__links {
+    display: flex;
+    align-items: center;
+    gap: clamp(20px, 2.4vw, 36px);
+  }
+
+  .hero-bar__links a,
+  .hero-bar__links button {
+    position: relative;
+    padding-block: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgb(255 255 255 / 0.9);
+    text-shadow: 0 1px 10px rgb(59 10 28 / 0.5);
+    transition: color 0.2s ease;
+  }
+
+  .hero-bar__links a::after,
+  .hero-bar__links button::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 2px;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .hero-bar__links a:hover,
+  .hero-bar__links button:hover {
+    color: #fff;
+  }
+
+  .hero-bar__links a:hover::after,
+  .hero-bar__links button:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    --chrome-h: 0px;
+  }
+}
+
+/* While the home hero is on screen (Home.tsx sets data-hero-nav), the floating nav leaves the page
+   flow and tucks up out of sight, then slides down once the hero has scrolled away. */
+@media (min-width: 810px) {
+  html[data-hero-nav] .desk-nav-wrap {
+    position: fixed;
+    inset: 0 0 auto;
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  }
+
+  html[data-hero-nav="tucked"] .desk-nav-wrap {
+    transform: translateY(-110%);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, visibility 0s linear 0.45s;
+  }
+
+  html[data-motion="off"][data-hero-nav] .desk-nav-wrap {
+    transition: none;
+  }
+}

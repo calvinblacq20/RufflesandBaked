@@ -1,23 +1,24 @@
-import { CakeSlice, CalendarClock, Clock, Gift, Heart, MapPin, MessageCircle, Pause, Phone, Play, Share2, Sparkles, Truck, Wallet } from "lucide-react";
+import { CakeSlice, CalendarClock, Clock, Gift, MapPin, MessageCircle, Pause, Phone, Play, Sparkles, Truck, Wallet } from "lucide-react";
 import { InstagramIcon } from "../components/SocialIcons";
-import { AnimatePresence, motion, useScroll, useTransform } from "motion/react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AppIcon } from "../components/Brand";
 import { Photo, SectionHead, Skeleton, Stars, useSkeleton } from "../components/Bits";
 import { Button, Cta } from "../components/Button";
 import { MapCard } from "../components/MapCard";
 import { Marquee } from "../components/Marquee";
+import { ContactDock } from "./home/ContactDock";
 import { Reveal } from "../components/Reveal";
+import { HeroBar } from "./home/HeroBar";
 import { CountUp, ScrollRevealText, useScrollTo } from "../components/Scroll";
 import { ClosingCta } from "./home/ClosingCta";
-import { nextSlide, preloadPhoto, useAutoplay } from "./home/autoplay";
-import { useHeroCurve } from "./home/heroCurve";
+import { EditorialHero } from "./home/EditorialHero";
 import { HowItWorks } from "./home/HowItWorks";
 import { WhyBento } from "./home/WhyBento";
 import { useNotify } from "../components/Notify";
 import { Sheet } from "../components/Sheet";
-import { HOURS, OCCASION_PHOTOS, STUDIO, STUDIO_FEATURES, STUDIO_PHOTOS } from "../data/business";
+import { HOURS, OCCASION_PHOTOS, STUDIO, STUDIO_FEATURES } from "../data/business";
 import { CATEGORIES, OCCASIONS, STYLES } from "../data/catalog";
 import { accountOf, useAppData } from "../data/store";
 import type { CategoryId } from "../data/types";
@@ -25,7 +26,7 @@ import { telLink, whatsappLink } from "../lib/contact";
 import { fmtDate, money, weekdayLong } from "../lib/format";
 import { fromPriceOf } from "../lib/pricing";
 import { openStatus } from "../lib/schedule";
-import { enter, isCalm, motionMode, spring } from "../motion";
+import { enter, spring } from "../motion";
 
 const SECTIONS = [
   { id: "lookbook", label: "Gallery" },
@@ -36,11 +37,6 @@ const SECTIONS = [
 ] as const;
 
 const FEATURE_ICONS = { truck: Truck, sparkles: Sparkles, gift: Gift, cake: CakeSlice, wallet: Wallet, calendar: CalendarClock } as const;
-const HERO = STUDIO_PHOTOS;
-const heroShot = (n: number) => HERO[n % HERO.length] ?? HERO[0];
-/** Rendered widths of the gallery's big photo and its two side photos. */
-const GALLERY_SIZES = ["(min-width: 1024px) 800px, 66vw", "(min-width: 1024px) 400px, 33vw", "(min-width: 1024px) 400px, 33vw"] as const;
-const GALLERY_FADE_S = 0.9;
 const STATEMENT =
   "Ruffles and Baked by H is Hillary's studio in Kasoa. Bespoke handmade headpieces, hats, crowns and the whole bridal set from the workroom; celebration cakes, kids' themed cakes and pastries from the kitchen. Most people come for one and stay for both.";
 const HIGHLIGHTS = [
@@ -87,7 +83,6 @@ function StudioPage() {
   const notify = useNotify();
   const now = new Date();
   const status = openStatus(now, HOURS);
-  const [slide, setSlide] = useState(0);
   const [saved, setSaved] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [category, setCategory] = useState<CategoryId | "featured">("featured");
@@ -110,6 +105,18 @@ function StudioPage() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Tablet and desktop: the hero's own bar is the header at the top, so the floating nav stays tucked
+  // away until the hero scrolls off (styles in hero.css). Set before paint so the nav never flashes.
+  useLayoutEffect(() => {
+    document.documentElement.dataset.heroNav = showHeader ? "shown" : "tucked";
+  }, [showHeader]);
+  useLayoutEffect(
+    () => () => {
+      delete document.documentElement.dataset.heroNav;
+    },
+    [],
+  );
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -140,60 +147,23 @@ function StudioPage() {
   };
 
   const scrollTo = useScrollTo();
-  const goTo = (id: string) => scrollTo(document.getElementById(id), { offset: window.innerWidth >= 810 ? -140 : -112 });
-  // Calm mode (reduced motion, incl. iOS Low Power Mode) leaves out the parallax and zoom below.
-  const calm = isCalm();
-  // Hero photos drift and settle as the page starts to scroll.
-  const { scrollY } = useScroll();
-  const heroY = useTransform(scrollY, [0, 600], [0, 90]);
-  const heroScale = useTransform(scrollY, [0, 600], [1, 1.08]);
-  // ...and their bottom edge starts as a U that straightens out. The phone intro sheet overlaps the photo by 24px.
-  const galleryRef = useRef<HTMLDivElement>(null);
-  const galleryCurve = useHeroCurve(galleryRef);
-  const heroCurve = useHeroCurve(heroRef, { overlap: 24 });
-  // The photos also move on by themselves: the gallery crossfades to the next set, the phone carousel slides.
-  const trackRef = useRef<HTMLDivElement>(null);
-  // `prev` is the set being covered while the next one fades in over it.
-  const [gallery, setGallery] = useState<{ step: number; prev: number | null }>({ step: 0, prev: null });
-  useAutoplay(galleryRef, async () => {
-    const next = gallery.step + 1;
-    await Promise.all(GALLERY_SIZES.map((sizes, i) => preloadPhoto(heroShot(next + i).src, sizes)));
-    setGallery({ step: next, prev: gallery.step });
-  });
-  useAutoplay(heroRef, async () => {
-    const track = trackRef.current;
-    if (!track) return;
-    const next = nextSlide(track.scrollLeft, track.clientWidth, HERO.length);
-    await preloadPhoto(heroShot(next).src, "100vw");
-    track.scrollTo({ left: next * track.clientWidth, behavior: motionMode() === "full" ? "smooth" : "auto" });
-  });
-
-  const actionButtons = (
-    <>
-      <button className="icon-btn" onClick={share} aria-label="Share the studio">
-        <Share2 size={18} strokeWidth={1.8} />
-      </button>
-      <motion.button className={`icon-btn ${saved ? "is-on" : ""}`} onClick={() => setSaved(!saved)} aria-pressed={saved} aria-label="Save the studio" whileTap={{ scale: 0.85 }} transition={spring.press}>
-        <Heart size={18} strokeWidth={1.8} fill={saved ? "currentColor" : "none"} />
-      </motion.button>
-    </>
-  );
+  // Each section's scroll-margin-top (.anchor) already leaves room for the nav and the section tabs.
+  const goTo = (id: string) => scrollTo(document.getElementById(id));
+  // The hero's "See the menu" button; a stable callback so the hero never re-renders (GSAP owns its markup).
+  const goToRef = useRef(goTo);
+  goToRef.current = goTo;
+  const seeMenu = useCallback(() => goToRef.current("styles"), []);
 
   return (
     <main className="screen studio">
-      {/* Phone: sticky header that appears once the hero scrolls away */}
+      {/* Phone: sticky header that appears once the hero scrolls away (share and save float in the dock) */}
       <div className="overlay-header mobile-only">
         <AnimatePresence>
           {showHeader && (
             <motion.div className="overlay-header-inner" initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={spring.micro}>
-              <div className="between" style={{ padding: "10px 16px 4px" }}>
-                <div className="inline" style={{ gap: 10 }}>
-                  <AppIcon size={30} />
-                  <span className="t-title">{STUDIO.name}</span>
-                </div>
-                <div className="inline" style={{ gap: 8 }}>
-                  {actionButtons}
-                </div>
+              <div className="inline" style={{ gap: 10, padding: "10px 16px 4px" }}>
+                <AppIcon size={30} />
+                <span className="t-title">{STUDIO.name}</span>
               </div>
               <nav className="section-tabs" aria-label="Studio sections">
                 {SECTIONS.map((s) => (
@@ -208,57 +178,14 @@ function StudioPage() {
         </AnimatePresence>
       </div>
 
-      {/* Wider screens: photo gallery grid */}
-      <motion.div ref={galleryRef} className="desk-gallery desktop-only" style={{ clipPath: galleryCurve.clipPath, WebkitClipPath: galleryCurve.WebkitClipPath }}>
-        {GALLERY_SIZES.map((sizes, i) => (
-          <div key={i} className="gallery-cell">
-            <motion.div className="gallery-inner" initial={calm ? { opacity: 0 } : { scale: 1.18, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ ...spring.settle, delay: 0.08 * i }} style={calm ? undefined : { y: heroY }}>
-              {/* The incoming photo fades in on top; the old one stays underneath until the last cell has finished. */}
-              {(gallery.prev === null ? [gallery.step] : [gallery.prev, gallery.step]).map((step) => {
-                const shot = heroShot(step + i);
-                const incoming = gallery.prev !== null && step === gallery.step;
-                return (
-                  <motion.div
-                    key={shot.src}
-                    className="gallery-layer"
-                    aria-hidden={step !== gallery.step || undefined}
-                    initial={gallery.prev === null ? false : { opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: GALLERY_FADE_S, delay: 0.12 * i, ease: [0.44, 0, 0.56, 1] }}
-                    onAnimationComplete={incoming && i === GALLERY_SIZES.length - 1 ? () => setGallery((g) => ({ ...g, prev: null })) : undefined}
-                  >
-                    <Photo tone="mist" src={shot.src} alt={shot.alt} position={shot.position} eager={i === 0} sizes={sizes} height="100%" radius={0} markSize={i === 0 ? 150 : 70} />
-                  </motion.div>
-                );
-              })}
-            </motion.div>
-          </div>
-        ))}
-        <motion.span className="desk-gallery-count" style={{ y: galleryCurve.badgeY }}>
-          {HERO.length} photos
-        </motion.span>
-      </motion.div>
+      {/* Opening slideshow, with the studio's name and page links across its top */}
+      <div ref={heroRef} className="hero-wrap">
+        <EditorialHero onSeeMenu={seeMenu} />
+        <HeroBar onSection={goTo} />
+      </div>
 
-      {/* Phone: hero carousel */}
-      <motion.div ref={heroRef} className="hero mobile-only" style={{ clipPath: heroCurve.clipPath, WebkitClipPath: heroCurve.WebkitClipPath }}>
-        <motion.div
-          ref={trackRef}
-          className="hero-track"
-          style={calm ? undefined : { y: heroY, scale: heroScale }}
-          onScroll={(e) => {
-            const el = e.currentTarget;
-            setSlide(Math.round(el.scrollLeft / el.clientWidth));
-          }}
-        >
-          {HERO.map((shot, i) => (
-            <Photo key={shot.src} tone="mist" src={shot.src} alt={shot.alt} position={shot.position} eager={i === 0} sizes="100vw" height={440} radius={0} markSize={120} className="hero-slide" />
-          ))}
-        </motion.div>
-        <div className="hero-actions">{actionButtons}</div>
-        <motion.span className="hero-count t-cap" style={{ y: heroCurve.badgeY }}>
-          {slide + 1}/{HERO.length}
-        </motion.span>
-      </motion.div>
+      {/* WhatsApp, call, share and save, floating at the bottom right while the page scrolls */}
+      <ContactDock saved={saved} onSave={() => setSaved(!saved)} onShare={share} />
 
       {/* Intro sheet */}
       <motion.section className="intro" {...enter(24)}>
@@ -270,9 +197,6 @@ function StudioPage() {
           <div className="inline" style={{ gap: 8 }}>
             <span className="pill-tag" title="Figures in this preview are samples">
               Demo
-            </span>
-            <span className="inline desktop-only" style={{ gap: 8 }}>
-              {actionButtons}
             </span>
           </div>
         </div>

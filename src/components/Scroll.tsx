@@ -30,7 +30,9 @@ export function useScrollTo() {
         lenis.scrollTo(target, { offset, immediate: jump, duration: jump ? 0 : 1.1, force: true });
         return;
       }
-      const top = typeof target === "number" ? target : target.getBoundingClientRect().top + window.scrollY + offset;
+      // Like Lenis, leave the element's scroll-margin-top above it.
+      const margin = typeof target === "number" ? 0 : parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+      const top = typeof target === "number" ? target : target.getBoundingClientRect().top + window.scrollY - margin + offset;
       window.scrollTo({ top, behavior: jump ? "auto" : "smooth" });
     },
     [lenis, jumpOnly],

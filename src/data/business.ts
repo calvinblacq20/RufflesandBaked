@@ -129,16 +129,6 @@ export function applySettings(settings: StudioSettings) {
   for (let day = 0; day < 7; day++) HOURS[day] = settings.hours[day] ?? null;
 }
 
-/** The studio's own photos, from @ruffles_byh and @bakedbyh_gh, for the hero gallery. */
-export const STUDIO_PHOTOS = [
-  { src: "/photos/hat-cream-gold.webp", alt: "Cream and gold wide-brim hat trimmed with feathers, worn at a wedding", position: "center 30%" },
-  { src: "/photos/cake-box-bow.webp", alt: "Hillary holding a white celebration cake dressed as a gift box with a satin bow", position: "center 35%" },
-  { src: "/photos/fascinator-purple.webp", alt: "Purple sinamay fascinator with feathers and tulle on a stand", position: "center 45%" },
-  { src: "/photos/bridal-look.webp", alt: "Bride in white with a handmade white fascinator and crystal detail", position: "center 30%" },
-  { src: "/photos/cake-minnie.webp", alt: "Minnie Mouse themed second birthday cake with a red bow topper", position: "center 40%" },
-  { src: "/photos/tiara-gold.webp", alt: "Gold beaded branch crown held up on a clear headband", position: "center 45%" },
-] as const;
-
 export const OCCASION_PHOTOS: Record<string, string> = {
   birthday: "/photos/cake-box-bow.webp",
   wedding: "/photos/bridal-look.webp",

@@ -34,18 +34,129 @@
 .section-underline { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; border-radius: 2px; background: var(--ink); }
 .anchor { scroll-margin-top: 112px; }
 
-.hero { position: relative; margin-inline: calc(var(--gutter) * -1); }
-.hero-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
-.hero-track::-webkit-scrollbar { display: none; }
-.hero-slide { flex: none; width: 100%; scroll-snap-align: start; }
-.hero-actions { position: absolute; top: 14px; right: 16px; display: flex; gap: 8px; }
-.hero-count {
+/* ---------- Floating contact dock (home, ContactDock.tsx) ----------
+   Stays in the bottom right corner while the page scrolls: on phones above the "Book now" bar
+   (84px up, 72px tall) and the tab bar, on tablets above the floating bar, in the corner on desktop.
+   Above the sticky bars, below sheets and toasts. Below 1024px only WhatsApp and a small toggle
+   show; call, share and save open above them. */
+.contact-dock {
+  position: fixed;
+  right: var(--gutter);
+  bottom: calc(168px + var(--safe-bottom));
+  z-index: calc(var(--z-tabbar) + 5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.contact-dock__more {
   position: absolute;
-  right: 16px;
-  bottom: 40px;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  translate: -50% 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: visibility 0s linear 0.25s;
+}
+
+.contact-dock__more > * {
+  opacity: 0;
+  transform: translateY(8px) scale(0.9);
+  transition: opacity 0.18s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease;
+}
+
+.contact-dock.is-open .contact-dock__more {
+  visibility: visible;
+  pointer-events: auto;
+  transition-delay: 0s;
+}
+
+.contact-dock.is-open .contact-dock__more > * {
+  opacity: 1;
+  transform: none;
+}
+
+/* The one nearest the toggle opens first. */
+.contact-dock.is-open .contact-dock__more > :nth-last-child(2) { transition-delay: 0.03s; }
+.contact-dock.is-open .contact-dock__more > :nth-last-child(3) { transition-delay: 0.06s; }
+
+.contact-dock__btn,
+.contact-dock__toggle {
+  position: relative;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--ink);
+  background: var(--surface);
+  box-shadow: var(--sh-float), 0 0 0 1px rgba(92, 46, 60, 0.06);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.contact-dock__btn { width: 44px; height: 44px; }
+
+/* WhatsApp's deeper green: white on it clears 3:1, the brighter #25d366 doesn't. */
+.contact-dock__btn.is-whatsapp {
+  width: 52px;
+  height: 52px;
   color: #fff;
-  font-weight: 500;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 0 14px rgba(0, 0, 0, 0.4);
+  background: #1da851;
+}
+
+.contact-dock__toggle { width: 32px; height: 32px; }
+
+/* A 44px touch target round the small toggle. */
+.contact-dock__toggle::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+}
+
+.contact-dock__toggle svg { transition: transform 0.25s ease; }
+.contact-dock.is-open .contact-dock__toggle svg { transform: rotate(180deg); }
+
+.contact-dock__icon { display: grid; place-items: center; }
+.contact-dock__icon.is-on { color: #d93a46; }
+
+.contact-dock__btn:focus-visible,
+.contact-dock__toggle:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+@media (hover: hover) {
+  .contact-dock__btn:hover,
+  .contact-dock__toggle:hover { background: var(--ground); }
+  .contact-dock__btn.is-whatsapp:hover { background: #179446; }
+}
+
+[data-motion="off"] .contact-dock__more,
+[data-motion="off"] .contact-dock__more > *,
+[data-motion="off"] .contact-dock__toggle svg { transition: none; }
+
+@media (min-width: 810px) {
+  .contact-dock { bottom: calc(100px + var(--safe-bottom)); }
+}
+
+/* Desktop: the dock sits outside the content column, so all four show and the toggle goes. */
+@media (min-width: 1024px) {
+  .contact-dock { right: 28px; bottom: 28px; gap: 12px; }
+  .contact-dock__toggle { display: none; }
+
+  .contact-dock__more {
+    position: static;
+    gap: 12px;
+    translate: none;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .contact-dock__more > * { opacity: 1; transform: none; }
+  .contact-dock__btn { width: 48px; height: 48px; }
+  .contact-dock__btn.is-whatsapp { width: 52px; height: 52px; }
 }
 
 .intro {
