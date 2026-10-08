@@ -12,7 +12,8 @@
   --surface: #ffffff;
   --ink: #242426;
   --ink-75: rgba(36, 36, 38, 0.75);
-  --ink-50: rgba(36, 36, 38, 0.5);
+  /* Named by level; 0.68 so the faintest text grey clears 4.5:1 on the ground (5.1:1). */
+  --ink-50: rgba(36, 36, 38, 0.68);
   --ink-25: rgba(36, 36, 38, 0.25);
   --ink-12: rgba(36, 36, 38, 0.12);
   --ink-06: rgba(36, 36, 38, 0.06);
@@ -36,8 +37,10 @@
   --slate: #58718a;
 
   /* Semantic, used only for state. */
-  --open: #3daa5c;
-  --danger: #c8412b;
+  /* 4.7:1 on the ground, so "Open now" passes AA at 12px (the brighter #3daa5c was 2.6:1). */
+  --open: #23784a;
+  /* 5.4:1 on white, 5:1 on the ground: danger links and white text on danger buttons both pass. */
+  --danger: #b83a26;
   --danger-wash: #fbe7e2;
   --warning-ink: #8a4b1f;
 

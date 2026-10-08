@@ -150,7 +150,8 @@
   color: var(--ink);
 }
 .bento-card.is-tall { min-height: 400px; }
-.bento-card.is-steel { background: linear-gradient(180deg, #5d7590 0%, #93a4bd 50%, #e7ecf3 100%); }
+/* The original steel, started deeper where the white heads sit, so the copy clears 4.5:1. */
+.bento-card.is-steel { background: linear-gradient(180deg, #3a516b 0%, #4f6884 40%, #93a4bd 70%, #e7ecf3 100%); }
 .bento-card.is-steel-rev { background: linear-gradient(180deg, #e7ecf3 0%, #93a4bd 55%, #5d7590 100%); }
 .bento-card.is-white { background: linear-gradient(180deg, #ffffff 0%, #ebeff5 100%); }
 .bento-card.is-blush { background: linear-gradient(180deg, #ffffff 0%, #fae9e6 100%); }
@@ -202,6 +203,8 @@
 }
 
 .momo-card { margin-top: auto; padding: 12px; border-radius: var(--r-20); background: #242426; color: #fff; box-shadow: var(--sh-float); }
+/* The header line sits on the dark card itself: light grey, not the dark-ground grey (8.9:1). */
+.momo-card > .between .subtle { color: var(--white-75); }
 .momo-amount {
   margin-top: 10px;
   padding: 16px 10px;
@@ -305,6 +308,13 @@
   color: var(--ink);
   box-shadow: var(--sh-float);
   text-align: left;
+  /* A light card inside the dark closing band: back to the deep label colours that read on white. */
+  --label-gold: #85601a;
+  --label-sand: var(--warning-ink);
+  --label-sky: #1a63a8;
+  --label-lilac: #5a3ec8;
+  --label-mist: #6b6470;
+  --label-danger: #b83a26;
 }
 .closing-chip.is-right { display: none; }
 
