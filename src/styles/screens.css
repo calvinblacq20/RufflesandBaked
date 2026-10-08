@@ -197,6 +197,14 @@
 .marquee:active {
   cursor: grabbing;
 }
+/* Curved rows clip only at the sides, so the tall cards at the ends of the curve aren't cut off top
+   and bottom. Before the off-mode rules below, which turn the row back into a plain scroller. */
+@supports (overflow: clip) {
+  .marquee.is-curved {
+    overflow-x: clip;
+    overflow-y: visible;
+  }
+}
 .marquee-track {
   display: flex !important;
   width: max-content !important;
@@ -220,24 +228,32 @@
 [data-motion="off"] .marquee-set[aria-hidden="true"] {
   display: none !important;
 }
+/* Curved rows: the viewport holds the perspective (set from its width) and the track and sets keep
+   their cards in 3D, so every card shares one vanishing point in the middle of the row. */
+.marquee.is-curved .marquee-track,
+.marquee.is-curved .marquee-set {
+  transform-style: preserve-3d;
+}
 
+/* Room above and below for the near cards at the ends of the curve, which stand taller. */
 .looks {
   margin-inline: calc(var(--gutter) * -1);
   width: calc(100% + var(--gutter) * 2);
-  padding-block: 4px;
+  padding-block: 28px;
 }
+/* The curve owns `transform`; the hover zoom uses `scale`, which stacks on top of it. */
 .look-card {
   display: block;
-  width: 160px;
+  width: 132px;
   flex: none;
   border-radius: var(--r-img);
   overflow: hidden;
-  transition: transform 0.2s ease;
+  transition: scale 0.2s ease;
 }
 /* Mouse only: on iPhone a tap leaves :hover stuck on, which would leave a card zoomed. */
 @media (hover: hover) {
   .look-card:hover {
-    transform: scale(1.02);
+    scale: 1.03;
   }
 }
 /* Pause/play for the moving lookbook (moving content needs a way to stop it). */
@@ -247,10 +263,11 @@
   .looks {
     margin-inline: 0;
     width: 100%;
+    padding-block: 40px;
     border-radius: var(--r-24);
   }
   .look-card {
-    width: 220px;
+    width: 168px;
   }
 }
 .look-label {

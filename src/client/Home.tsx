@@ -241,8 +241,8 @@ function StudioPage() {
             </span>
           }
         />
-        {/* Photos drift left to right on their own; drag to look around, or pause. */}
-        <Marquee label="Gallery" className="looks" direction="right" paused={lookbookPaused}>
+        {/* Photos drift left to right round a curved band; drag to look around, or pause. */}
+        <Marquee label="Gallery" className="looks" direction="right" paused={lookbookPaused} curved>
           {OCCASIONS.filter((o) => o.id !== "other").map((o, i) => (
             <Link key={o.id} to={`/explore?occasion=${o.id}`} className="look-card" aria-label={`${o.label} cakes and pieces`} draggable={false}>
               <Photo tone={OCCASION_TONES[i % OCCASION_TONES.length] ?? "sky"} src={OCCASION_PHOTOS[o.id]} alt={`${o.label} cake by ${STUDIO.name}`} sizes="(min-width: 810px) 240px, 150px" ratio="3 / 4" radius="var(--r-img)" markSize={56}>

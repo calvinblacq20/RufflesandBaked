@@ -1,5 +1,6 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import { advance, frameStep, snapToPixel, wrap } from "../lib/ambient";
+import { cylinderPose, PERSPECTIVE } from "../lib/curve";
 import { motionMode } from "../motion";
 
 interface MarqueeProps {
@@ -11,6 +12,8 @@ interface MarqueeProps {
   /** Which way the items travel across the screen. */
   direction?: "left" | "right";
   paused?: boolean;
+  /** Bends the row around the inside of a cylinder: the middle sinks back, the ends come forward. */
+  curved?: boolean;
   className?: string;
 }
 
@@ -25,7 +28,7 @@ interface MarqueeProps {
  * - nothing gates the start: an on-screen test from cached positions only pauses it;
  * - no layout reads inside the loop, and the transform is written only when the pixel changes.
  */
-export function Marquee({ children, label, speed = 32, direction = "left", paused = false, className = "" }: MarqueeProps) {
+export function Marquee({ children, label, speed = 32, direction = "left", paused = false, curved = false, className = "" }: MarqueeProps) {
   const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const setRef = useRef<HTMLDivElement>(null);
@@ -58,6 +61,31 @@ export function Marquee({ children, label, speed = 32, direction = "left", pause
       pageTop = rect.top + window.scrollY;
       pageBottom = pageTop + rect.height;
       dpr = window.devicePixelRatio || 1;
+      if (curved) {
+        half = viewport.clientWidth / 2;
+        viewport.style.perspective = `${Math.round(half * PERSPECTIVE)}px`;
+        // Flat centres along the track. offsetLeft ignores transforms, but 3D sets can be their cards'
+        // offsetParent, so each card is measured from its set's first card and the set's place added.
+        cards = Array.from(track.children).flatMap((copy, i) => {
+          const first = (copy.firstElementChild as HTMLElement | null)?.offsetLeft ?? 0;
+          return Array.from(copy.children as HTMLCollectionOf<HTMLElement>, (el) => ({ el, centre: i * loopWidth + el.offsetLeft - first + el.offsetWidth / 2, pose: "" }));
+        });
+        bend();
+      }
+    };
+
+    // Curved rows: every card's flat centre, cached by measure() so the loop reads no layout.
+    let half = 0;
+    let cards: { el: HTMLElement; centre: number; pose: string }[] = [];
+    let trackX = 0;
+    const bend = () => {
+      for (const card of cards) {
+        const { x, z, turn } = cylinderPose(card.centre + trackX - half, half);
+        const pose = `translate3d(${x.toFixed(1)}px, 0, ${z.toFixed(1)}px) rotateY(${turn.toFixed(4)}rad)`;
+        if (pose === card.pose) continue;
+        card.pose = pose;
+        card.el.style.transform = pose;
+      }
     };
 
     let offset = 0;
@@ -78,7 +106,9 @@ export function Marquee({ children, label, speed = 32, direction = "left", pause
       const x = snapToPixel(offset, dpr);
       if (x === written) return;
       written = x;
-      track.style.transform = `translate3d(${rightward ? x - loopWidth : -x}px, 0, 0)`;
+      trackX = rightward ? x - loopWidth : -x;
+      track.style.transform = `translate3d(${trackX}px, 0, 0)`;
+      if (curved) bend();
     };
 
     const tick = (now: number) => {
@@ -208,11 +238,13 @@ export function Marquee({ children, label, speed = 32, direction = "left", pause
       window.removeEventListener("pageshow", onPageShow);
       window.removeEventListener("resize", measure);
       track.style.transform = "";
+      viewport.style.perspective = "";
+      for (const card of cards) card.el.style.transform = "";
     };
-  }, [speed, direction]);
+  }, [speed, direction, curved]);
 
   return (
-    <div ref={viewportRef} className={`marquee ${className}`} role="region" aria-label={label}>
+    <div ref={viewportRef} className={`marquee ${curved ? "is-curved" : ""} ${className}`} role="region" aria-label={label}>
       <div ref={trackRef} className="marquee-track">
         <div ref={setRef} className="marquee-set">
           {children}
