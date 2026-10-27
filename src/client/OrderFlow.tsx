@@ -45,11 +45,18 @@ export function OrderFlow() {
   const data = useAppData();
   const now = useMemo(() => new Date(), []);
 
-  const [step, setStep] = useState(0);
-  const [lines, setLines] = useState<Draft[]>(() => {
+  /**
+   * Arriving from a menu item: tapping it was already the choice, so the flow opens on the next
+   * real decision instead of a picker with that one item ticked. Step 0 stays a step back, and
+   * the Menu crumb stays live, so a second item is still one tap away.
+   */
+  const opening = useMemo(() => {
     const style = styleById(params.get("style") ?? "");
-    return style && style.active !== false ? [newLine(style)] : [];
-  });
+    return style && style.active !== false ? style : null;
+  }, [params]);
+
+  const [step, setStep] = useState(opening ? 1 : 0);
+  const [lines, setLines] = useState<Draft[]>(() => (opening ? [newLine(opening)] : []));
   const [photos, setPhotos] = useState<{ url: string; name: string }[]>([]);
   const [occasion, setOccasion] = useState<Occasion | null>(() => {
     const o = params.get("occasion");
