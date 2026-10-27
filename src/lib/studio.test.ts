@@ -46,7 +46,7 @@ describe("owner stages", () => {
 
   it("marks ready orders that still owe money as needing attention", () => {
     expect(ownerBadge(order({ status: "ready" }), NOW).tone).toBe("sand");
-    expect(ownerBadge(order({ status: "ready", payments: [pay(500, "2026-09-02T10:00:00Z")] }), NOW)).toEqual({ label: "Ready", tone: "gold" });
+    expect(ownerBadge(order({ status: "ready", payments: [pay(500, "2026-09-02T10:00:00Z")] }), NOW)).toEqual({ label: "Ready", tone: "coral" });
   });
 
   it("picks one next step per stage", () => {

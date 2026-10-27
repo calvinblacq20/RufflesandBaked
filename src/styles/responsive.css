@@ -117,7 +117,7 @@
     background: var(--ground);
     transition: background-color 0.2s, transform 0.3s;
   }
-  .nav-cta:hover .sq { background: var(--gold); transform: translateX(2px); }
+  .nav-cta:hover .sq { background: var(--coral); transform: translateX(2px); }
   .desk-avatar {
     display: grid;
     place-items: center;
@@ -125,10 +125,10 @@
     height: 40px;
     border-radius: 50%;
     background: var(--ink);
-    color: var(--gold);
+    color: var(--coral);
     font-weight: 600;
   }
-  .desk-avatar.is-active { background: var(--gold); color: var(--ink); }
+  .desk-avatar.is-active { background: var(--coral); color: var(--ink); }
 
   /* ---- Footer with giant wordmark (Makro) ---- */
   .desk-footer {

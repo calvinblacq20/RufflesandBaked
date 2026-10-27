@@ -167,7 +167,7 @@ export function Appointments() {
                       <button className="icon-btn is-plain" style={{ width: 34, height: 34 }} onClick={() => setDeclining(a)} aria-label="Decline request">
                         <X size={17} />
                       </button>
-                      <button className="icon-btn" style={{ width: 34, height: 34, background: "var(--ink)", color: "var(--gold)" }} onClick={() => confirm(a)} aria-label="Confirm request">
+                      <button className="icon-btn" style={{ width: 34, height: 34, background: "var(--ink)", color: "var(--coral)" }} onClick={() => confirm(a)} aria-label="Confirm request">
                         <Check size={17} />
                       </button>
                     </div>

@@ -69,7 +69,7 @@ a {
 }
 
 ::selection {
-  background: var(--gold);
+  background: var(--coral);
 }
 
 .sr-only {

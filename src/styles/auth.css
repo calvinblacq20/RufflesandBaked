@@ -62,7 +62,7 @@
   position: absolute;
   right: var(--gutter);
   top: calc(24px + env(safe-area-inset-top, 0px));
-  color: var(--gold);
+  color: var(--coral);
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -194,7 +194,7 @@
   color: var(--danger);
   font-size: 14px;
 }
-.auth-alert.is-ok { background: var(--gold-wash); color: var(--ink); }
+.auth-alert.is-ok { background: var(--coral-wash); color: var(--ink); }
 .auth-alert .auth-link { align-self: flex-start; color: inherit; }
 
 .auth-form .btn-cta { width: 100%; height: 54px; }

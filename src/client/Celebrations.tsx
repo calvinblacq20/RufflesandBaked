@@ -87,7 +87,7 @@ export function Celebrations() {
                           </p>
                         </div>
                         {c.days <= 14 && (
-                          <span className="badge is-gold" style={{ paddingRight: 10 }}>
+                          <span className="badge is-coral" style={{ paddingRight: 10 }}>
                             <span className="badge-well" aria-hidden="true">
                               <CakeSlice size={13} />
                             </span>

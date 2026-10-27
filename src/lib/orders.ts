@@ -14,7 +14,7 @@ export const STATUS_LABEL: Record<OrderStatus, string> = {
   cancelled: "Cancelled",
 };
 
-export type BadgeTone = "gold" | "sand" | "sky" | "lilac" | "mist" | "danger" | "wash";
+export type BadgeTone = "coral" | "sand" | "sky" | "lilac" | "mist" | "danger" | "wash";
 
 /**
  * The studio bakes and it beads, so the two middle stages read differently depending on what is
@@ -60,13 +60,13 @@ export function badgeFor(order: Pick<Order, "status" | "payments" | "total" | "r
       return { label: order.delivery === "delivery" ? "Delivered" : "Collected", tone: "mist" };
     case "ready":
       if (balanceDue(order) > 0) return { label: "Ready · balance due", tone: "sand" };
-      return { label: order.delivery === "delivery" ? "Out for delivery" : "Ready for pickup", tone: "gold" };
+      return { label: order.delivery === "delivery" ? "Out for delivery" : "Ready for pickup", tone: "coral" };
     case "request":
-      return paidTotal(order) > 0 ? { label: "Paid", tone: "gold" } : { label: "Request sent", tone: "lilac" };
+      return paidTotal(order) > 0 ? { label: "Paid", tone: "coral" } : { label: "Request sent", tone: "lilac" };
     case "quoted":
       return { label: "Action required", tone: "sand" };
     case "confirmed":
-      return { label: "Booked", tone: "gold" };
+      return { label: "Booked", tone: "coral" };
     default:
       if (order.readyBy < dayKey(now)) return { label: "Running late", tone: "sand" };
       return { label: "In the kitchen", tone: "sky" };

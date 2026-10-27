@@ -105,7 +105,7 @@ export function ActionCard({ title, body, cta, onClick }: { title: string; body:
     <section className="act-card" aria-label={title}>
       <p className="t-title">{title}</p>
       <p>{body}</p>
-      <Cta tone="gold" onClick={onClick}>
+      <Cta tone="coral" onClick={onClick}>
         {cta}
       </Cta>
     </section>
@@ -119,7 +119,7 @@ export function ActionBanner({ title, body, cta, onClick }: { title: string; bod
         <span style={{ fontWeight: 500 }}>{title}</span>
         <p>{body}</p>
       </div>
-      <button className="btn btn-gold btn-sm" onClick={onClick}>
+      <button className="btn btn-coral btn-sm" onClick={onClick}>
         {cta}
       </button>
     </section>

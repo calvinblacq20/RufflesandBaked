@@ -164,7 +164,7 @@ const DEFAULT_STYLES: Style[] = [
     extraFrom: 0,
     readyDays: 1,
     featured: true,
-    tone: "gold",
+    tone: "coral",
   },
   {
     id: "rect-cake",
@@ -335,7 +335,7 @@ const DEFAULT_STYLES: Style[] = [
     customDesign: true,
     readyDays: 10,
     featured: true,
-    tone: "gold",
+    tone: "coral",
     photo: "/photos/tiara-gold.webp",
   },
   {
@@ -447,7 +447,7 @@ const DEFAULT_STYLES: Style[] = [
     unit: "set",
     readyDays: 5,
     featured: true,
-    tone: "gold",
+    tone: "coral",
   },
   {
     id: "dowry-wrapping",

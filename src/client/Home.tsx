@@ -456,7 +456,7 @@ function StudioPage() {
         <SectionHead title="Contact" />
         <div className="card list-card">
           <a className="row" href={STUDIO.whatsappBusiness} target="_blank" rel="noreferrer">
-            <span className="row-icon is-gold">
+            <span className="row-icon is-coral">
               <MessageCircle size={18} strokeWidth={1.7} />
             </span>
             <span className="grow">Chat on WhatsApp</span>
@@ -484,7 +484,7 @@ function StudioPage() {
         <div className="card list-card">
           {account ? (
             <div className="row">
-              <span className="row-icon is-gold">
+              <span className="row-icon is-coral">
                 <Sparkles size={18} strokeWidth={1.7} />
               </span>
               <span className="grow stack">
@@ -494,7 +494,7 @@ function StudioPage() {
             </div>
           ) : (
             <Link className="row" to="/profile">
-              <span className="row-icon is-gold">
+              <span className="row-icon is-coral">
                 <Sparkles size={18} strokeWidth={1.7} />
               </span>
               <span className="grow stack">

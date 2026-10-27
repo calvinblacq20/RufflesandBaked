@@ -90,7 +90,7 @@ function OrderMenuSheet({ order, customer, open, onClose, onPick }: { order: Ord
     <Sheet open={open} onClose={onClose} title={`${order.number} · ${orderTitle(order)}`}>
       <nav className="list-card" style={{ margin: "-8px -20px 0" }} aria-label="Order actions">
         <button className="row" onClick={() => pick("update")} disabled={!customer}>
-          <span className="row-icon is-gold">
+          <span className="row-icon is-coral">
             <MessageCircle size={18} strokeWidth={1.8} />
           </span>
           <span className="grow">Send WhatsApp update</span>

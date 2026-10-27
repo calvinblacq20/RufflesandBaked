@@ -13,7 +13,7 @@ export function Dots() {
   );
 }
 
-type Variant = "outline" | "soft" | "dark" | "gold" | "danger" | "ghost-dark";
+type Variant = "outline" | "soft" | "dark" | "coral" | "danger" | "ghost-dark";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: Variant;
@@ -49,12 +49,12 @@ interface CtaProps {
   disabled?: boolean;
   type?: "button" | "submit";
   className?: string;
-  /** "dark" on light backgrounds (default); "gold" on dark sections, as in the reference. */
-  tone?: "dark" | "gold";
+  /** "dark" on light backgrounds (default); "coral" on dark sections, as in the reference. */
+  tone?: "dark" | "coral";
 }
 
 const INK = "#242426";
-const GOLD = "#e9c67e";
+const CORAL = "#fcb49c";
 
 /**
  * Makro's primary CTA: a button with an arrow square.
@@ -63,8 +63,8 @@ const GOLD = "#e9c67e";
 export function Cta({ children, onClick, loading, disabled, type = "button", className = "", tone = "dark" }: CtaProps) {
   const [hover, setHover] = useState(false);
   const active = hover && !disabled && !loading;
-  const base = tone === "gold" ? GOLD : INK;
-  const flip = tone === "gold" ? INK : GOLD;
+  const base = tone === "coral" ? CORAL : INK;
+  const flip = tone === "coral" ? INK : CORAL;
   return (
     <motion.button
       type={type}

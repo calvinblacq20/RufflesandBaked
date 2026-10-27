@@ -48,7 +48,7 @@ export function ownerBadge(order: Pick<Order, "status" | "readyBy" | "payments" 
     case "quoted":
       return { label: OWNER_STAGE_LABEL.quoted, tone: "sand" };
     case "ready":
-      return { label: balanceDue(order) > 0 ? "Ready · owes" : "Ready", tone: balanceDue(order) > 0 ? "sand" : "gold" };
+      return { label: balanceDue(order) > 0 ? "Ready · owes" : "Ready", tone: balanceDue(order) > 0 ? "sand" : "coral" };
     case "collected":
       return { label: OWNER_STAGE_LABEL.collected, tone: "mist" };
     case "cancelled":

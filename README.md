@@ -95,6 +95,24 @@ To add a photo for a menu item, put the JPG in `brand/photos-original/`, run the
 
 ## Brand files
 
-The colours are sampled from the studio's own brand card (`brand/photos-instagram/greetings-collage.jpg`), which carries both logos: wine `#7b0b33` from the @ruffles_byh wordmark, champagne gold `#e9c67e` from "Baked by H", on the card's ivory.
+The studio's official logos are in `brand/logos/`, and everything the app shows is built from
+them. `docs/brand.md` records which colour came from where.
 
-The mark is the wide-brim hat from the @ruffles_byh logo, drawn in code (`src/components/Brand.tsx`) with the band and a beaded pin cut out of it so it reads at favicon size. `python scripts/make_icons.py` writes the favicon (`public/favicon.svg`), `public/brand/rbh-mark.svg` and the app icons from the same shapes. Swap in a vector of their real logo when they send one.
+```bash
+python scripts/cutout_logos.py
+```
+
+Keys the white background out of the supplied logos, which arrive as RGB on solid white. Writes
+`brand/logos/*-cutout.png`.
+
+```bash
+python scripts/build_brand.py
+```
+
+Cuts the mark — the lady in the hat — out of the Ruffles lockup and writes the app's marks, the
+full lockups and every icon into `public/brand/` and `public/`. All of them are transparent
+cutouts. Re-run both scripts after replacing anything in `brand/logos/`.
+
+The brand colours live in `src/styles/tokens.css`: `--wine` `#9c3048` from the "Baked" script,
+`--wine-deep` `#6c0018` from the Ruffles flower, and `--coral` `#fcb49c` from the cupcake
+frosting as the one bright accent.

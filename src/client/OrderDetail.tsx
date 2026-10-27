@@ -197,7 +197,7 @@ function OrderView({ order }: { order: Order }) {
         <>
           {calendarEvent && (
             <button className="row" onClick={() => setCalendarOpen(true)}>
-              <span className="row-icon is-gold">
+              <span className="row-icon is-coral">
                 <CalendarPlus size={18} strokeWidth={1.7} />
               </span>
               <span className="grow stack">
@@ -217,7 +217,7 @@ function OrderView({ order }: { order: Order }) {
         </>
       ) : (
         <Link className="row" to={`/order/new?style=${first?.styleId ?? ""}`}>
-          <span className="row-icon is-gold">
+          <span className="row-icon is-coral">
             <ShoppingBag size={18} strokeWidth={1.7} />
           </span>
           <span className="grow">Order again</span>
@@ -283,7 +283,7 @@ function OrderView({ order }: { order: Order }) {
             <p className="muted">Optional. Save an account with {formatGhPhone(customer.phone)} and your orders, dates to remember and receipts go wherever you log in.</p>
             <div className="account-card-actions">
               <Button
-                variant="gold"
+                variant="coral"
                 size="sm"
                 onClick={() => {
                   // Start the form off with what the studio already has for this order.

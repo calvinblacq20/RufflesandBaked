@@ -22,7 +22,7 @@ export function ClosingCta() {
   return (
     <section className="closing" data-nav-theme="dark" aria-labelledby="closing-title">
       <Reveal as="span" look="focus" className="closing-mark">
-        <LogoMark size={44} />
+        <LogoMark size={44} tone="light" />
       </Reveal>
       <Reveal as="h2" look="focus" delay={0.05} id="closing-title" className="closing-title">
         Ready for your next celebration?
@@ -31,7 +31,7 @@ export function ClosingCta() {
         Tell us the occasion, the date and your colours. We'll handle the sponge, the beads and everything in between.
       </Reveal>
       <Reveal look="focus" delay={0.15}>
-        <Cta tone="gold" onClick={() => navigate("/order/new")}>
+        <Cta tone="coral" onClick={() => navigate("/order/new")}>
           Order now
         </Cta>
       </Reveal>
@@ -41,7 +41,7 @@ export function ClosingCta() {
           <Photo tone="mist" src="/photos/bridal-look.webp" alt="A bride in white wearing a handmade fascinator by Ruffles and Baked by H" position="center 25%" sizes="(min-width: 1024px) 960px, 100vw" height="100%" radius={0} />
           <div className="closing-overlay">
             <div className="closing-chip">
-              <span className="badge is-gold" style={{ paddingRight: 12 }}>
+              <span className="badge is-coral" style={{ paddingRight: 12 }}>
                 <span className="badge-well">
                   <Check size={13} />
                 </span>

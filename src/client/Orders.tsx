@@ -122,7 +122,7 @@ export function Orders() {
                       const start = parseLocal(a.start);
                       return (
                         <Link key={a.id} to={order ? `/orders/${order.id}` : "/orders"} className="row">
-                          <span className="row-icon is-gold">
+                          <span className="row-icon is-coral">
                             <CalendarDays size={18} strokeWidth={1.7} />
                           </span>
                           <span className="grow stack">

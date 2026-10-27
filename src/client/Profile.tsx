@@ -76,7 +76,7 @@ function GuestProfile() {
             <p className="t-title">Save your orders (optional)</p>
             <p className="muted">Create an account to see every order, save family birthdays for reminders and collect loyalty points on any phone.</p>
             <div className="account-card-actions">
-              <Button variant="gold" size="sm" onClick={() => toAccount("/signup")}>
+              <Button variant="coral" size="sm" onClick={() => toAccount("/signup")}>
                 Create account
               </Button>
               <Button variant="ghost-dark" size="sm" onClick={() => toAccount("/login")}>
@@ -178,11 +178,11 @@ function AccountProfile({ account }: { account: Customer }) {
             </p>
             <div className="inline" style={{ gap: 8, marginTop: 10 }}>
               {owing[0] && (
-                <Button variant="gold" size="sm" onClick={() => navigate(`/orders/${owing[0]?.id}`)}>
+                <Button variant="coral" size="sm" onClick={() => navigate(`/orders/${owing[0]?.id}`)}>
                   Pay now
                 </Button>
               )}
-              <span className="inline t-cap" style={{ color: "var(--gold)", gap: 4 }}>
+              <span className="inline t-cap" style={{ color: "var(--coral)", gap: 4 }}>
                 <Sparkles size={13} /> {account.points} points
               </span>
             </div>

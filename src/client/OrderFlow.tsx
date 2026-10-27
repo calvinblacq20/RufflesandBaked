@@ -738,7 +738,7 @@ function Customise({
             </div>
           </div>
           <label className="upload">
-            <span className="row-icon is-gold">
+            <span className="row-icon is-coral">
               <ImagePlus size={18} />
             </span>
             <span className="grow stack">
@@ -1127,7 +1127,7 @@ function DateAndHandover(p: DateProps) {
 function PlanCard({ selected, onSelect, icon, title, body, disabled }: { selected: boolean; onSelect: () => void; icon: ReactNode; title: string; body: string; disabled?: boolean }) {
   return (
     <button role="radio" aria-checked={selected} className={`select-card ${selected ? "is-selected" : ""}`} onClick={onSelect} disabled={disabled} style={{ alignItems: "center" }}>
-      <span className="row-icon" style={{ width: 44, height: 44, borderRadius: 999, background: selected ? "var(--gold)" : undefined }}>
+      <span className="row-icon" style={{ width: 44, height: 44, borderRadius: 999, background: selected ? "var(--coral)" : undefined }}>
         {icon}
       </span>
       <span className="grow stack">
@@ -1397,7 +1397,7 @@ function Review(r: ReviewProps) {
       <Sheet open={discountOpen} onClose={() => setDiscountOpen(false)} title="Discounts and benefits">
         <div className="stack gap-16">
           <button className={`select-card ${r.usePoints ? "is-selected" : ""}`} onClick={() => r.setUsePoints(!r.usePoints)} role="switch" aria-checked={r.usePoints} style={{ alignItems: "center" }}>
-            <span className="row-icon is-gold">
+            <span className="row-icon is-coral">
               <Sparkles size={18} />
             </span>
             <span className="grow stack">

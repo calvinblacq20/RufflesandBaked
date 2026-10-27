@@ -60,7 +60,7 @@
   width: 34px;
   height: 34px;
   border-radius: var(--r-10);
-  background: var(--gold);
+  background: var(--coral);
   color: var(--ink);
 }
 
@@ -154,7 +154,7 @@
 .bento-card.is-steel { background: linear-gradient(180deg, #3a516b 0%, #4f6884 40%, #93a4bd 70%, #e7ecf3 100%); }
 .bento-card.is-steel-rev { background: linear-gradient(180deg, #e7ecf3 0%, #93a4bd 55%, #5d7590 100%); }
 .bento-card.is-white { background: linear-gradient(180deg, #ffffff 0%, #ebeff5 100%); }
-.bento-card.is-blush { background: linear-gradient(180deg, #ffffff 0%, #fae9e6 100%); }
+.bento-card.is-blush { background: linear-gradient(180deg, #ffffff 0%, #fce4e4 100%); }
 .bento-card-head { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
 .bento-card-head h3 { font-size: 24px; line-height: 1.25; letter-spacing: -0.03em; }
 .bento-card-head p { max-width: 32ch; font-size: 13px; color: var(--ink-75); }
@@ -217,7 +217,7 @@
   font-variant-numeric: tabular-nums;
 }
 .receipt-mini { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 12px; border-radius: var(--r-16); background: #fff; box-shadow: var(--sh-soft); }
-.pill-gold { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 600; color: var(--label-gold); }
+.pill-coral { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 600; color: var(--label-gold); }
 
 .track-list { display: flex; flex-direction: column; gap: 8px; margin-top: auto; }
 .track-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 12px; border-radius: var(--r-16); background: #fff; box-shadow: var(--sh-soft); font-size: 14px; }
@@ -258,7 +258,7 @@
   color: #fff;
   font-size: 13px;
 }
-.alert-check { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 6px; background: var(--gold); color: var(--ink); }
+.alert-check { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 6px; background: var(--coral); color: var(--ink); }
 
 /* ---------- Closing CTA ---------- */
 .closing {
@@ -361,7 +361,7 @@
   .desk-nav.is-dark .desk-link-hl { background: rgba(255, 255, 255, 0.12); }
   .desk-nav.is-dark .nav-cta { background: rgba(255, 255, 255, 0.1); color: #fff; box-shadow: none; }
   .desk-nav.is-dark .nav-cta .sq { background: rgba(255, 255, 255, 0.14); }
-  .desk-nav.is-dark .nav-cta:hover .sq { background: var(--gold); color: var(--ink); }
+  .desk-nav.is-dark .nav-cta:hover .sq { background: var(--coral); color: var(--ink); }
   .desk-nav.is-dark .desk-avatar { background: #fff; color: var(--ink); }
 
   /* The page lifts away to reveal the footer underneath. */

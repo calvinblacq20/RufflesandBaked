@@ -106,7 +106,7 @@ export function DesktopNav() {
     <div className="desk-nav-wrap desktop-only">
       <nav className={`desk-nav ${dark ? "is-dark" : ""}`} aria-label="Main">
         <Link to="/" className="desk-brand" aria-label={`${STUDIO.name} home`}>
-          <AppIcon size={34} />
+          <AppIcon size={34} tone={dark ? "light" : "dark"} />
           <span>{STUDIO.name}</span>
         </Link>
         <div className="desk-links">

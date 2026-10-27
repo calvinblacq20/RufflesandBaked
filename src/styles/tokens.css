@@ -1,9 +1,10 @@
 /*
  * Design tokens: the house layout system (docs/design-reference.md), in the same neutrals as the
  * other studios on this system — cool grey ground, near-black ink, shared pastel slots — with this
- * studio's own brand colour in every accent slot. Gold is that accent: the champagne gold of
- * "Baked by H" from the studio's brand card, always a fill under ink text. Wine, from the
- * @ruffles_byh wordmark, stays for the logo. Light-only by design.
+ * studio's own brand colours in every accent slot. Both are sampled from the official logos in
+ * brand/logos/: wine is the "Baked" script, the most-used colour across the pair, and coral is the
+ * cupcake frosting, always a fill under ink text. Wine-deep is the core of the Ruffles flower, for
+ * the places that need more weight than the script. Light-only by design.
  */
 :root {
   color-scheme: light;
@@ -23,14 +24,15 @@
   --white-50: rgba(255, 255, 255, 0.5);
   --glass: rgba(255, 255, 255, 0.8);
 
-  /* The brand pair: wine from the @ruffles_byh wordmark, gold from "Baked by H". */
-  --wine: #7b0b33;
-  --wine-wash: #fbe3ec;
-  --gold: #e9c67e;
-  --gold-wash: #fbf0dc;
+  /* Straight off the official logos. See docs/brand.md for where each one was sampled. */
+  --wine: #9c3048;
+  --wine-deep: #6c0018;
+  --wine-wash: #fce4e4;
+  --coral: #fcb49c;
+  --coral-wash: #fcf0ea;
   --lilac: #c0adff;
   --sky: #b8deff;
-  --blush: #fae9e6;
+  --blush: #fce4e4;
   --sand: #e0c5b6;
   --steel: #a5b2cf;
   --mist: #d9d5dc;

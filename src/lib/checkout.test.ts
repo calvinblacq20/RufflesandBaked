@@ -115,7 +115,7 @@ describe("payments", () => {
 
   it("marks a paid request as paid while the design is confirmed", () => {
     const now = new Date("2026-09-15T10:00:00Z");
-    expect(badgeFor({ ...order, payments: [paid(600)] }, now)).toEqual({ label: "Paid", tone: "gold" });
+    expect(badgeFor({ ...order, payments: [paid(600)] }, now)).toEqual({ label: "Paid", tone: "coral" });
     expect(nextAction({ ...order, payments: [paid(600)] }, now)?.title).toBe("Payment received");
   });
 });

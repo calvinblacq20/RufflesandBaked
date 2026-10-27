@@ -138,7 +138,7 @@ function PaymentsCard() {
       </div>
       <div className="receipt-mini">
         <span className="t-mono t-cap">RBHR-2026-0041</span>
-        <span className="pill-gold">
+        <span className="pill-coral">
           <Check size={12} /> Official receipt
         </span>
       </div>
@@ -150,7 +150,7 @@ function TrackingCard() {
   const rows = [
     { name: "Kids themed cake", ref: "RBH-1041", status: "Decorating", tone: "sky" },
     { name: "Beaded headband", ref: "RBH-1044", status: "Beading", tone: "lilac" },
-    { name: "Cake jars × 6", ref: "RBH-1036", status: "Ready", tone: "gold" },
+    { name: "Cake jars × 6", ref: "RBH-1036", status: "Ready", tone: "coral" },
   ];
   return (
     <div className="bento-card is-white">

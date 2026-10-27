@@ -5,13 +5,13 @@ import { STUDIO } from "../data/business";
 import { blurIn, motionMode, spring } from "../motion";
 import { LogoMark } from "./Brand";
 
-const SPLASH_KEY = "dnf-splash-seen";
+const SPLASH_KEY = "rbh-splash-seen";
 /** Long enough to hold the finished logo, name and tagline on screen for about two seconds. */
 const SPLASH_MS = 3200;
 /** Without the write-in animation there is nothing to wait for, but the brand still gets a beat. */
 const SPLASH_CALM_MS = 1200;
 
-/** Launch screen: the doughnut mark draws itself in, then the app fades up. */
+/** Launch screen: the studio's mark wipes in, then the app fades up. */
 export function Splash() {
   const [show, setShow] = useState(() => {
     try {
@@ -51,7 +51,7 @@ export function Splash() {
               animate={{ clipPath: "inset(0% 0% 0% 0%)", opacity: 1, rotate: 0 }}
               transition={{ clipPath: { duration: 0.9, ease: [0.27, 0, 0.51, 1] }, opacity: { duration: 0.4 }, rotate: spring.large }}
             >
-              <LogoMark size={112} />
+              <LogoMark size={112} tone="light" />
             </motion.div>
             <div className="stack" style={{ alignItems: "center", gap: 6 }}>
               <motion.p className="splash-word" {...blurIn(0.55)}>
@@ -90,7 +90,7 @@ export function SuccessScreen({ open, title, tone = "success", onDone }: Success
   const blobs =
     tone === "success"
       ? [
-          { c: "#e9c67e", x: "-20%", y: "-10%", s: "70vmax" },
+          { c: "#fcb49c", x: "-20%", y: "-10%", s: "70vmax" },
           { c: "#c0adff", x: "35%", y: "30%", s: "65vmax" },
           { c: "#b8deff", x: "-10%", y: "55%", s: "55vmax" },
         ]

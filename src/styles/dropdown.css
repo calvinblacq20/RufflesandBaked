@@ -76,7 +76,7 @@
 .dd-label { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .dd-hint { font-size: 12px; font-weight: 400; color: var(--ink-75); font-variant-numeric: tabular-nums; }
 .dd-check { display: grid; place-items: center; width: 20px; height: 20px; flex: none; border-radius: 50%; }
-.dd-check.is-on { background: var(--gold); color: var(--ink); }
+.dd-check.is-on { background: var(--coral); color: var(--ink); }
 .adm-searchbar .dd-btn.is-field { border-bottom: 0; min-height: 30px; padding: 2px 0; font-size: 15px; }
 @media (max-width: 809.98px) {
   .dd-opt { min-height: 44px; font-size: 15px; }

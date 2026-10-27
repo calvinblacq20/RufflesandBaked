@@ -106,7 +106,7 @@
   background: var(--ground);
   color: var(--ink);
 }
-.row-icon.is-gold { background: var(--gold); }
+.row-icon.is-coral { background: var(--coral); }
 .row-chevron { color: var(--ink-50); flex: none; }
 button.row:active, a.row:active { background: var(--ink-06); }
 
@@ -148,7 +148,7 @@ button.row:active, a.row:active { background: var(--ink-06); }
 .btn-outline:hover { background: var(--ink-12); }
 .btn-soft { background: var(--ground); color: var(--ink); }
 .btn-dark { background: var(--ink); color: #fff; }
-.btn-gold { background: var(--gold); color: var(--ink); }
+.btn-coral { background: var(--coral); color: var(--ink); }
 .btn-danger { background: var(--danger); color: #fff; }
 .btn-ghost-dark { background: rgba(255, 255, 255, 0.12); color: #fff; }
 
@@ -168,7 +168,7 @@ button.row:active, a.row:active { background: var(--ink-06); }
   width: 40px;
   height: 40px;
   border-radius: var(--r-12);
-  background: var(--gold);
+  background: var(--coral);
   color: var(--ink);
   flex: none;
 }
@@ -223,7 +223,7 @@ button.row:active, a.row:active { background: var(--ink-06); }
   color: var(--ink-75);
   font-variant-numeric: tabular-nums;
 }
-.chip.is-active .chip-count { color: var(--gold); }
+.chip.is-active .chip-count { color: var(--coral); }
 
 .badge {
   display: inline-flex;
@@ -236,7 +236,7 @@ button.row:active, a.row:active { background: var(--ink-06); }
   color: var(--ink);
 }
 .badge-well { display: inline-flex; flex: none; }
-.badge.is-gold { color: var(--label-gold); }
+.badge.is-coral { color: var(--label-gold); }
 .badge.is-sand { color: var(--label-sand); }
 .badge.is-sky { color: var(--label-sky); }
 .badge.is-lilac { color: var(--label-lilac); }
@@ -255,7 +255,7 @@ button.row:active, a.row:active { background: var(--ink-06); }
 
 /* On dark surfaces labels take the bright pill colours, which read well there. */
 :is(.adm-dark, .act-card, .act-banner, .closing, .momo-card, .alert-foot, .desk-copy, .balance-card, .account-card, .option.is-selected, .btn-dark, .btn-cta, .chip.is-active, .date-cell.is-selected, .slot.is-selected, .success, .auth-top) {
-  --label-gold: var(--gold);
+  --label-gold: var(--coral);
   --label-sand: var(--sand);
   --label-sky: var(--sky);
   --label-lilac: var(--lilac);
@@ -311,11 +311,11 @@ button.row:active, a.row:active { background: var(--ink-06); }
 .photo .photo-mark { opacity: 0.16; }
 .photo.tone-lilac { --tone-a: #c0adff; --tone-b: #ebeff5; }
 .photo.tone-sky { --tone-a: #b8deff; --tone-b: #ebeff5; }
-.photo.tone-sand { --tone-a: #e0c5b6; --tone-b: #fae9e6; }
-.photo.tone-blush { --tone-a: #fae9e6; --tone-b: #e0c5b6; }
+.photo.tone-sand { --tone-a: #e0c5b6; --tone-b: #fce4e4; }
+.photo.tone-blush { --tone-a: #fce4e4; --tone-b: #e0c5b6; }
 .photo.tone-steel { --tone-a: #a5b2cf; --tone-b: #ebeff5; }
 .photo.tone-mist { --tone-a: #d9d5dc; --tone-b: #ebeff5; }
-.photo.tone-gold { --tone-a: #e9c67e; --tone-b: #ebeff5; }
+.photo.tone-coral { --tone-a: #fcb49c; --tone-b: #ebeff5; }
 .photo.tone-charcoal { --tone-a: #242426; --tone-b: #4d4f57; color: #fff; }
 .photo.tone-charcoal::before {
   background:
@@ -332,12 +332,12 @@ button.row:active, a.row:active { background: var(--ink-06); }
 }
 
 /* ---------- App icon ---------- */
+/* The mark is a cutout, so nothing is painted behind it: it sits straight on whatever the
+   surface is, the way a logo should. */
 .app-icon {
   flex: none;
   display: grid;
   place-items: center;
-  background: var(--ink);
-  color: var(--gold);
 }
 
 /* ---------- Tab bar ---------- */
@@ -385,11 +385,11 @@ button.row:active, a.row:active { background: var(--ink-06); }
   height: 24px;
   border-radius: 50%;
   background: var(--ink);
-  color: var(--gold);
+  color: var(--coral);
   font-size: 11px;
   font-weight: 600;
 }
-.tab.is-active .tab-avatar { background: var(--gold); color: var(--ink); }
+.tab.is-active .tab-avatar { background: var(--coral); color: var(--ink); }
 
 /* ---------- Sticky bottom bar ---------- */
 .sticky-bar {
@@ -417,7 +417,7 @@ button.row:active, a.row:active { background: var(--ink-06); }
   gap: 6px;
   padding: 16px;
   border-radius: var(--r-16);
-  background: var(--gold-wash);
+  background: var(--coral-wash);
 }
 .banner.is-sand { background: #f4e9e2; }
 .banner-cta { display: inline-flex; align-items: center; gap: 6px; font-weight: 500; margin-top: 4px; align-self: flex-start; }
@@ -445,7 +445,7 @@ button.row:active, a.row:active { background: var(--ink-06); }
   box-shadow: var(--sh-soft);
   transition: background-color 0.2s;
 }
-.select-card.is-selected { background: var(--gold-wash); }
+.select-card.is-selected { background: var(--coral-wash); }
 .select-card:disabled { opacity: 0.45; cursor: not-allowed; }
 /* Menu photo on the order flow's item cards. */
 .select-card .select-thumb { width: 72px; flex: none; align-self: flex-start; }
@@ -457,7 +457,7 @@ button.row:active, a.row:active { background: var(--ink-06); }
   border-radius: 50%;
   flex: none;
 }
-.check.is-on { background: var(--gold); color: var(--ink); }
+.check.is-on { background: var(--coral); color: var(--ink); }
 .check.is-add { background: var(--ink-06); }
 
 /* ---------- Date strip & slots ---------- */
@@ -490,11 +490,11 @@ button.row:active, a.row:active { background: var(--ink-06); }
 .date-cell b { font-size: 22px; font-weight: 500; letter-spacing: -0.03em; line-height: 1.2; }
 .date-cell small { font-size: 11px; color: var(--ink-50); }
 .date-cell.is-selected { background: var(--ink); color: #fff; }
-.date-cell.is-selected small { color: var(--gold); }
+.date-cell.is-selected small { color: var(--coral); }
 .date-cell:disabled { background: transparent; box-shadow: none; color: var(--ink-25); cursor: not-allowed; }
 .date-cell:disabled small { color: var(--ink-25); }
 .date-cell .flag { font-size: 11px; color: var(--warning-ink); }
-.date-cell.is-selected .flag { color: var(--gold); }
+.date-cell.is-selected .flag { color: var(--coral); }
 
 .slot {
   display: flex;
@@ -706,8 +706,8 @@ button.row:active, a.row:active { background: var(--ink-06); }
   background: var(--ground);
   color: var(--ink);
 }
-.tl-step.is-done .tl-dot { background: var(--ink); color: var(--gold); }
-.tl-step.is-current .tl-dot { background: var(--gold); }
+.tl-step.is-done .tl-dot { background: var(--ink); color: var(--coral); }
+.tl-step.is-current .tl-dot { background: var(--coral); }
 .tl-label { font-size: 14px; line-height: 24px; }
 .tl-step:not(.is-done):not(.is-current) .tl-label { color: var(--ink-50); }
 
@@ -730,7 +730,7 @@ button.row:active, a.row:active { background: var(--ink-06); }
   flex: none;
   border-radius: 50%;
   background: var(--ink);
-  color: var(--gold);
+  color: var(--coral);
   font-weight: 500;
 }
 .avatar.is-soft { background: var(--ground); color: var(--ink); }

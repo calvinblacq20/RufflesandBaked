@@ -19,7 +19,7 @@ export type CategoryId =
   | "gifting";
 
 /** Pastel tile colours behind photos and fallbacks (see .photo.tone-* in ui.css). */
-export type Tone = "lilac" | "sky" | "sand" | "blush" | "steel" | "mist" | "gold" | "charcoal";
+export type Tone = "lilac" | "sky" | "sand" | "blush" | "steel" | "mist" | "coral" | "charcoal";
 
 /**
  * How a menu item is priced.

@@ -9,7 +9,7 @@
   --hero-serif: "Bodoni Moda", "Bodoni 72", Didot, Georgia, serif;
   --hero-sans: var(--font);
   /* Champagne gold from "Baked by H": the button hover sweep. */
-  --hero-accent: var(--gold);
+  --hero-accent: var(--coral);
   --hero-sheet: 24px;
   --chrome-h: 146px;
   --hero-gutter: clamp(16px, 4vw, 48px);

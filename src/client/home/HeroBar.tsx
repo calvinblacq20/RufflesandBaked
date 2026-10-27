@@ -20,7 +20,7 @@ export function HeroBar({ onSection }: { onSection: (id: string) => void }) {
   return (
     <header className="hero-bar">
       <Link to="/" className="hero-bar__brand" aria-label={`${STUDIO.name} home`}>
-        <AppIcon size={30} />
+        <AppIcon size={30} tone="light" />
         <span className="hero-bar__name">{STUDIO.name}</span>
       </Link>
 
