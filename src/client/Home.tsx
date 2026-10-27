@@ -5,14 +5,14 @@ import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } fr
 import { Link, useNavigate } from "react-router-dom";
 import { AppIcon } from "../components/Brand";
 import { Photo, SectionHead, Skeleton, Stars, useSkeleton } from "../components/Bits";
-import { Button, Cta } from "../components/Button";
+import { Cta } from "../components/Button";
 import { MapCard } from "../components/MapCard";
 import { ContactDock } from "./home/ContactDock";
 import { Reveal } from "../components/Reveal";
 import { HeroBar } from "./home/HeroBar";
 import { CountUp, ScrollRevealText, useScrollTo } from "../components/Scroll";
 import { FloatingGallery, type GalleryPiece } from "./home/FloatingGallery";
-import { RevealRows, type RevealRow } from "./home/RevealRows";
+import { ProductGrid, type ProductItem } from "../components/ProductGrid";
 import { ClosingCta } from "./home/ClosingCta";
 import { EditorialHero } from "./home/EditorialHero";
 import { HowItWorks } from "./home/HowItWorks";
@@ -256,20 +256,18 @@ function StudioPage() {
             </button>
           ))}
         </div>
-        <RevealRows
+        <ProductGrid
           ariaLabel="Featured menu"
-          rows={styles.slice(0, 5).map((style): RevealRow => ({
+          sizes="(min-width: 810px) 240px, 50vw"
+          items={styles.slice(0, 6).map((style): ProductItem => ({
             id: style.id,
-            title: style.name,
-            body: `${style.unit ? `${style.unit.charAt(0).toUpperCase()}${style.unit.slice(1)} · ` : ""}order ${style.readyDays} working ${style.readyDays === 1 ? "day" : "days"} ahead`,
-            meta: isQuoted(style) ? "By quote" : style.kind === "unit" ? money(style.fromPrice) : `from ${money(fromPriceOf(style))}`,
+            name: style.name,
             photo: style.photo,
             tone: style.tone,
-            action: (
-              <Button size="sm" onClick={() => navigate(`/order/new?style=${style.id}`)} aria-label={`Order ${style.name}`}>
-                Order
-              </Button>
-            ),
+            href: `/order/new?style=${style.id}`,
+            badge: isQuoted(style) ? "By quote" : undefined,
+            price: isQuoted(style) ? "Ask for a price" : style.kind === "unit" ? money(style.fromPrice) : `from ${money(fromPriceOf(style))}`,
+            note: `${style.readyDays}-day notice`,
           }))}
         />
         <Link to="/explore" className="btn btn-outline btn-block">

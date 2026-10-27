@@ -1,9 +1,9 @@
 import { Heart, Search, X } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
+import { motion } from "motion/react";
 import { useMemo, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { Photo, Skeleton, useSkeleton } from "../components/Bits";
-import { Reveal } from "../components/Reveal";
+import { useSearchParams } from "react-router-dom";
+import { Skeleton, useSkeleton } from "../components/Bits";
+import { ProductGrid, type ProductItem } from "../components/ProductGrid";
 import { actions, useAppData } from "../data/store";
 import { CATEGORIES, LINES, OCCASIONS, STYLES, categoryLabel } from "../data/catalog";
 import type { Line, Occasion } from "../data/types";
@@ -20,7 +20,6 @@ export function Explore() {
   const savedOnly = params.get("saved") === "1";
   const [query, setQuery] = useState("");
   const { savedStyleIds } = useAppData().device;
-  const navigate = useNavigate();
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -112,30 +111,37 @@ export function Explore() {
           </button>
         </div>
       ) : (
-        <motion.div layout className="style-grid" style={{ marginTop: 12 }}>
-          <AnimatePresence mode="popLayout">
-            {results.map((style, i) => {
+        <div style={{ marginTop: 12 }}>
+          <ProductGrid
+            wide
+            ariaLabel="The menu"
+            items={results.map((style): ProductItem => {
               const saved = savedStyleIds.includes(style.id);
-              return (
-                <motion.div key={style.id} layout="position" exit={{ opacity: 0, scale: 0.96 }} transition={spring.small} className="style-tile">
-                  <Reveal y={32} delay={(i % 4) * 0.06}>
-                  <button onClick={() => navigate(`/order/new?style=${style.id}`)} className="stack gap-8" style={{ textAlign: "left", width: "100%" }} aria-label={isQuoted(style) ? `Ask about ${style.name}` : `Order ${style.name}, from ${money(fromPriceOf(style))}`}>
-                    <Photo tone={style.tone} src={style.photo} alt={style.name} sizes="(min-width: 1200px) 290px, (min-width: 810px) 33vw, 50vw" ratio="4 / 5" radius="var(--r-img)" markSize={44} />
-                    <span className="stack">
-                      <span className="t-title" style={{ fontSize: 15 }}>{style.name}</span>
-                      <span className="subtle t-cap">{style.unit ? style.unit.charAt(0).toUpperCase() + style.unit.slice(1) : categoryLabel(style.category)} · {style.readyDays}-day notice</span>
-                      <span className="tabular" style={{ fontWeight: 500 }}>{isQuoted(style) ? "By quote" : style.kind === "unit" ? money(style.fromPrice) : `from ${money(fromPriceOf(style))}`}</span>
-                    </span>
-                  </button>
-                  <motion.button className={`icon-btn save ${saved ? "is-on" : ""}`} onClick={() => actions.toggleSaved(style.id)} aria-pressed={saved} aria-label={saved ? `Remove ${style.name} from saved` : `Save ${style.name}`} whileTap={{ scale: 0.8 }} transition={spring.press}>
+              return {
+                id: style.id,
+                name: style.name,
+                photo: style.photo,
+                tone: style.tone,
+                href: `/order/new?style=${style.id}`,
+                badge: isQuoted(style) ? "By quote" : undefined,
+                price: isQuoted(style) ? "Ask for a price" : style.kind === "unit" ? money(style.fromPrice) : `from ${money(fromPriceOf(style))}`,
+                note: `${style.readyDays}-day notice`,
+                corner: (
+                  <motion.button
+                    className={`icon-btn save ${saved ? "is-on" : ""}`}
+                    onClick={() => actions.toggleSaved(style.id)}
+                    aria-pressed={saved}
+                    aria-label={saved ? `Remove ${style.name} from saved` : `Save ${style.name}`}
+                    whileTap={{ scale: 0.8 }}
+                    transition={spring.press}
+                  >
                     <Heart size={16} strokeWidth={1.8} fill={saved ? "currentColor" : "none"} />
                   </motion.button>
-                  </Reveal>
-                </motion.div>
-              );
+                ),
+              };
             })}
-          </AnimatePresence>
-        </motion.div>
+          />
+        </div>
       )}
     </main>
   );

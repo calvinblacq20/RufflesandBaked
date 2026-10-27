@@ -445,3 +445,79 @@
   .perforation::before, .perforation::after { background: #fff; }
   .receipt-highlight { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
+
+/* ---------- The ruled menu grid (ProductGrid.tsx) ----------
+   A picture, then the name and the price, with a hairline between every cell. The grid draws its
+   own top and left rules and each cell draws its right and bottom, so the lines meet exactly once
+   however many rows there are. Two across on a phone, three above that. */
+.pgrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid var(--ink-12);
+  border-left: 1px solid var(--ink-12);
+}
+.pgrid-cell {
+  min-width: 0;
+  border-right: 1px solid var(--ink-12);
+  border-bottom: 1px solid var(--ink-12);
+}
+.pgrid-reveal { position: relative; height: 100%; }
+.pgrid-link {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+  padding: 14px 14px 16px;
+  color: var(--ink);
+}
+.pgrid-pic {
+  display: block;
+  margin-bottom: 2px;
+  background: var(--ink-06);
+}
+@media (hover: hover) {
+  .pgrid-link:hover .photo img { transform: scale(1.03); }
+}
+.pgrid-pic .photo img { transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1); }
+.pgrid-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.pgrid-name {
+  min-width: 0;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+/* The one thing worth saying up front, in the corner the reference keeps for "New". */
+.pgrid-badge {
+  flex: none;
+  padding: 3px 9px;
+  border: 1px solid var(--ink-12);
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.pgrid-price {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: auto;
+  font-size: 15px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+.pgrid-note { font-size: 13px; font-weight: 400; color: var(--ink-50); }
+/* The save heart, over the top right of the picture. */
+.pgrid-reveal .save { position: absolute; top: 22px; right: 22px; }
+
+@media (min-width: 810px) {
+  .pgrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .pgrid-link { gap: 12px; padding: 20px 20px 22px; }
+  .pgrid-name { font-size: 16px; }
+  .pgrid-price { font-size: 16px; }
+  .pgrid-reveal .save { top: 28px; right: 28px; }
+}
+@media (min-width: 1280px) {
+  .pgrid.is-wide { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
