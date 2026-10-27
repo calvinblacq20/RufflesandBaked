@@ -477,17 +477,16 @@
 .pgrid-pic {
   display: block;
   margin-bottom: 2px;
-  /* An off-white behind the picture, so a cutout or a pale cake still sits on something. */
-  background: #fbfaf8;
+  background: #fff;
 }
-/* An item with no photo still gets a tile, but in the grid it stays white whatever tone it
-   carries - a row of pastels reads as a fault, not as a placeholder. */
-.pgrid-cell .pgrid-pic .photo {
-  --tone-a: #ffffff;
-  --tone-b: #f7f5f2;
-  color: var(--ink);
+/* Nothing grey inside a cell. The tile's dot texture, its pastel tone, the mark and the
+   loading shimmer are all house styling for a tile that stands on its own - in a ruled grid
+   they just dirty the rows, so here a picture sits on plain white and an empty slot is white. */
+.pgrid-cell .pgrid-pic .photo::before {
+  background: #fff;
+  animation: none;
 }
-.pgrid-cell .pgrid-pic .photo .photo-mark { opacity: 0.12; }
+.pgrid-cell .pgrid-pic .photo .photo-mark { visibility: hidden; }
 @media (hover: hover) {
   .pgrid-link:hover .photo img { transform: scale(1.03); }
 }
