@@ -231,15 +231,6 @@
     gap: 0 48px;
     align-items: start;
   }
-  .desk-section-tabs {
-    position: sticky;
-    top: var(--nav-h);
-    z-index: 9;
-    margin-top: 24px;
-    padding-inline: 0;
-    background: var(--ground);
-    box-shadow: 0 1px 0 var(--ink-06);
-  }
   .anchor { scroll-margin-top: calc(var(--nav-h) + 64px); }
 
   .steps {

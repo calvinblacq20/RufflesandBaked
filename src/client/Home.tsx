@@ -202,8 +202,6 @@ function StudioPage() {
       {/* WhatsApp, call, share and save, floating at the bottom right while the page scrolls */}
       <ContactDock saved={saved} onSave={() => setSaved(!saved)} onShare={share} />
 
-      <div className="studio-layout">
-      <div className="studio-main">
       {/* Lookbook by occasion: the work hanging in the air, flown through on scroll */}
       <FloatingGallery
         id="lookbook"
@@ -217,6 +215,8 @@ function StudioPage() {
         }
       />
 
+      <div className="studio-layout">
+      <div className="studio-main">
       {/* About */}
       <section id="about" className="section anchor about">
         <Reveal as="span" look="focus" className="chip-soft">

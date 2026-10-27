@@ -452,16 +452,16 @@
   }
 }
 
-/* The statement: the one oversized line on the page, like the reference's opening paragraph.
-   It wraps around 62% of a wide screen so the right side stays open. */
+/* The statement: the page's opening paragraph, set a step above body copy. It is three
+   sentences, so display sizing turned it into a wall - this is a lede, not a headline. */
 .statement.is-display {
-  font-size: clamp(26px, 5vw, 56px);
-  line-height: 1.14;
-  letter-spacing: -0.04em;
-  max-width: 19ch;
+  font-size: clamp(21px, 2.9vw, 31px);
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  max-width: min(32ch, 100%);
 }
 @media (min-width: 810px) {
-  .statement.is-display { max-width: 22ch; }
+  .statement.is-display { max-width: min(38ch, 100%); }
 }
 
 /* An oversized section heading, for the sections that carry the editorial treatment. */
