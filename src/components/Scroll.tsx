@@ -57,17 +57,24 @@ export function useLockScroll(locked: boolean) {
  * each word rises a few pixels and darkens from pale to full ink. Calm mode keeps the
  * darkening (opacity isn't motion) and drops the rise; off mode shows plain text.
  */
-export function ScrollRevealText({ text, className, as = "p" }: { text: string; className?: string; as?: "p" | "h2" }) {
+/**
+ * Reveals a line word by word as it comes up the screen.
+ *
+ * `progress` is for headings that stop moving — one pinned inside a sticky stage would freeze
+ * its own reveal half-finished, so the caller hands it a range that keeps running instead.
+ */
+export function ScrollRevealText({ text, className, id, as = "p", progress }: { text: string; className?: string; id?: string; as?: "p" | "h2"; progress?: MotionValue<number> }) {
   const ref = useRef<HTMLElement>(null);
   const mode = motionMode();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.88", "end 0.5"] });
+  const own = useScroll({ target: ref, offset: ["start 0.88", "end 0.5"] });
+  const scrollYProgress = progress ?? own.scrollYProgress;
   const words = text.split(/\s+/);
 
-  if (mode === "off") return createElement(as, { className }, text);
+  if (mode === "off") return createElement(as, { className, id }, text);
 
   return createElement(
     as,
-    { ref, className, "aria-label": text },
+    { ref, className, id, "aria-label": text },
     words.map((word, i) => (
       <RevealWord key={`${word}-${i}`} progress={scrollYProgress} start={i / words.length} end={(i + 1) / words.length} rise={mode === "full"}>
         {word}

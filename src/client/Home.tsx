@@ -1,4 +1,4 @@
-import { CakeSlice, CalendarClock, Clock, Gift, MapPin, MessageCircle, Pause, Phone, Play, Sparkles, Truck, Wallet } from "lucide-react";
+import { CakeSlice, CalendarClock, Clock, Gift, MapPin, MessageCircle, Phone, Sparkles, Truck, Wallet } from "lucide-react";
 import { InstagramIcon } from "../components/SocialIcons";
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
@@ -7,11 +7,11 @@ import { AppIcon } from "../components/Brand";
 import { Photo, SectionHead, Skeleton, Stars, useSkeleton } from "../components/Bits";
 import { Button, Cta } from "../components/Button";
 import { MapCard } from "../components/MapCard";
-import { Marquee } from "../components/Marquee";
 import { ContactDock } from "./home/ContactDock";
 import { Reveal } from "../components/Reveal";
 import { HeroBar } from "./home/HeroBar";
 import { CountUp, ScrollRevealText, useScrollTo } from "../components/Scroll";
+import { FloatingGallery, type GalleryPiece } from "./home/FloatingGallery";
 import { RevealRows, type RevealRow } from "./home/RevealRows";
 import { ClosingCta } from "./home/ClosingCta";
 import { EditorialHero } from "./home/EditorialHero";
@@ -27,7 +27,7 @@ import { telLink, whatsappLink } from "../lib/contact";
 import { fmtDate, money, weekdayLong } from "../lib/format";
 import { fromPriceOf, isQuoted } from "../lib/pricing";
 import { openStatus } from "../lib/schedule";
-import { enter, spring } from "../motion";
+import { spring } from "../motion";
 
 const SECTIONS = [
   { id: "lookbook", label: "Gallery" },
@@ -46,6 +46,21 @@ const HIGHLIGHTS = [
   { icon: Wallet, title: "Clear cake prices", note: "Straight off the menu card" },
 ];
 const OCCASION_TONES = ["sky", "blush", "charcoal", "sand", "lilac"] as const;
+/** The gallery field: every occasion as a link, then scenery to fill the far distance. */
+const GALLERY_PIECES: GalleryPiece[] = [
+  ...OCCASIONS.filter((o) => o.id !== "other").map((o, i): GalleryPiece => ({
+    id: o.id,
+    label: o.label,
+    href: `/explore?occasion=${o.id}`,
+    photo: OCCASION_PHOTOS[o.id],
+    tone: OCCASION_TONES[i % OCCASION_TONES.length] ?? "sky",
+  })),
+  { id: "far-crown", photo: "/photos/crown-crystal.webp", tone: "lilac" },
+  { id: "far-blue", photo: "/photos/headpiece-blue.webp", tone: "sky" },
+  { id: "far-hat", photo: "/photos/hat-cream-gold.webp", tone: "sand" },
+  { id: "far-tiara", photo: "/photos/tiara-gold.webp", tone: "blush" },
+  { id: "far-minnie", photo: "/photos/cake-minnie.webp", tone: "charcoal" },
+];
 
 export function Home() {
   const loading = useSkeleton(700);
@@ -90,7 +105,6 @@ function StudioPage() {
   const [active, setActive] = useState<string>("lookbook");
   const [showHeader, setShowHeader] = useState(false);
   const [reviewsOpen, setReviewsOpen] = useState(false);
-  const [lookbookPaused, setLookbookPaused] = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
 
   const styles = useMemo(
@@ -188,71 +202,20 @@ function StudioPage() {
       {/* WhatsApp, call, share and save, floating at the bottom right while the page scrolls */}
       <ContactDock saved={saved} onSave={() => setSaved(!saved)} onShare={share} />
 
-      {/* Intro sheet */}
-      <motion.section className="intro" {...enter(24)}>
-        <div className="between" style={{ alignItems: "flex-start" }}>
-          <div className="stack gap-4">
-            <h1 className="t-h2">{STUDIO.name}</h1>
-            <p className="muted">{STUDIO.category}</p>
-          </div>
-          <div className="inline" style={{ gap: 8 }}>
-            <span className="pill-tag" title="Figures in this preview are samples">
-              Demo
-            </span>
-          </div>
-        </div>
-        <button className="inline t-body tap-grow" onClick={() => goTo("reviews")} style={{ gap: 6 }}>
-          <Stars value={STUDIO.rating} />
-          <strong style={{ fontWeight: 500 }}>{STUDIO.rating}</strong>
-          <span className="subtle">({STUDIO.reviewCount})</span>
-        </button>
-        <p className="inline" style={{ color: status.open ? "var(--open)" : "var(--warning-ink)" }}>
-          <Clock size={15} />
-          <span>{status.label}</span>
-        </p>
-        <button className="address-chip" onClick={() => goTo("info")}>
-          <MapPin size={16} />
-          <span className="truncate">{STUDIO.area}</span>
-        </button>
-      </motion.section>
-
       <div className="studio-layout">
       <div className="studio-main">
-      <nav className="section-tabs desk-section-tabs desktop-only" aria-label="Studio sections">
-        {SECTIONS.map((s) => (
-          <button key={s.id} className={`section-tab ${active === s.id ? "is-active" : ""}`} onClick={() => goTo(s.id)}>
-            {s.label}
-            {active === s.id && <motion.span layoutId="desk-section-underline" className="section-underline" transition={spring.press} />}
-          </button>
-        ))}
-      </nav>
-
-      {/* Lookbook by occasion */}
-      <section id="lookbook" className="section anchor">
-        <SectionHead
-          title={<ScrollRevealText as="h2" className="display-head" text="Every piece leaves the studio by hand." />}
-          action={
-            <span className="inline" style={{ gap: 4 }}>
-              <button className="icon-btn is-plain lookbook-toggle" onClick={() => setLookbookPaused(!lookbookPaused)} aria-pressed={lookbookPaused} aria-label={lookbookPaused ? "Play the gallery" : "Pause the gallery"}>
-                {lookbookPaused ? <Play size={15} strokeWidth={1.8} /> : <Pause size={15} strokeWidth={1.8} />}
-              </button>
-              <Link className="link t-cap" to="/explore">
-                See all
-              </Link>
-            </span>
-          }
-        />
-        {/* Photos drift left to right round a curved band; drag to look around, or pause. */}
-        <Marquee label="Gallery" className="looks" direction="right" paused={lookbookPaused} curved>
-          {OCCASIONS.filter((o) => o.id !== "other").map((o, i) => (
-            <Link key={o.id} to={`/explore?occasion=${o.id}`} className="look-card" aria-label={`${o.label} cakes and pieces`} draggable={false}>
-              <Photo tone={OCCASION_TONES[i % OCCASION_TONES.length] ?? "sky"} src={OCCASION_PHOTOS[o.id]} alt={`${o.label} cake by ${STUDIO.name}`} sizes="(min-width: 810px) 240px, 150px" ratio="3 / 4" radius="var(--r-img)" markSize={56}>
-                <span className="look-label">{o.label}</span>
-              </Photo>
-            </Link>
-          ))}
-        </Marquee>
-      </section>
+      {/* Lookbook by occasion: the work hanging in the air, flown through on scroll */}
+      <FloatingGallery
+        id="lookbook"
+        eyebrow="Gallery"
+        heading="Every piece leaves the studio by hand."
+        pieces={GALLERY_PIECES}
+        action={
+          <Link className="btn btn-sm fgal-cta" to="/explore">
+            See all the work
+          </Link>
+        }
+      />
 
       {/* About */}
       <section id="about" className="section anchor about">
