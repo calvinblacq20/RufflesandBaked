@@ -389,3 +389,86 @@
 /* Calm and off: stacking cards become a plain flow instead of sticky-pinned. */
 [data-motion="calm"] .stack-card,
 [data-motion="off"] .stack-card { position: relative; top: 0; }
+
+/* ---------- Editorial reveal list (RevealRows.tsx) ----------
+   A number, a big line, and the detail in a grey column on the right, separated by hairlines.
+   The row slides in and lifts out of grey as it comes up the screen; on a mouse its photo
+   follows the pointer. Phones drop the right column under the line and never show the preview. */
+.rev-rows { position: relative; margin-top: 8px; }
+.rev-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4px 20px;
+  padding: 22px 0;
+  border-top: 1px solid var(--ink-06);
+}
+.rev-row:last-child { border-bottom: 1px solid var(--ink-06); }
+.rev-num {
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.06em;
+  color: var(--ink-50);
+}
+.rev-title {
+  display: block;
+  font-size: clamp(24px, 5.2vw, 34px);
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+  font-weight: 500;
+  text-wrap: balance;
+  will-change: transform, opacity;
+}
+.rev-detail { display: flex; flex-direction: column; gap: 2px; max-width: 46ch; }
+.rev-body { font-size: 14px; line-height: 1.5; color: var(--ink-75); }
+.rev-meta { font-size: 13px; font-variant-numeric: tabular-nums; color: var(--ink); font-weight: 500; }
+.rev-action { display: none; }
+
+/* The pointer preview: parked at the cursor, lifted so it reads over the hairlines. */
+.rev-peek {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 190px;
+  margin: -118px 0 0 28px;
+  pointer-events: none;
+  border-radius: var(--r-img);
+  overflow: hidden;
+  box-shadow: var(--sh-float);
+}
+
+@media (min-width: 810px) {
+  .rev-row {
+    grid-template-columns: 56px minmax(0, 1fr) minmax(0, 0.9fr);
+    align-items: start;
+    gap: 24px;
+    padding: 30px 0;
+  }
+  .rev-num { padding-top: 10px; }
+  .rev-action { display: flex; align-items: center; }
+  .rev-row {
+    grid-template-columns: 56px minmax(0, 1fr) minmax(0, 0.9fr) auto;
+  }
+}
+
+/* The statement: the one oversized line on the page, like the reference's opening paragraph.
+   It wraps around 62% of a wide screen so the right side stays open. */
+.statement.is-display {
+  font-size: clamp(26px, 5vw, 56px);
+  line-height: 1.14;
+  letter-spacing: -0.04em;
+  max-width: 19ch;
+}
+@media (min-width: 810px) {
+  .statement.is-display { max-width: 22ch; }
+}
+
+/* An oversized section heading, for the sections that carry the editorial treatment. */
+.display-head {
+  font-size: clamp(26px, 4.4vw, 44px);
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+  font-weight: 500;
+  text-wrap: balance;
+}

@@ -12,6 +12,7 @@ import { ContactDock } from "./home/ContactDock";
 import { Reveal } from "../components/Reveal";
 import { HeroBar } from "./home/HeroBar";
 import { CountUp, ScrollRevealText, useScrollTo } from "../components/Scroll";
+import { RevealRows, type RevealRow } from "./home/RevealRows";
 import { ClosingCta } from "./home/ClosingCta";
 import { EditorialHero } from "./home/EditorialHero";
 import { HowItWorks } from "./home/HowItWorks";
@@ -24,7 +25,7 @@ import { accountOf, useAppData } from "../data/store";
 import type { CategoryId } from "../data/types";
 import { telLink, whatsappLink } from "../lib/contact";
 import { fmtDate, money, weekdayLong } from "../lib/format";
-import { fromPriceOf } from "../lib/pricing";
+import { fromPriceOf, isQuoted } from "../lib/pricing";
 import { openStatus } from "../lib/schedule";
 import { enter, spring } from "../motion";
 
@@ -229,7 +230,7 @@ function StudioPage() {
       {/* Lookbook by occasion */}
       <section id="lookbook" className="section anchor">
         <SectionHead
-          title="Gallery"
+          title={<ScrollRevealText as="h2" className="display-head" text="Every piece leaves the studio by hand." />}
           action={
             <span className="inline" style={{ gap: 4 }}>
               <button className="icon-btn is-plain lookbook-toggle" onClick={() => setLookbookPaused(!lookbookPaused)} aria-pressed={lookbookPaused} aria-label={lookbookPaused ? "Play the gallery" : "Pause the gallery"}>
@@ -258,7 +259,7 @@ function StudioPage() {
         <Reveal as="span" look="focus" className="chip-soft">
           <CakeSlice size={13} /> About the studio
         </Reveal>
-        <ScrollRevealText className="statement" text={STATEMENT} />
+        <ScrollRevealText className="statement is-display" text={STATEMENT} />
         <div className="highlights">
           {HIGHLIGHTS.map((h, i) => (
             <Reveal key={h.title} className="highlight" y={20} delay={0.1 * i}>
@@ -284,7 +285,7 @@ function StudioPage() {
 
       {/* Styles */}
       <section id="styles" className="section anchor">
-        <SectionHead title="Menu" />
+        <SectionHead title={<ScrollRevealText as="h2" className="display-head" text="What the studio makes." />} />
         <div className="chips">
           {[{ id: "featured" as const, label: "Featured" }, ...CATEGORIES].map((c) => (
             <button key={c.id} className={`chip ${category === c.id ? "is-active" : ""}`} onClick={() => setCategory(c.id)}>
@@ -292,27 +293,22 @@ function StudioPage() {
             </button>
           ))}
         </div>
-        <motion.div layout className="card styles-list" style={{ borderRadius: "var(--r-16)" }} transition={spring.small}>
-          <AnimatePresence mode="popLayout" initial={false}>
-            {styles.slice(0, 4).map((style, i) => (
-              <motion.div key={style.id} layout initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ ...spring.small, delay: i * 0.04 }}>
-                <div className="style-row">
-                  <Photo tone={style.tone} src={style.photo} alt={style.name} sizes="76px" height={76} radius="var(--r-img)" markSize={26} className="style-thumb" />
-                  <div className="grow stack gap-4">
-                    <p className="t-title">{style.name}</p>
-                    <p className="subtle t-cap">{style.unit ? `${style.unit.charAt(0).toUpperCase()}${style.unit.slice(1)} · ` : ""}order {style.readyDays} working {style.readyDays === 1 ? "day" : "days"} ahead</p>
-                    <p className="tabular" style={{ fontWeight: 500 }}>
-                      {style.kind === "unit" ? money(style.fromPrice) : `from ${money(fromPriceOf(style))}`}
-                    </p>
-                  </div>
-                  <Button size="sm" onClick={() => navigate(`/order/new?style=${style.id}`)} aria-label={`Order ${style.name}`}>
-                    Order
-                  </Button>
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </motion.div>
+        <RevealRows
+          ariaLabel="Featured menu"
+          rows={styles.slice(0, 5).map((style): RevealRow => ({
+            id: style.id,
+            title: style.name,
+            body: `${style.unit ? `${style.unit.charAt(0).toUpperCase()}${style.unit.slice(1)} · ` : ""}order ${style.readyDays} working ${style.readyDays === 1 ? "day" : "days"} ahead`,
+            meta: isQuoted(style) ? "By quote" : style.kind === "unit" ? money(style.fromPrice) : `from ${money(fromPriceOf(style))}`,
+            photo: style.photo,
+            tone: style.tone,
+            action: (
+              <Button size="sm" onClick={() => navigate(`/order/new?style=${style.id}`)} aria-label={`Order ${style.name}`}>
+                Order
+              </Button>
+            ),
+          }))}
+        />
         <Link to="/explore" className="btn btn-outline btn-block">
           See the full menu ({STYLES.length})
         </Link>

@@ -116,12 +116,21 @@ export function Avatar({ name, size = 40, soft }: { name: string; size?: number;
   );
 }
 
-export function SectionHead({ title, action }: { title: string; action?: ReactNode }) {
+/**
+ * A section's heading row. A plain string gets the standard small heading; pass an element
+ * instead (a ScrollRevealText, say) when the section carries its own display heading, and it is
+ * rendered as given rather than wrapped in a second <h2>.
+ */
+export function SectionHead({ title, action }: { title: ReactNode; action?: ReactNode }) {
   return (
     <div className="section-head">
-      <Reveal as="h2" look="focus" className="t-h3">
-        {title}
-      </Reveal>
+      {typeof title === "string" ? (
+        <Reveal as="h2" look="focus" className="t-h3">
+          {title}
+        </Reveal>
+      ) : (
+        title
+      )}
       {action}
     </div>
   );
