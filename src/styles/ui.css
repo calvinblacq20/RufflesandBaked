@@ -426,11 +426,9 @@ button.row:active, a.row:active { background: var(--ink-06); }
 .banner-cta,
 .section-head .link,
 .about > .link,
-.intro > button.inline { position: relative; }
 .banner-cta::after,
 .section-head .link::after,
 .about > .link::after,
-.intro > button.inline::after { content: ""; position: absolute; inset: -10px -8px; }
 
 /* ---------- Selection cards ---------- */
 .select-card {

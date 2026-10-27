@@ -71,24 +71,28 @@ export function Home() {
 function HomeSkeleton() {
   return (
     <main className="screen" aria-busy="true" aria-label="Loading the studio">
+      {/* The page's own shape while it loads: the hero, the gallery's dark stage, the opening
+          paragraph, then the ruled menu. It borrows the grid's real markup so the cells land
+          exactly where the photos will. */}
       <Skeleton w="calc(100% + var(--gutter) * 2)" h={440} r={0} className="mobile-only" style={{ marginInline: "calc(var(--gutter) * -1)" }} />
       <Skeleton h={520} r={12} className="desktop-only" style={{ marginTop: 4 }} />
-      <div className="stack gap-12 intro">
-        <div className="stack gap-12" style={{ maxWidth: 760 }}>
-        <Skeleton w="62%" h={30} />
-        <Skeleton w="30%" h={14} />
-        <Skeleton w="48%" h={14} />
-        <Skeleton h={40} r={7} />
-        <Skeleton w="24%" h={20} style={{ marginTop: 16 }} />
-        <Skeleton h={14} />
-        <Skeleton w="80%" h={14} />
-        <div className="stack gap-12" style={{ marginTop: 16 }}>
-          {[0, 1, 2].map((i) => (
-            <Skeleton key={i} h={96} r={8} />
-          ))}
-        </div>
-        </div>
+      <div className="sk-stage" aria-hidden="true" />
+      <div className="stack gap-12" style={{ maxWidth: 680, marginTop: 32 }}>
+        <Skeleton w="94%" h={20} />
+        <Skeleton w="86%" h={20} />
+        <Skeleton w="52%" h={20} />
       </div>
+      <ul className="pgrid" style={{ marginTop: 32 }} aria-hidden="true">
+        {[0, 1, 2, 3, 4, 5].map((i) => (
+          <li key={i} className="pgrid-cell">
+            <div className="pgrid-link">
+              <Skeleton r={0} h="auto" style={{ aspectRatio: "1 / 1" }} />
+              <Skeleton w="68%" h={15} />
+              <Skeleton w="42%" h={15} style={{ marginTop: "auto" }} />
+            </div>
+          </li>
+        ))}
+      </ul>
     </main>
   );
 }

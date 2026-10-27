@@ -159,16 +159,6 @@
   .contact-dock__btn.is-whatsapp { width: 52px; height: 52px; }
 }
 
-.intro {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin: -24px calc(var(--gutter) * -1) 0;
-  padding: 20px var(--gutter) 4px;
-  border-radius: var(--r-24) var(--r-24) 0 0;
-  background: var(--page);
-}
 .address-chip {
   display: flex;
   align-items: center;
@@ -546,4 +536,21 @@
   object-fit: contain;
   object-position: center;
   padding: 6%;
+}
+
+/* The gallery's dark stage, stood in for while the page loads, so the first paint is not a
+   white page that then turns dark under the reader. */
+.sk-stage {
+  margin-top: 0;
+  margin-inline: calc(var(--gutter) * -1);
+  width: calc(100% + var(--gutter) * 2);
+  height: 70svh;
+  min-height: 420px;
+  background: #242426;
+}
+@media (min-width: 810px) {
+  .sk-stage {
+    margin-inline: calc((100% - 100vw) / 2);
+    width: 100vw;
+  }
 }

@@ -216,15 +216,6 @@
   }
 
   /* ---- Studio page ---- */
-  .intro {
-    margin: 28px 0 0;
-    padding: 0;
-    border-radius: 0;
-    background: none;
-  }
-  .intro h1 { font-size: 44px; letter-spacing: -0.04em; }
-  .intro .address-chip { align-self: flex-start; padding-right: 18px; }
-
   .studio-layout {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
