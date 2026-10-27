@@ -539,3 +539,11 @@
 @media (min-width: 1280px) {
   .pgrid.is-wide { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
+
+/* A cutout has no background of its own, so it is shown whole and sits on the white tile with
+   room around it, rather than being cropped to fill the square like a photograph. */
+.pgrid-pic.is-cutout .photo img {
+  object-fit: contain;
+  object-position: center;
+  padding: 6%;
+}

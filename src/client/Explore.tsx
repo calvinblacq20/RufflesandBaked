@@ -121,6 +121,7 @@ export function Explore() {
                 id: style.id,
                 name: style.name,
                 photo: style.photo,
+                cutout: style.cutout,
                 tone: style.tone,
                 href: `/order/new?style=${style.id}`,
                 badge: isQuoted(style) ? "By quote" : undefined,

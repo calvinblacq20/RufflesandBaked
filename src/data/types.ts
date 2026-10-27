@@ -93,6 +93,8 @@ export interface Style {
   tone: Tone;
   /** Optional real photo in /public/photos. */
   photo?: string;
+  /** The photo is a cutout on transparency, so show it whole rather than cropping it to fill. */
+  cutout?: boolean;
 }
 
 export interface OrderItem {

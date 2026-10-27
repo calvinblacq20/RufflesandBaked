@@ -150,7 +150,8 @@ const DEFAULT_STYLES: Style[] = [
     readyDays: 3,
     featured: true,
     tone: "blush",
-    photo: "/photos/cake-box-bow.webp",
+    photo: "/photos/cake-she-said-yes.webp",
+    cutout: true,
   },
   {
     id: "bento-cake",
@@ -178,6 +179,8 @@ const DEFAULT_STYLES: Style[] = [
     extraFrom: 0,
     readyDays: 3,
     tone: "sand",
+    photo: "/photos/cake-sheet-grapes.webp",
+    cutout: true,
   },
   {
     id: "kids-cake",
@@ -193,7 +196,8 @@ const DEFAULT_STYLES: Style[] = [
     readyDays: 5,
     featured: true,
     tone: "sky",
-    photo: "/photos/cake-minnie.webp",
+    photo: "/photos/cake-two-johan.webp",
+    cutout: true,
   },
   {
     id: "number-cake",
@@ -208,6 +212,8 @@ const DEFAULT_STYLES: Style[] = [
     customDesign: true,
     readyDays: 5,
     tone: "charcoal",
+    photo: "/photos/cake-letter-b.webp",
+    cutout: true,
   },
   {
     id: "wedding-cake",
@@ -221,6 +227,8 @@ const DEFAULT_STYLES: Style[] = [
     readyDays: 14,
     featured: true,
     tone: "mist",
+    photo: "/photos/cake-wedding-roses.webp",
+    cutout: true,
   },
   {
     id: "calendar-cake",
@@ -234,6 +242,8 @@ const DEFAULT_STYLES: Style[] = [
     customDesign: true,
     readyDays: 7,
     tone: "steel",
+    photo: "/photos/cake-heart-calendar.webp",
+    cutout: true,
   },
   {
     id: "pastry-box",
@@ -248,6 +258,8 @@ const DEFAULT_STYLES: Style[] = [
     readyDays: 2,
     featured: true,
     tone: "sand",
+    photo: "/photos/chops-box.webp",
+    cutout: true,
   },
   {
     id: "cake-jars",
@@ -291,7 +303,8 @@ const DEFAULT_STYLES: Style[] = [
     readyDays: 7,
     featured: true,
     tone: "lilac",
-    photo: "/photos/fascinator-purple.webp",
+    photo: "/photos/fascinator-purple-wide.webp",
+    cutout: true,
   },
   {
     id: "hat",
@@ -379,6 +392,8 @@ const DEFAULT_STYLES: Style[] = [
     minQty: 4,
     readyDays: 10,
     tone: "steel",
+    photo: "/photos/boutonniere-rose.webp",
+    cutout: true,
   },
   {
     id: "bridal-fan",
@@ -392,6 +407,8 @@ const DEFAULT_STYLES: Style[] = [
     customDesign: true,
     readyDays: 10,
     tone: "sand",
+    photo: "/photos/fan-blue-beaded.webp",
+    cutout: true,
   },
   {
     id: "brooch",
@@ -476,6 +493,8 @@ const DEFAULT_STYLES: Style[] = [
     minQty: 10,
     readyDays: 7,
     tone: "mist",
+    photo: "/photos/party-packs.webp",
+    cutout: true,
   },
 ];
 

@@ -15,6 +15,8 @@ export interface ProductItem {
   note?: string;
   /** Pill at the end of the name row, for the one thing worth saying up front. */
   badge?: string;
+  /** A cutout on transparency: show it whole instead of cropping it to fill the tile. */
+  cutout?: boolean;
   href?: string;
   /** Sits in the corner of the picture; the save heart, on Explore. */
   corner?: ReactNode;
@@ -43,7 +45,7 @@ export function ProductGrid({
         <li key={item.id} className="pgrid-cell">
           <Reveal y={28} delay={(i % 4) * 0.05} className="pgrid-reveal">
             <Link to={item.href ?? "/explore"} className="pgrid-link">
-              <span className="pgrid-pic">
+              <span className={`pgrid-pic ${item.cutout ? "is-cutout" : ""}`}>
                 <Photo tone={item.tone} src={item.photo} alt="" ratio="1 / 1" radius={0} sizes={sizes} markSize={44} />
               </span>
               <span className="pgrid-row">

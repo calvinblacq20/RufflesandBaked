@@ -1,9 +1,27 @@
 {
+  "boutonniere-rose": {
+    "sm": 480,
+    "w": 810,
+    "w2x": 810,
+    "h": 1185
+  },
   "bridal-look": {
     "sm": 480,
     "w": 1080,
     "w2x": 1440,
     "h": 1349
+  },
+  "cake-birthday-25": {
+    "sm": 480,
+    "w": 900,
+    "w2x": 1101,
+    "h": 1063
+  },
+  "cake-blue-flowers": {
+    "sm": 480,
+    "w": 900,
+    "w2x": 1200,
+    "h": 666
   },
   "cake-box-bow": {
     "sm": 480,
@@ -11,11 +29,83 @@
     "w2x": 1440,
     "h": 945
   },
+  "cake-bride-to-be": {
+    "sm": 480,
+    "w": 900,
+    "w2x": 1200,
+    "h": 779
+  },
+  "cake-bride-to-be-side": {
+    "sm": 480,
+    "w": 900,
+    "w2x": 1200,
+    "h": 779
+  },
+  "cake-gold-butterfly": {
+    "sm": 480,
+    "w": 900,
+    "w2x": 1175,
+    "h": 973
+  },
+  "cake-greenery-tier": {
+    "sm": 480,
+    "w": 900,
+    "w2x": 1035,
+    "h": 1314
+  },
+  "cake-heart-calendar": {
+    "sm": 480,
+    "w": 900,
+    "w2x": 1200,
+    "h": 900
+  },
+  "cake-heart-pink": {
+    "sm": 480,
+    "w": 900,
+    "w2x": 1200,
+    "h": 845
+  },
+  "cake-letter-b": {
+    "sm": 480,
+    "w": 900,
+    "w2x": 907,
+    "h": 1509
+  },
   "cake-minnie": {
     "sm": 480,
     "w": 1080,
     "w2x": 1440,
     "h": 1080
+  },
+  "cake-she-said-yes": {
+    "sm": 480,
+    "w": 900,
+    "w2x": 1118,
+    "h": 977
+  },
+  "cake-sheet-grapes": {
+    "sm": 480,
+    "w": 900,
+    "w2x": 1200,
+    "h": 638
+  },
+  "cake-two-johan": {
+    "sm": 480,
+    "w": 900,
+    "w2x": 1065,
+    "h": 1186
+  },
+  "cake-wedding-roses": {
+    "sm": 480,
+    "w": 866,
+    "w2x": 866,
+    "h": 1573
+  },
+  "chops-box": {
+    "sm": 480,
+    "w": 900,
+    "w2x": 1200,
+    "h": 680
   },
   "crown-crystal": {
     "sm": 480,
@@ -23,11 +113,53 @@
     "w2x": 640,
     "h": 816
   },
+  "fan-blue-beaded": {
+    "sm": 480,
+    "w": 900,
+    "w2x": 1200,
+    "h": 668
+  },
+  "fascinator-burgundy": {
+    "sm": 480,
+    "w": 900,
+    "w2x": 1100,
+    "h": 1217
+  },
+  "fascinator-cream": {
+    "sm": 480,
+    "w": 900,
+    "w2x": 1027,
+    "h": 1318
+  },
+  "fascinator-lilac": {
+    "sm": 480,
+    "w": 900,
+    "w2x": 1074,
+    "h": 1193
+  },
   "fascinator-purple": {
     "sm": 480,
     "w": 1080,
     "w2x": 1440,
     "h": 1042
+  },
+  "fascinator-purple-wide": {
+    "sm": 480,
+    "w": 900,
+    "w2x": 1200,
+    "h": 994
+  },
+  "fascinator-rainbow": {
+    "sm": 480,
+    "w": 795,
+    "w2x": 795,
+    "h": 1339
+  },
+  "group-outfits": {
+    "sm": 480,
+    "w": 900,
+    "w2x": 1062,
+    "h": 1034
   },
   "hat-cream-gold": {
     "sm": 480,
@@ -52,6 +184,12 @@
     "w": 640,
     "w2x": 640,
     "h": 1136
+  },
+  "party-packs": {
+    "sm": 480,
+    "w": 900,
+    "w2x": 1200,
+    "h": 679
   },
   "tiara-gold": {
     "sm": 480,

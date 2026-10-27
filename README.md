@@ -93,6 +93,38 @@ Writes three WebP sizes per photo to `public/photos/` (480, 1080 and up to 2160p
 
 To add a photo for a menu item, put the JPG in `brand/photos-original/`, run the last script, and set `photo: "/photos/name.webp"` on the item in `src/data/catalog.ts`.
 
+### Cutouts
+
+Most of the menu is photographed as cutouts, which sit on the white page with no background of
+their own. They have their own two steps, because `build_photos.py` goes through OpenCV and
+JPEG, neither of which carries an alpha channel.
+
+```bash
+python scripts/cutout_products.py brand/photos-incoming brand/photos-cutout
+```
+
+Keys the white out of any shot that arrived flattened, and passes the already-transparent ones
+straight through. The raw shots are not tracked — they arrive from the studio and are mostly
+editor chequer — so `brand/photos-cutout/` is the archive, kept as high-quality WebP with the
+alpha intact. Keying works on connected regions rather than on colour alone: a white area
+only goes transparent if it touches the edge of the frame, which is what lets a white cake on a
+white background keep its body. `NAMES` in that script maps each incoming file to its real name.
+
+```bash
+python scripts/build_cutouts.py brand/photos-cutout
+```
+
+Writes the same three WebP sizes as `build_photos.py`, with the transparency intact, and merges
+into the same manifest. Set `photo` **and** `cutout: true` on the item in `src/data/catalog.ts`:
+the flag is what tells the menu grid to show the piece whole instead of cropping it to fill.
+
+These scripts need Pillow, numpy and scipy. The repo keeps them out of the way in a throwaway
+environment:
+
+```bash
+python -m venv .venv-img && .venv-img/Scripts/pip install pillow numpy scipy
+```
+
 ## Brand files
 
 The studio's official logos are in `brand/logos/`, and everything the app shows is built from

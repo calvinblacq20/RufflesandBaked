@@ -10,3 +10,10 @@ __pycache__
 
 # Upscaling intermediates (large PNGs; rebuild with scripts/upscale_photos.py)
 brand/photos-upscaled/
+
+# Image tooling venv (Pillow/numpy/scipy for the cutout scripts)
+.venv-img/
+
+# The studio's raw product shots, as they arrive: ~47MB of PNGs, most of it the editor's
+# transparency chequer. The keyed result in brand/photos-cutout/ is what the repo keeps.
+brand/photos-incoming/
