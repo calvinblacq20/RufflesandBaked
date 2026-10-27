@@ -453,9 +453,13 @@
 .pgrid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-inline: calc(var(--gutter) * -1);
+  width: calc(100% + var(--gutter) * 2);
+  background: #fff;
   border-top: 1px solid var(--ink-12);
-  border-left: 1px solid var(--ink-12);
 }
+/* The last cell in a row has no neighbour to rule against, so its right edge is the screen. */
+.pgrid-cell:nth-child(2n) { border-right: 0; }
 .pgrid-cell {
   min-width: 0;
   border-right: 1px solid var(--ink-12);
@@ -473,7 +477,8 @@
 .pgrid-pic {
   display: block;
   margin-bottom: 2px;
-  background: var(--ink-06);
+  /* An off-white behind the picture, so a cutout or a pale cake still sits on something. */
+  background: #fbfaf8;
 }
 @media (hover: hover) {
   .pgrid-link:hover .photo img { transform: scale(1.03); }
@@ -512,7 +517,13 @@
 .pgrid-reveal .save { position: absolute; top: 22px; right: 22px; }
 
 @media (min-width: 810px) {
-  .pgrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .pgrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-inline: 0;
+    width: 100%;
+    border-left: 1px solid var(--ink-12);
+  }
+  .pgrid-cell:nth-child(2n) { border-right: 1px solid var(--ink-12); }
   .pgrid-link { gap: 12px; padding: 20px 20px 22px; }
   .pgrid-name { font-size: 16px; }
   .pgrid-price { font-size: 16px; }
