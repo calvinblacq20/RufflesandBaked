@@ -14,7 +14,7 @@ html {
 body {
   margin: 0;
   min-height: 100dvh;
-  background: var(--glow) fixed, var(--ground);
+  background: var(--glow) fixed, var(--page);
   color: var(--ink);
   font-family: var(--font);
   /* Inter picks its optical size from the font size: sturdy text cuts for 12-16px copy, the

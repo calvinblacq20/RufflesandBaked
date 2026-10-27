@@ -578,7 +578,7 @@ function ChooseItems({ lines, onToggle, onQty }: { lines: Draft[]; onToggle: (st
 
   return (
     <>
-      <div className="chips" style={{ position: "sticky", top: 60, zIndex: 9, background: "var(--ground)", paddingBlock: 8 }}>
+      <div className="chips" style={{ position: "sticky", top: 60, zIndex: 9, background: "var(--page)", paddingBlock: 8 }}>
         {CATEGORIES.map((c) => (
           <button key={c.id} className="chip" onClick={() => scrollTo(document.getElementById(`cat-${c.id}`), { offset: -120 })}>
             {c.label}

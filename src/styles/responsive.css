@@ -25,7 +25,7 @@
   }
 
   /* Flat ground so sticky rows (filters, section tabs) blend in without a visible band. */
-  body { background: var(--ground); }
+  body { background: var(--page); }
 
   .app {
     max-width: none;

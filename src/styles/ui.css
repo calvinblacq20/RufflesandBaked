@@ -3,7 +3,7 @@
   position: relative;
   min-height: 100dvh;
   margin-inline: auto;
-  background: var(--ground);
+  background: var(--page);
   display: flex;
   flex-direction: column;
 }

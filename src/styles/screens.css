@@ -167,7 +167,7 @@
   margin: -24px calc(var(--gutter) * -1) 0;
   padding: 20px var(--gutter) 4px;
   border-radius: var(--r-24) var(--r-24) 0 0;
-  background: var(--ground);
+  background: var(--page);
 }
 .address-chip {
   display: flex;
@@ -368,7 +368,7 @@
   margin: -24px calc(var(--gutter) * -1) 0;
   padding: 20px var(--gutter) 0;
   border-radius: var(--r-24) var(--r-24) 0 0;
-  background: var(--ground);
+  background: var(--page);
 }
 
 /* ---------- Receipt ---------- */

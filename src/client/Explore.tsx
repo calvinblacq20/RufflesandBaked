@@ -52,7 +52,7 @@ export function Explore() {
         <p className="muted">{CATEGORIES.length} categories · made to order in Kasoa</p>
       </header>
 
-      <div className="stack gap-12 explore-bar" style={{ position: "sticky", top: 0, zIndex: 10, background: "var(--ground)", marginInline: "calc(var(--gutter) * -1)", padding: "8px var(--gutter) 10px" }}>
+      <div className="stack gap-12 explore-bar" style={{ position: "sticky", top: 0, zIndex: 10, background: "var(--page)", marginInline: "calc(var(--gutter) * -1)", padding: "8px var(--gutter) 10px" }}>
         <label className="search-box">
           <Search size={18} className="subtle" />
           <span className="sr-only">Search the menu</span>

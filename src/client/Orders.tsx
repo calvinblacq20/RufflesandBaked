@@ -51,7 +51,7 @@ export function Orders() {
       <header className="page-title" style={{ paddingTop: 20 }}>
         <h1 className="t-h1">Orders</h1>
       </header>
-      <div className="chips sticky-under-nav" role="tablist" style={{ position: "sticky", top: 0, zIndex: 10, background: "var(--ground)", paddingBlock: 8 }}>
+      <div className="chips sticky-under-nav" role="tablist" style={{ position: "sticky", top: 0, zIndex: 10, background: "var(--page)", paddingBlock: 8 }}>
         {tabs.map((t) => (
           <button key={t.id} role="tab" aria-selected={tab === t.id} className={`chip ${tab === t.id ? "is-active" : ""}`} onClick={() => setParams(t.id === "orders" ? {} : { tab: t.id }, { replace: true })}>
             {t.label}

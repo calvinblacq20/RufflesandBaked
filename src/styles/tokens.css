@@ -10,6 +10,9 @@
   color-scheme: light;
 
   --ground: #ebeff5;
+  /* What the client's pages are painted on. Separate from --ground, which stays the cool grey
+     the admin sits on and the fill for its tracks, chips and hover states. */
+  --page: #ffffff;
   --surface: #ffffff;
   --ink: #242426;
   --ink-75: rgba(36, 36, 38, 0.75);
@@ -67,7 +70,7 @@
   --sh-deep: 0 0.81px 0.81px -0.47px rgba(62, 36, 46, 0.19), 0 1.91px 1.91px -0.94px rgba(62, 36, 46, 0.18), 0 3.49px 3.49px -1.41px rgba(62, 36, 46, 0.18), 0 5.79px 5.79px -1.88px rgba(62, 36, 46, 0.17), 0 9.36px 9.36px -2.34px rgba(62, 36, 46, 0.16), 0 15.32px 15.32px -2.81px rgba(62, 36, 46, 0.15), 0 26.38px 26.38px -3.28px rgba(62, 36, 46, 0.12), 0 48px 48px -3.75px rgba(62, 36, 46, 0.06);
   --sh-chip: 0 4px 8px rgba(0, 0, 0, 0.25);
 
-  --glow: radial-gradient(134% 100% at 50% 0%, #ffffff 0%, #ebeff5 100%);
+  --glow: radial-gradient(134% 100% at 50% 0%, #ffffff 0%, #ffffff 100%);
   --fade: linear-gradient(#ffffff 0%, #ebeff5 100%);
 
   --z-sticky: 10;
