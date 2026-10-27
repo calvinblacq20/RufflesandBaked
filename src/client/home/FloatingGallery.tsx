@@ -12,6 +12,8 @@ export interface GalleryPiece {
   tone: Tone;
   /** Occasion pieces are links; the rest are scenery and stay out of the tab order. */
   label?: string;
+  /** No card, no shadow: a cutout should look like it is hanging there, not printed on a tile. */
+  cutout?: boolean;
   href?: string;
 }
 
@@ -169,12 +171,12 @@ function FieldCard({ piece, spot, progress, fly }: { piece: GalleryPiece; spot: 
       >
         <div className="fgal-float" style={{ animationDelay: `-${(spot.x * 37) % 9}s`, animationDuration: `${7 + (spot.y % 5)}s` }}>
           {piece.href ? (
-            <Link to={piece.href} className="fgal-card" aria-label={piece.label}>
+            <Link to={piece.href} className={`fgal-card ${piece.cutout ? "is-cutout" : ""}`} aria-label={piece.label}>
               <CardPhoto piece={piece} spot={spot} />
               <span className="fgal-label">{piece.label}</span>
             </Link>
           ) : (
-            <div className="fgal-card" aria-hidden="true">
+            <div className={`fgal-card ${piece.cutout ? "is-cutout" : ""}`} aria-hidden="true">
               <CardPhoto piece={piece} spot={spot} />
             </div>
           )}
@@ -191,7 +193,7 @@ function CardPhoto({ piece, spot }: { piece: GalleryPiece; spot: Spot }) {
       tone={piece.tone}
       src={piece.photo}
       alt=""
-      ratio={spot.ratio}
+      ratio={piece.cutout ? undefined : spot.ratio}
       radius="var(--r-img)"
       sizes={`(min-width: 810px) ${spot.w * 2}px, ${Math.round(spot.w * 1.2)}px`}
       markSize={Math.round(spot.w / 4)}

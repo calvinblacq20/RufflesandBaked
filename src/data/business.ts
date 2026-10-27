@@ -129,16 +129,17 @@ export function applySettings(settings: StudioSettings) {
   for (let day = 0; day < 7; day++) HOURS[day] = settings.hours[day] ?? null;
 }
 
-export const OCCASION_PHOTOS: Record<string, string> = {
-  birthday: "/photos/cake-box-bow.webp",
-  wedding: "/photos/bridal-look.webp",
-  engagement: "/photos/tiara-gold.webp",
-  kids: "/photos/cake-minnie.webp",
-  christening: "/photos/headband-crystal.webp",
-  funeral: "/photos/hat-cream-gold.webp",
-  church: "/photos/owner-gold.webp",
-  anniversary: "/photos/cake-box-bow.webp",
-  everyday: "/photos/fascinator-purple.webp",
+/** The gallery's picture for each occasion. Cutouts hang in the air with no card behind them. */
+export const OCCASION_PHOTOS: Record<string, { src: string; cutout?: boolean }> = {
+  birthday: { src: "/photos/cake-box-bow.webp" },
+  wedding: { src: "/photos/bride-portrait.webp" },
+  engagement: { src: "/photos/group-outfits.webp", cutout: true },
+  kids: { src: "/photos/cake-minnie.webp" },
+  christening: { src: "/photos/fascinator-rainbow.webp", cutout: true },
+  funeral: { src: "/photos/fascinator-burgundy.webp", cutout: true },
+  church: { src: "/photos/fascinator-cream.webp", cutout: true },
+  anniversary: { src: "/photos/cake-bride-to-be-side.webp", cutout: true },
+  everyday: { src: "/photos/fascinator-lilac.webp", cutout: true },
 };
 
 export const STUDIO_FEATURES = [

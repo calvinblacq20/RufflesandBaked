@@ -559,3 +559,23 @@
   color: var(--ink);
 }
 .fgal-cta:hover { background: rgba(255, 255, 255, 0.86); }
+
+/* A cutout in the field has nothing to sit on: no tile, no shadow, no clipping, so it reads as
+   the piece itself hanging in the dark rather than a photograph pinned to a card. */
+.fgal-card.is-cutout {
+  overflow: visible;
+  border-radius: 0;
+  box-shadow: none;
+}
+.fgal-card.is-cutout .photo {
+  background: none;
+  border-radius: 0;
+}
+.fgal-card.is-cutout .photo::before { display: none; }
+.fgal-card.is-cutout .photo img {
+  position: static;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.55));
+}

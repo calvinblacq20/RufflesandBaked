@@ -33,6 +33,10 @@ FEATHER = 1.1
 # Breathing room left around the trimmed subject, as a fraction of its longest side.
 MARGIN = 0.02
 
+# One of the shots is a photograph of the studio's work being worn, not a cutout. It has a real
+# background, so it is passed through whole: keying it would eat the sky behind the bride.
+OPAQUE = {"IMG_4432": "bride-portrait"}
+
 # What each file actually is, read off the contact sheet. Anything not listed is left alone:
 # the four logo files, which the brand pipeline already owns.
 NAMES = {
@@ -99,6 +103,12 @@ def main() -> None:
     out.mkdir(parents=True, exist_ok=True)
 
     for path in sorted(src.iterdir()):
+        if path.stem in OPAQUE:
+            with Image.open(path) as opened:
+                opened.convert("RGB").save(out / f"{OPAQUE[path.stem]}.webp", quality=95, method=4)
+            print(f"{path.stem} -> {OPAQUE[path.stem]:<24} kept whole (a photograph, not a cutout)")
+            continue
+
         name = NAMES.get(path.stem)
         if not name:
             print(f"{path.name:<16} skipped (not a product)")
