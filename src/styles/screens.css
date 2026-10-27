@@ -480,6 +480,14 @@
   /* An off-white behind the picture, so a cutout or a pale cake still sits on something. */
   background: #fbfaf8;
 }
+/* An item with no photo still gets a tile, but in the grid it stays white whatever tone it
+   carries - a row of pastels reads as a fault, not as a placeholder. */
+.pgrid-cell .pgrid-pic .photo {
+  --tone-a: #ffffff;
+  --tone-b: #f7f5f2;
+  color: var(--ink);
+}
+.pgrid-cell .pgrid-pic .photo .photo-mark { opacity: 0.12; }
 @media (hover: hover) {
   .pgrid-link:hover .photo img { transform: scale(1.03); }
 }
