@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { STUDIO } from "../data/business";
-import { blurIn, motionMode, spring } from "../motion";
+import { blurIn, motionMode } from "../motion";
 import { LogoMark } from "./Brand";
 
 const SPLASH_KEY = "rbh-splash-seen";
@@ -46,13 +46,9 @@ export function Splash() {
           transition={{ duration: 0.45, ease: [0.44, 0, 0.56, 1] }}
         >
           <div className="splash-content">
-            <motion.div
-              initial={{ clipPath: "inset(0% 100% 0% 0%)", opacity: 0.4, rotate: -6 }}
-              animate={{ clipPath: "inset(0% 0% 0% 0%)", opacity: 1, rotate: 0 }}
-              transition={{ clipPath: { duration: 0.9, ease: [0.27, 0, 0.51, 1] }, opacity: { duration: 0.4 }, rotate: spring.large }}
-            >
+            <div className="splash-mark">
               <LogoMark size={112} tone="light" />
-            </motion.div>
+            </div>
             <div className="stack" style={{ alignItems: "center", gap: 6 }}>
               <motion.p className="splash-word" {...blurIn(0.55)}>
                 {STUDIO.name}

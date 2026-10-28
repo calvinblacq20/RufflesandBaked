@@ -672,6 +672,18 @@ button.row:active, a.row:active { background: var(--ink-06); }
 
 /* Launch screen: strictly black and white, matching the logo. */
 .splash { background: #000; color: #fff; }
+/* The mark wipes in left to right, and the wipe is only ever an enhancement: the resting state
+   is the logo, fully visible, so anything that stops the animation from running leaves the mark
+   on screen rather than clipped to nothing. That is why there is no fill-mode here - with one,
+   a blocked animation holds the first keyframe and the launch screen shows no logo at all. */
+.splash-mark { animation: splash-wipe 0.9s cubic-bezier(0.27, 0, 0.51, 1); }
+@keyframes splash-wipe {
+  from { clip-path: inset(0 100% 0 0); opacity: 0.4; }
+  to { clip-path: inset(0 0 0 0); opacity: 1; }
+}
+[data-motion="calm"] .splash-mark,
+[data-motion="off"] .splash-mark { animation: none; }
+
 .splash-content { display: flex; flex-direction: column; align-items: center; gap: 22px; }
 .splash-word { font-size: 28px; letter-spacing: -0.03em; color: #fff; }
 .splash-sub { font-size: 12px; color: rgba(255, 255, 255, 0.55); letter-spacing: 0.08em; text-transform: uppercase; }
