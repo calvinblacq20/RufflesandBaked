@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AppIcon } from "../components/Brand";
-import { Photo, SectionHead, Skeleton, Stars, useSkeleton } from "../components/Bits";
+import { Photo, SectionHead, Stars } from "../components/Bits";
 import { Cta } from "../components/Button";
 import { MapCard } from "../components/MapCard";
 import { ContactDock } from "./home/ContactDock";
@@ -50,39 +50,16 @@ const GALLERY_PIECES: GalleryPiece[] = [
   { id: "far-minnie", photo: "/photos/cake-minnie.webp", tone: "charcoal" },
 ];
 
+/**
+ * No skeleton here. It was a fixed 700ms placeholder, not a wait on anything - the store is
+ * localStorage and answers at once - and it cost a grey screen in front of a hero that paints
+ * its own deep wine and its own words immediately. A full-screen hero's placeholder is just a
+ * full screen of grey.
+ */
 export function Home() {
-  const loading = useSkeleton(700);
-  return loading ? <HomeSkeleton /> : <StudioPage />;
+  return <StudioPage />;
 }
 
-function HomeSkeleton() {
-  return (
-    <main className="screen" aria-busy="true" aria-label="Loading the studio">
-      {/* The page's own shape while it loads: the hero, the gallery's dark stage, the opening
-          paragraph, then the ruled menu. It borrows the grid's real markup so the cells land
-          exactly where the photos will. */}
-      <Skeleton w="calc(100% + var(--gutter) * 2)" h={440} r={0} className="mobile-only" style={{ marginInline: "calc(var(--gutter) * -1)" }} />
-      <Skeleton h={520} r={12} className="desktop-only" style={{ marginTop: 4 }} />
-      <div className="sk-stage" aria-hidden="true" />
-      <div className="stack gap-12" style={{ maxWidth: 680, marginTop: 32 }}>
-        <Skeleton w="94%" h={20} />
-        <Skeleton w="86%" h={20} />
-        <Skeleton w="52%" h={20} />
-      </div>
-      <ul className="pgrid" style={{ marginTop: 32 }} aria-hidden="true">
-        {[0, 1, 2, 3, 4, 5].map((i) => (
-          <li key={i} className="pgrid-cell">
-            <div className="pgrid-link">
-              <Skeleton r={0} h="auto" style={{ aspectRatio: "1 / 1" }} />
-              <Skeleton w="68%" h={15} />
-              <Skeleton w="42%" h={15} style={{ marginTop: "auto" }} />
-            </div>
-          </li>
-        ))}
-      </ul>
-    </main>
-  );
-}
 
 function StudioPage() {
   const data = useAppData();

@@ -489,22 +489,6 @@
   padding: 6%;
 }
 
-/* The gallery's dark stage, stood in for while the page loads, so the first paint is not a
-   white page that then turns dark under the reader. */
-.sk-stage {
-  margin-top: 0;
-  margin-inline: calc(var(--gutter) * -1);
-  width: calc(100% + var(--gutter) * 2);
-  height: 70svh;
-  min-height: 420px;
-  background: #242426;
-}
-@media (min-width: 810px) {
-  .sk-stage {
-    margin-inline: calc((100% - 100vw) / 2);
-    width: 100vw;
-  }
-}
 
 /* ---------- Phone nav (Chrome.tsx MobileNav) ----------
    One button in the top right and the menu under it. There is no bar: every screen already
