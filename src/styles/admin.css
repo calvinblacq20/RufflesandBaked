@@ -676,3 +676,20 @@ a.adm-row:hover, button.adm-row:hover { background: var(--ground); }
   .adm-side, .adm-bar, .adm-tabbar, .no-print { display: none !important; }
   .adm { display: block; }
 }
+
+/* Two fields that belong together — a button and its link, a start date and an end date — side
+   by side where there is room, stacked on a phone. */
+.adm-grid-2 { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+@media (min-width: 560px) {
+  .adm-grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+/* A switch that reads as one row, with the whole label clickable. */
+.adm-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  cursor: pointer;
+  font-size: 15px;
+}
+.adm-check input { width: 18px; height: 18px; flex: none; accent-color: var(--ink); }

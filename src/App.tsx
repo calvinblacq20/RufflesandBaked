@@ -2,7 +2,8 @@ import { MotionConfig } from "motion/react";
 import { lazy, Suspense, useEffect } from "react";
 import { HashRouter, Link, Outlet, Route, Routes, useLocation } from "react-router-dom";
 import { Skeleton } from "./components/Bits";
-import { DesktopFooter, DesktopNav, TabBar } from "./components/Chrome";
+import { AnnouncementBar } from "./components/AnnouncementBar";
+import { DesktopFooter, DesktopNav, MobileNav } from "./components/Chrome";
 import { NotifyProvider } from "./components/Notify";
 import { Splash } from "./components/Overlays";
 import { SmoothScroll, useScrollTo } from "./components/Scroll";
@@ -52,24 +53,26 @@ function ScrollToTop() {
   return null;
 }
 
-/** Main tabs: bottom tab bar on phones, floating top nav and footer on wider screens. */
+/** The studio's pages: one top nav at every width, the owner's notice across the foot. */
 function TabsLayout() {
   return (
     <>
+      <MobileNav />
       <div className="page-surface">
         <DesktopNav />
         <Outlet />
       </div>
       <DesktopFooter />
-      <TabBar />
+      <AnnouncementBar />
     </>
   );
 }
 
-/** Detail pages: no tab bar on phones, top nav and footer on wider screens. */
+/** Detail pages: the same nav, without the notice taking room over an order in progress. */
 function NavLayout() {
   return (
     <>
+      <MobileNav />
       <div className="page-surface">
         <DesktopNav />
         <Outlet />

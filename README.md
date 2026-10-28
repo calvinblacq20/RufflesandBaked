@@ -36,7 +36,7 @@ npm run build
 
 | Width | Layout |
 |---|---|
-| Under 810px (phones) | App layout: bottom tab bar, bottom sheets, sticky bottom action bars |
+| Under 810px (phones) | App layout: brand and menu in a sticky top bar, bottom sheets, sticky bottom action bars |
 | 810–1023px (tablets) | Floating top nav and footer, wider grids, dialogs instead of bottom sheets |
 | 1024px and up (desktop) | Two-column pages with sticky side cards on the studio page, order flow and order page |
 
@@ -48,6 +48,14 @@ Every menu item belongs to the kitchen, the workroom, or both, and that one fiel
 - **Cakes** are priced from the studio's own menu card — four grids by shape (round/square/heart, bento, rectangular, kids themed) crossed with layers and size. The price is shown before you order, and a cake carries **one flavour per layer**, which is what her menu card allows.
 - **Handmade pieces** have no list price. They go out as a request, the owner sends a quote on WhatsApp, and a deposit starts the work. The order total says "So far" while a quote is outstanding, and the piece reads "By quote" rather than GH₵ 0.
 - **Stage names follow the order**: a cake goes *Baking → Decorating*, a headpiece goes *Beading → Finishing*, and a mixed order reads neutrally. The same applies to the WhatsApp updates the owner sends.
+
+## The studio's notice
+
+One notice can run across the foot of the client app — pre-orders opening, a festive cut-off, the
+kitchen closed for a week. The owner writes it in **Settings → Notice to clients**: the line, an
+optional detail, an optional button, and the dates it runs between. It stays up for the whole of
+the last day. A client who closes it does not see it again, but changing the words gives the
+notice a new id and a fresh run at everyone.
 
 ## Demo notes
 

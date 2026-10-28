@@ -1,5 +1,5 @@
-import { ArrowLeft, ArrowRight, CalendarDays, Home, Search, UserRound, X } from "lucide-react";
-import { motion, useScroll, useTransform } from "motion/react";
+import { ArrowLeft, ArrowRight, CalendarDays, Home, Menu, Search, UserRound, X } from "lucide-react";
+import { AnimatePresence, motion, useScroll, useTransform } from "motion/react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { HOURS, STUDIO } from "../data/business";
@@ -218,38 +218,93 @@ export function DesktopFooter() {
   );
 }
 
-export function TabBar() {
+/**
+ * Phones and small tablets: the brand on the left, the way around on the right.
+ *
+ * This replaces the bottom tab bar. Four tabs along the bottom of a page that also has an action
+ * bar and a contact dock left the foot of the screen doing three jobs at once; the destinations
+ * are not visited often enough to earn permanent room, and the foot is now the studio's notice.
+ */
+export function MobileNav() {
   const account = accountOf(useAppData());
+  const [open, setOpen] = useState(false);
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+
+  // A route change closes the menu, including one made with the back button.
+  useEffect(() => setOpen(false), [pathname]);
+
+  // While it is open the page behind must not scroll under it.
+  useEffect(() => {
+    if (!open) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [open]);
+
   return (
-    <div className="tabbar-wrap mobile-only">
-      <nav className="tabbar" aria-label="Main">
-        {TABS.map(({ to, label, icon: Icon, ...rest }) => (
-          <NavLink key={to} to={to} end={"end" in rest} className={({ isActive }) => `tab ${isActive ? "is-active" : ""}`}>
-            {({ isActive }) => (
-              <>
-                {isActive && <motion.span layoutId="tab-hl" className="tab-hl" transition={spring.press} />}
-                <Icon size={22} strokeWidth={isActive ? 2 : 1.6} />
-                <span>{label}</span>
-              </>
-            )}
-          </NavLink>
-        ))}
-        <NavLink to="/profile" className={({ isActive }) => `tab ${isActive ? "is-active" : ""}`}>
-          {({ isActive }) => (
-            <>
-              {isActive && <motion.span layoutId="tab-hl" className="tab-hl" transition={spring.press} />}
-              {account ? (
-                <span className="tab-avatar" aria-hidden="true">
-                  {account.name[0]}
-                </span>
-              ) : (
-                <UserRound size={22} strokeWidth={isActive ? 2 : 1.6} />
-              )}
-              <span>Profile</span>
-            </>
-          )}
-        </NavLink>
+    <div className="mob-nav-wrap mobile-only">
+      <nav className="mob-nav" aria-label="Main">
+        <Link to="/" className="mob-brand" aria-label={`${STUDIO.name} home`}>
+          <AppIcon size={30} />
+          <span>{STUDIO.name}</span>
+        </Link>
+        <button
+          className="mob-menu-btn"
+          onClick={() => setOpen(!open)}
+          aria-expanded={open}
+          aria-controls="mob-menu"
+          aria-label={open ? "Close the menu" : "Open the menu"}
+        >
+          {open ? <X size={22} strokeWidth={1.8} /> : <Menu size={22} strokeWidth={1.8} />}
+        </button>
       </nav>
+
+      <AnimatePresence>
+        {open && (
+          <>
+            <motion.button
+              className="mob-scrim"
+              aria-label="Close the menu"
+              onClick={() => setOpen(false)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            />
+            <motion.div
+              id="mob-menu"
+              className="mob-menu"
+              initial={{ y: -12, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -12, opacity: 0 }}
+              transition={spring.small}
+            >
+              {TABS.map(({ to, label, icon: Icon, ...rest }) => (
+                <NavLink key={to} to={to} end={"end" in rest} className={({ isActive }) => `mob-link ${isActive ? "is-active" : ""}`}>
+                  <Icon size={20} strokeWidth={1.7} />
+                  <span>{label}</span>
+                </NavLink>
+              ))}
+              <NavLink to="/profile" className={({ isActive }) => `mob-link ${isActive ? "is-active" : ""}`}>
+                {account ? (
+                  <span className="mob-avatar" aria-hidden="true">
+                    {account.name[0]}
+                  </span>
+                ) : (
+                  <UserRound size={20} strokeWidth={1.7} />
+                )}
+                <span>{account ? account.name.split(" ")[0] : "Profile"}</span>
+              </NavLink>
+              <button className="btn btn-dark btn-block mob-order" onClick={() => navigate("/order/new")}>
+                Order now
+              </button>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

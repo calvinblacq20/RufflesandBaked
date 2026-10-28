@@ -333,7 +333,6 @@ function StudioPage() {
       </aside>
       </div>
 
-
       <HowItWorks />
 
       <WhyBento />
@@ -480,14 +479,6 @@ function StudioPage() {
       </div>
 
       <ClosingCta />
-
-      <div className="floating-bar lt-desk">
-        <div className="sticky-bar-meta">
-          <strong>{STYLES.length} cakes and pieces</strong>
-          <span className="subtle t-cap">from {money(cheapest)}</span>
-        </div>
-        <Cta onClick={() => navigate("/order/new")}>Order now</Cta>
-      </div>
 
       <Sheet open={reviewsOpen} onClose={() => setReviewsOpen(false)} title={`${STUDIO.reviewCount} reviews`}>
         <div className="stack gap-12">

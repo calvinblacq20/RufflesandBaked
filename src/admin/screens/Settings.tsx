@@ -2,7 +2,7 @@ import { ArrowUpRight, RotateCcw } from "lucide-react";
 import { useEffect, useState, type FormEvent, type ReactNode } from "react";
 import { Button } from "../../components/Button";
 import { useNotify } from "../../components/Notify";
-import type { Policies, Rules, StudioDetails } from "../../data/business";
+import type { Announcement, Policies, Rules, StudioDetails } from "../../data/business";
 import { actions, studio, useAppData } from "../../data/store";
 import type { Hours } from "../../lib/schedule";
 import { CardHead } from "../controls";
@@ -24,6 +24,7 @@ export function Settings() {
       <div className="adm-grid adm-grid-2" style={{ maxWidth: 1040 }}>
         <StudioCard details={data.settings.studio} />
         <HoursCard hours={data.settings.hours} />
+        <AnnouncementCard notice={data.settings.announcement} />
         <PoliciesCard policies={data.settings.policies} />
         <RulesCard rules={data.settings.rules} />
         <section className="adm-card" aria-labelledby="demo">
@@ -232,6 +233,101 @@ function RulesCard({ rules }: { rules: Rules }) {
         <label htmlFor="rule-design">Custom and character design, from (GH₵)</label>
         <input id="rule-design" inputMode="decimal" value={form.designFee} onChange={(e) => setForm({ ...form, designFee: e.target.value })} />
         <span className="hint">Added to single cakes with a custom design. You can raise it in the quote.</span>
+      </div>
+    </EditCard>
+  );
+}
+
+/**
+ * The one notice the studio can put in front of every client. It sits across the foot of the
+ * client app between the dates set here, and a client who closes it does not see it again —
+ * so changing the words gives it a new id and a fresh run at everyone.
+ */
+function AnnouncementCard({ notice }: { notice: Announcement }) {
+  const notify = useNotify();
+  const read = () => ({
+    on: notice.on,
+    title: notice.title,
+    note: notice.note ?? "",
+    ctaLabel: notice.ctaLabel ?? "",
+    ctaHref: notice.ctaHref ?? "",
+    from: notice.from ?? "",
+    until: notice.until ?? "",
+  });
+  const [form, setForm] = useState(read);
+  const [error, setError] = useState<string | null>(null);
+  useEffect(() => setForm(read()), [notice]);
+  const dirty = JSON.stringify(form) !== JSON.stringify(read());
+  const set = (patch: Partial<typeof form>) => setForm({ ...form, ...patch });
+
+  return (
+    <EditCard
+      id="notice"
+      title="Notice to clients"
+      dirty={dirty}
+      error={error}
+      onReset={() => {
+        setForm(read());
+        setError(null);
+      }}
+      onSave={(e) => {
+        e.preventDefault();
+        if (form.on && !form.title.trim()) return setError("Write the notice, or switch it off.");
+        if (form.from && form.until && form.from > form.until) return setError("The end date is before the start date.");
+        if (Boolean(form.ctaLabel.trim()) !== Boolean(form.ctaHref.trim())) return setError("A button needs both a label and a link, or neither.");
+        const changed = form.title !== notice.title || form.note !== (notice.note ?? "");
+        const result = studio.saveSettings({
+          announcement: {
+            on: form.on,
+            // New words, new id: anyone who closed the last notice sees this one.
+            id: changed ? `n-${Date.now().toString(36)}` : notice.id,
+            title: form.title.trim(),
+            note: form.note.trim() || undefined,
+            ctaLabel: form.ctaLabel.trim() || undefined,
+            ctaHref: form.ctaHref.trim() || undefined,
+            from: form.from || undefined,
+            until: form.until || undefined,
+          },
+        });
+        if ("error" in result) return setError(result.error);
+        setError(null);
+        notify(form.on ? "Notice is up" : "Notice switched off", form.on ? "Clients see it across the foot of the app." : "Nothing shows until you switch it back on.");
+      }}
+    >
+      <label className="adm-check">
+        <input type="checkbox" checked={form.on} onChange={(e) => set({ on: e.target.checked })} />
+        <span>Show this notice to clients</span>
+      </label>
+      <div className="field">
+        <label htmlFor="notice-title">The notice</label>
+        <input id="notice-title" value={form.title} onChange={(e) => set({ title: e.target.value })} placeholder="Christmas orders close on 18 December" />
+        <span className="hint">One line. This is what people read first.</span>
+      </div>
+      <div className="field">
+        <label htmlFor="notice-note">The detail (optional)</label>
+        <input id="notice-note" value={form.note} onChange={(e) => set({ note: e.target.value })} placeholder="Cakes and headpieces for the season are taken until then." />
+        <span className="hint">Kept to two lines on a phone, so put the important part first.</span>
+      </div>
+      <div className="adm-grid-2">
+        <div className="field">
+          <label htmlFor="notice-cta">Button (optional)</label>
+          <input id="notice-cta" value={form.ctaLabel} onChange={(e) => set({ ctaLabel: e.target.value })} placeholder="Start an order" />
+        </div>
+        <div className="field">
+          <label htmlFor="notice-href">Where it goes</label>
+          <input id="notice-href" value={form.ctaHref} onChange={(e) => set({ ctaHref: e.target.value })} placeholder="/order/new" />
+        </div>
+      </div>
+      <div className="adm-grid-2">
+        <div className="field">
+          <label htmlFor="notice-from">Show from (optional)</label>
+          <input id="notice-from" type="date" value={form.from} onChange={(e) => set({ from: e.target.value })} />
+        </div>
+        <div className="field">
+          <label htmlFor="notice-until">Show until (optional)</label>
+          <input id="notice-until" type="date" value={form.until} onChange={(e) => set({ until: e.target.value })} />
+          <span className="hint">It stays up for the whole of that day, then comes down on its own.</span>
+        </div>
       </div>
     </EditCard>
   );

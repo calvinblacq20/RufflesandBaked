@@ -613,12 +613,22 @@ export const studio = {
   },
 
   /** Saves the bakery details, opening hours, policies or money rules. */
-  saveSettings(patch: { studio?: Partial<StudioSettings["studio"]>; hours?: StudioSettings["hours"]; policies?: Partial<StudioSettings["policies"]>; rules?: Partial<StudioSettings["rules"]> }): Result<{ settings: StudioSettings }> {
+  saveSettings(patch: { studio?: Partial<StudioSettings["studio"]>; hours?: StudioSettings["hours"]; policies?: Partial<StudioSettings["policies"]>; rules?: Partial<StudioSettings["rules"]>; announcement?: StudioSettings["announcement"] }): Result<{ settings: StudioSettings }> {
     const next = cloneSettings(state.settings);
     if (patch.studio) Object.assign(next.studio, patch.studio);
     if (patch.policies) Object.assign(next.policies, patch.policies);
     if (patch.rules) Object.assign(next.rules, patch.rules);
     if (patch.hours) next.hours = { ...patch.hours };
+    if (patch.announcement) next.announcement = { ...patch.announcement };
+
+    // A notice that is on has to say something, and a button is useless with only half of it.
+    if (next.announcement.on && !next.announcement.title.trim()) return { error: "Write the notice, or switch it off." };
+    if (Boolean(next.announcement.ctaLabel?.trim()) !== Boolean(next.announcement.ctaHref?.trim())) {
+      return { error: "A notice button needs both a label and a link, or neither." };
+    }
+    if (next.announcement.from && next.announcement.until && next.announcement.from > next.announcement.until) {
+      return { error: "The notice's end date is before its start date." };
+    }
 
     next.studio.name = next.studio.name.trim();
     next.studio.phone = next.studio.phone.trim();

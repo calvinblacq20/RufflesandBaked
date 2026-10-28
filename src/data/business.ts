@@ -52,6 +52,28 @@ export interface StudioSettings {
   hours: Hours;
   policies: Policies;
   rules: Rules;
+  /** The one notice the owner can put in front of everyone. */
+  announcement: Announcement;
+}
+
+/**
+ * A notice across the bottom of the client app: pre-orders opening, the kitchen closed for a
+ * week, a festive cut-off. It is the owner's, not the app's, so everything about it is settings.
+ */
+export interface Announcement {
+  /** Off hides it whatever the dates say. */
+  on: boolean;
+  /** Bumped whenever the words change, so dismissing one notice never hides the next. */
+  id: string;
+  title: string;
+  /** The quiet line under it: a date range, a detail, whatever the notice needs. */
+  note?: string;
+  /** The button. Both of these or neither. */
+  ctaLabel?: string;
+  ctaHref?: string;
+  /** Only shown between these, when they are set. Plain yyyy-mm-dd. */
+  from?: string;
+  until?: string;
 }
 
 const DEFAULT_STUDIO: StudioDetails = {
@@ -103,14 +125,24 @@ const DEFAULT_POLICIES: Policies = {
 
 const DEFAULT_RULES: Rules = { lateFee: 50, designFee: 150, depositPercent: 50 };
 
+const DEFAULT_ANNOUNCEMENT: Announcement = {
+  on: true,
+  id: "christmas-cutoff",
+  title: "Christmas orders close on 18 December",
+  note: "Cakes and headpieces for the season are taken until then, while dates last.",
+  ctaLabel: "Start an order",
+  ctaHref: "/order/new",
+};
+
 export const cloneSettings = (settings: StudioSettings): StudioSettings => ({
   studio: { ...settings.studio },
   hours: { ...settings.hours },
   policies: { ...settings.policies },
   rules: { ...settings.rules },
+  announcement: { ...(settings.announcement ?? DEFAULT_ANNOUNCEMENT) },
 });
 
-export const defaultSettings = (): StudioSettings => cloneSettings({ studio: DEFAULT_STUDIO, hours: DEFAULT_HOURS, policies: DEFAULT_POLICIES, rules: DEFAULT_RULES });
+export const defaultSettings = (): StudioSettings => cloneSettings({ studio: DEFAULT_STUDIO, hours: DEFAULT_HOURS, policies: DEFAULT_POLICIES, rules: DEFAULT_RULES, announcement: DEFAULT_ANNOUNCEMENT });
 
 /**
  * The studio details every screen reads. The saved settings in the store are the source of truth:

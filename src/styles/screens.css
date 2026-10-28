@@ -42,7 +42,7 @@
 .contact-dock {
   position: fixed;
   right: var(--gutter);
-  bottom: calc(168px + var(--safe-bottom));
+  bottom: calc(96px + var(--safe-bottom));
   z-index: calc(var(--z-tabbar) + 5);
   display: flex;
   flex-direction: column;
@@ -193,22 +193,6 @@
   font-weight: 500;
 }
 
-
-.floating-bar {
-  position: sticky;
-  bottom: calc(84px + var(--safe-bottom));
-  z-index: var(--z-sticky);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 28px;
-  padding: 10px 10px 10px 18px;
-  border-radius: var(--r-24);
-  background: var(--glass);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-  box-shadow: var(--sh-float);
-}
 
 /* ---------- Explore ---------- */
 .search-box {
@@ -553,4 +537,130 @@
     margin-inline: calc((100% - 100vw) / 2);
     width: 100vw;
   }
+}
+
+/* ---------- Phone nav (Chrome.tsx MobileNav) ----------
+   The brand and the way around, at the top. It replaced a bottom tab bar: four destinations do
+   not earn permanent room at the foot of a screen that also carries the studio's notice. */
+.mob-nav-wrap {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-tabbar);
+  padding: 10px var(--gutter) 0;
+}
+.mob-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  height: 52px;
+  padding: 0 6px 0 10px;
+  border-radius: var(--r-pill);
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--sh-float);
+}
+.mob-brand { display: flex; align-items: center; gap: 8px; min-width: 0; color: var(--ink); }
+.mob-brand span {
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* 44px square: the smallest a thumb should have to find (Apple's figure, Material's is 48dp). */
+.mob-menu-btn {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border-radius: 50%;
+  color: var(--ink);
+}
+.mob-menu-btn:hover { background: var(--ink-06); }
+.mob-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: rgba(36, 36, 38, 0.38);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+}
+.mob-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: var(--gutter);
+  right: var(--gutter);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px;
+  border-radius: var(--r-24);
+  background: var(--surface);
+  box-shadow: var(--sh-float);
+}
+.mob-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 0 12px;
+  border-radius: var(--r-12);
+  color: var(--ink);
+  font-size: 16px;
+}
+.mob-link:hover { background: var(--ink-06); }
+.mob-link.is-active { background: var(--ink-06); font-weight: 500; }
+.mob-avatar {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 500;
+}
+.mob-order { margin-top: 6px; }
+
+/* ---------- The studio's notice (AnnouncementBar.tsx) ----------
+   Fixed to the foot of the client app, above the page and below sheets and toasts. It takes the
+   room the Order-now bar used to, and says the one thing the reader cannot find on the page. */
+.notice {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: calc(var(--z-tabbar) + 1);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px var(--gutter) calc(14px + var(--safe-bottom));
+  background: var(--wine);
+  color: #fff;
+}
+.notice-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.notice-text strong { font-size: 15px; font-weight: 500; letter-spacing: -0.01em; }
+/* Two lines at most: the foot of a phone is not the place for a paragraph, and the detail is
+   always repeated somewhere the notice points to. */
+.notice-note {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.78);
+}
+.notice-cta { flex: none; background: #fff; color: var(--ink); }
+.notice-cta:hover { background: rgba(255, 255, 255, 0.86); }
+.notice-close { flex: none; width: 44px; height: 44px; color: rgba(255, 255, 255, 0.78); }
+.notice-close:hover { color: #fff; background: rgba(255, 255, 255, 0.14); }
+@media (min-width: 810px) {
+  .notice { padding-inline: max(var(--gutter), calc((100vw - 1200px) / 2)); }
+  .notice-text { flex-direction: row; align-items: baseline; gap: 12px; }
+  .notice-note { -webkit-line-clamp: 1; }
 }

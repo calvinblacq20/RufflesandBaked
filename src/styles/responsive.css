@@ -241,7 +241,6 @@
   .desk-2col > .section:first-child,
   .desk-2col > .section { margin-top: 28px; }
 
-  .floating-bar { bottom: 16px; }
 
   /* ---- Explore ---- */
   .style-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px 16px; }
