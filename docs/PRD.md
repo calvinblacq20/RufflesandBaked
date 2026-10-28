@@ -73,9 +73,9 @@ The Franz Qlodin system (Makro look, Fresha structure; see `docs/design-referenc
 | Explore | The whole menu with a switch between **Cakes** and **Headpieces** (bundles show under both), filtered by occasion, searchable, with saved favourites |
 | Order | Menu → customise (flavours one per layer, layers, size, finish, design, message for cakes; colours to match for pieces) → day, pickup time or delivery window, fitting if wanted → your details, allergies and head size → review and pay. No account needed. |
 | Pay | Cakes on the price list: pay in full now (Paystack: Mobile Money or card) and the date is booked. Bespoke pieces and custom designs: send the request, get a quote on WhatsApp, then a deposit starts the work. |
-| Track | Orders on this phone; "Find my order" with order number + WhatsApp number + code; pickups and fittings; receipts |
+| Track | Orders on this phone; "Find an order" for one placed without an account; pickups and fittings; receipts |
 | Dates to remember | Birthdays and anniversaries the client saves for a WhatsApp reminder, plus allergies and head measurement (needs an account) |
-| Account (optional) | WhatsApp number + code, no password |
+| Account (optional) | Email and password, with "remember me", a forgotten-password reset, and the sample account offered on the log in page |
 
 ## Owner side (`#/admin`)
 | Screen | Job |

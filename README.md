@@ -65,8 +65,8 @@ notice a new id and a fresh run at everyone.
 - Paying in full online books a price-list cake straight away. Custom designs, tiered cakes and bespoke pieces stay a request until the owner sends the quote.
 - The owner side has no login in the demo. The studio's order book is simulated over five months from fixed seeds (`src/data/studio-seed.ts`), dated relative to today, so there's always something in the oven, something on the beading table and something ready.
 - WhatsApp updates and birthday reminders open WhatsApp with the message filled in; nothing is sent automatically.
-- You start without an account and can order without one. To see order history, dates to remember, allergies and head size, log in from **Profile** with the sample account `024 555 0142`.
-- Paystack payments and WhatsApp login codes are simulated. The code shows up as a notification at the top of the screen, and no money moves.
+- You start without an account and can order without one. To see order history, dates to remember, allergies and head size, log in from **Profile**. The sample account's email and password are printed on the log in page, with a button that fills them in.
+- Paystack payments are simulated: the Mobile Money prompt and the card form both go through, and no money moves.
 - Going live needs a server to verify Paystack payments; see "Going live with Paystack" in `docs/PRD.md`.
 
 ## Photos

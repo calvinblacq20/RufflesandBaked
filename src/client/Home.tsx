@@ -198,6 +198,12 @@ function StudioPage() {
         </AnimatePresence>
       </div>
 
+      {/* The page's one h1. The hero's wordmark changes with the slide, so it cannot be the
+          heading; this says what the page is, once, for readers and crawlers. */}
+      <h1 className="sr-only">
+        {STUDIO.name} — {STUDIO.category} in {STUDIO.area}
+      </h1>
+
       {/* Opening slideshow, with the studio's name and page links across its top */}
       <div ref={heroRef} className="hero-wrap">
         <EditorialHero onSeeMenu={seeMenu} />

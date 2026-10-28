@@ -75,11 +75,13 @@ export function ScrollRevealText({ text, className, id, as = "p", progress }: { 
   return createElement(
     as,
     { ref, className, id, "aria-label": text },
-    words.map((word, i) => (
+    words.flatMap((word, i) => [
       <RevealWord key={`${word}-${i}`} progress={scrollYProgress} start={i / words.length} end={(i + 1) / words.length} rise={mode === "full"}>
         {word}
-      </RevealWord>
-    )),
+      </RevealWord>,
+      // A real space, not a margin: the line has to survive being copied or read as text.
+      i < words.length - 1 ? " " : null,
+    ]),
   );
 }
 
@@ -87,7 +89,7 @@ function RevealWord({ progress, start, end, rise, children }: { progress: Motion
   const opacity = useTransform(progress, [start, end], [0.16, 1]);
   const y = useTransform(progress, [start, end], [7, 0]);
   return (
-    <motion.span aria-hidden="true" style={{ opacity, y: rise ? y : 0, display: "inline-block", marginRight: "0.26em", willChange: rise ? "transform, opacity" : "opacity" }}>
+    <motion.span aria-hidden="true" style={{ opacity, y: rise ? y : 0, display: "inline-block", willChange: rise ? "transform, opacity" : "opacity" }}>
       {children}
     </motion.span>
   );
