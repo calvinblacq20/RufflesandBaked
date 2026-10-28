@@ -1,4 +1,4 @@
-import { CakeSlice, CalendarClock, Clock, Gift, MapPin, MessageCircle, Phone, Sparkles, Truck, Wallet } from "lucide-react";
+import { ArrowUpRight, CakeSlice, CalendarClock, Clock, Gift, MapPin, MessageCircle, Phone, Sparkles, Truck, Wallet } from "lucide-react";
 import { InstagramIcon } from "../components/SocialIcons";
 import { motion } from "motion/react";
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
@@ -184,23 +184,21 @@ function StudioPage() {
       <div className="studio-main">
       {/* About */}
       <section id="about" className="section anchor about">
-        <Reveal as="span" look="focus" className="chip-soft">
-          <CakeSlice size={13} /> About the studio
+        <Reveal as="span" look="focus" className="eyebrow">
+          About the studio
         </Reveal>
         <ScrollRevealText className="statement is-display" text={STATEMENT} />
-        <div className="highlights">
+        <ul className="ruled is-facts">
           {HIGHLIGHTS.map((h, i) => (
-            <Reveal key={h.title} className="highlight" y={20} delay={0.1 * i}>
-              <span className="highlight-icon">
-                <h.icon size={16} strokeWidth={1.8} />
-              </span>
-              <span className="stack">
-                <span className="t-title" style={{ fontSize: 15 }}>{h.title}</span>
-                <span className="subtle t-cap">{h.note}</span>
-              </span>
-            </Reveal>
+            <li key={h.title} className="ruled-row">
+              <Reveal y={20} delay={0.08 * i} className="ruled-body">
+                <h.icon size={18} strokeWidth={1.6} className="ruled-icon" />
+                <span className="ruled-title">{h.title}</span>
+                <span className="ruled-note">{h.note}</span>
+              </Reveal>
+            </li>
           ))}
-        </div>
+        </ul>
         {aboutOpen && (
           <motion.p className="t-lead" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={spring.small} style={{ color: "var(--ink-75)" }}>
             {STUDIO.about}
@@ -352,19 +350,21 @@ function StudioPage() {
 
       <section className="section">
         <SectionHead title="Good to know" />
-        <div className="card list-card">
+        <ul className="ruled">
           {STUDIO_FEATURES.map((f) => {
             const Icon = FEATURE_ICONS[f.icon];
             return (
-              <div key={f.label} className="row">
-                <span className="row-icon">
-                  <Icon size={18} strokeWidth={1.7} />
-                </span>
-                <span>{f.label}</span>
-              </div>
+              <li key={f.label}>
+                <div className="ruled-row">
+                  <Icon size={18} strokeWidth={1.6} className="ruled-icon" />
+                  <span className="ruled-body">
+                    <span className="ruled-title">{f.label}</span>
+                  </span>
+                </div>
+              </li>
             );
           })}
-        </div>
+        </ul>
       </section>
 
       <section className="section">
@@ -376,65 +376,72 @@ function StudioPage() {
       <div className="desk-2col">
       <section className="section">
         <SectionHead title="Contact" />
-        <div className="card list-card">
-          <a className="row" href={STUDIO.whatsappBusiness} target="_blank" rel="noreferrer">
-            <span className="row-icon is-coral">
-              <MessageCircle size={18} strokeWidth={1.7} />
-            </span>
-            <span className="grow">Chat on WhatsApp</span>
-          </a>
-          <a className="row" href={telLink(STUDIO.phone)}>
-            <span className="row-icon">
-              <Phone size={18} strokeWidth={1.7} />
-            </span>
-            <span className="grow">Call {STUDIO.phone}</span>
-          </a>
-          <a className="row" href={STUDIO.instagram} target="_blank" rel="noreferrer">
-            <span className="row-icon">
-              <InstagramIcon size={18} strokeWidth={1.7} />
-            </span>
-            <span className="grow stack">
-              <span>@ruffles_byh on Instagram</span>
-              <span className="subtle t-cap">Cakes, behind the scenes and cake classes</span>
-            </span>
-          </a>
-        </div>
+        <ul className="ruled">
+          <li>
+            <a className="ruled-row is-link" href={STUDIO.whatsappBusiness} target="_blank" rel="noreferrer">
+              <MessageCircle size={18} strokeWidth={1.6} className="ruled-icon" />
+              <span className="ruled-body">
+                <span className="ruled-title">Chat on WhatsApp</span>
+              </span>
+              <ArrowUpRight size={16} strokeWidth={1.7} className="ruled-go" />
+            </a>
+          </li>
+          <li>
+            <a className="ruled-row is-link" href={telLink(STUDIO.phone)}>
+              <Phone size={18} strokeWidth={1.6} className="ruled-icon" />
+              <span className="ruled-body">
+                <span className="ruled-title">Call {STUDIO.phone}</span>
+              </span>
+              <ArrowUpRight size={16} strokeWidth={1.7} className="ruled-go" />
+            </a>
+          </li>
+          <li>
+            <a className="ruled-row is-link" href={STUDIO.instagram} target="_blank" rel="noreferrer">
+              <InstagramIcon size={18} strokeWidth={1.6} className="ruled-icon" />
+              <span className="ruled-body">
+                <span className="ruled-title">@ruffles_byh on Instagram</span>
+                <span className="ruled-note">Cakes, behind the scenes and cake classes</span>
+              </span>
+              <ArrowUpRight size={16} strokeWidth={1.7} className="ruled-go" />
+            </a>
+          </li>
+        </ul>
       </section>
 
       <section className="section">
         <SectionHead title="Loyalty" />
-        <div className="card list-card">
-          {account ? (
-            <div className="row">
-              <span className="row-icon is-coral">
-                <Sparkles size={18} strokeWidth={1.7} />
+        <ul className="ruled">
+          <li>
+            {account ? (
+              <div className="ruled-row">
+                <Sparkles size={18} strokeWidth={1.6} className="ruled-icon" />
+                <span className="ruled-body">
+                  <span className="ruled-title">{account.points} points</span>
+                  <span className="ruled-note">Worth {money(account.points / 10)} off your next order</span>
+                </span>
+              </div>
+            ) : (
+              <Link className="ruled-row is-link" to="/profile">
+                <Sparkles size={18} strokeWidth={1.6} className="ruled-icon" />
+                <span className="ruled-body">
+                  <span className="ruled-title">Earn points on every order</span>
+                  <span className="ruled-note">Optional: save an account with your WhatsApp number to collect them</span>
+                </span>
+                <ArrowUpRight size={16} strokeWidth={1.7} className="ruled-go" />
+              </Link>
+            )}
+          </li>
+          <li>
+            <a className="ruled-row is-link" href={whatsappLink("", `I get my cakes and my headpieces from ${STUDIO.name} in Kasoa. Order here: ${window.location.origin}`)} target="_blank" rel="noreferrer">
+              <Gift size={18} strokeWidth={1.6} className="ruled-icon" />
+              <span className="ruled-body">
+                <span className="ruled-title">Refer a friend</span>
+                <span className="ruled-note">You both get 100 points on their first order</span>
               </span>
-              <span className="grow stack">
-                <span>{account.points} points</span>
-                <span className="subtle t-cap">Worth {money(account.points / 10)} off your next order</span>
-              </span>
-            </div>
-          ) : (
-            <Link className="row" to="/profile">
-              <span className="row-icon is-coral">
-                <Sparkles size={18} strokeWidth={1.7} />
-              </span>
-              <span className="grow stack">
-                <span>Earn points on every order</span>
-                <span className="subtle t-cap">Optional: save an account with your WhatsApp number to collect them</span>
-              </span>
-            </Link>
-          )}
-          <a className="row" href={whatsappLink("", `I get my cakes and my headpieces from ${STUDIO.name} in Kasoa. Order here: ${window.location.origin}`)} target="_blank" rel="noreferrer">
-            <span className="row-icon">
-              <Gift size={18} strokeWidth={1.7} />
-            </span>
-            <span className="grow stack">
-              <span>Refer a friend</span>
-              <span className="subtle t-cap">You both get 100 points on their first order</span>
-            </span>
-          </a>
-        </div>
+              <ArrowUpRight size={16} strokeWidth={1.7} className="ruled-go" />
+            </a>
+          </li>
+        </ul>
       </section>
       </div>
 
