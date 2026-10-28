@@ -219,11 +219,11 @@ export function DesktopFooter() {
 }
 
 /**
- * Phones and small tablets: the brand on the left, the way around on the right.
+ * Phones and small tablets: one button in the top right, and the way around under it.
  *
- * This replaces the bottom tab bar. Four tabs along the bottom of a page that also has an action
- * bar and a contact dock left the foot of the screen doing three jobs at once; the destinations
- * are not visited often enough to earn permanent room, and the foot is now the studio's notice.
+ * Just the button. Every screen already names itself — the hero carries the studio's name, the
+ * other screens carry their own title — so a bar repeating it was a second header doing nothing.
+ * The destinations sit behind the button instead, which is why there is no bottom tab bar.
  */
 export function MobileNav() {
   const account = accountOf(useAppData());
@@ -246,21 +246,15 @@ export function MobileNav() {
 
   return (
     <div className="mob-nav-wrap mobile-only">
-      <nav className="mob-nav" aria-label="Main">
-        <Link to="/" className="mob-brand" aria-label={`${STUDIO.name} home`}>
-          <AppIcon size={30} />
-          <span>{STUDIO.name}</span>
-        </Link>
-        <button
-          className="mob-menu-btn"
-          onClick={() => setOpen(!open)}
-          aria-expanded={open}
-          aria-controls="mob-menu"
-          aria-label={open ? "Close the menu" : "Open the menu"}
-        >
-          {open ? <X size={22} strokeWidth={1.8} /> : <Menu size={22} strokeWidth={1.8} />}
-        </button>
-      </nav>
+      <button
+        className="mob-menu-btn"
+        onClick={() => setOpen(!open)}
+        aria-expanded={open}
+        aria-controls="mob-menu"
+        aria-label={open ? "Close the menu" : "Open the menu"}
+      >
+        {open ? <X size={22} strokeWidth={1.8} /> : <Menu size={22} strokeWidth={1.8} />}
+      </button>
 
       <AnimatePresence>
         {open && (

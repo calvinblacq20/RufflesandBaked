@@ -68,11 +68,10 @@ function TabsLayout() {
   );
 }
 
-/** Detail pages: the same nav, without the notice taking room over an order in progress. */
+/** Detail pages: their own back and close, no menu and no notice over an order in progress. */
 function NavLayout() {
   return (
     <>
-      <MobileNav />
       <div className="page-surface">
         <DesktopNav />
         <Outlet />

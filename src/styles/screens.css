@@ -540,47 +540,26 @@
 }
 
 /* ---------- Phone nav (Chrome.tsx MobileNav) ----------
-   The brand and the way around, at the top. It replaced a bottom tab bar: four destinations do
-   not earn permanent room at the foot of a screen that also carries the studio's notice. */
+   One button in the top right and the menu under it. There is no bar: every screen already
+   names itself, so a second header carrying the studio's name again earned nothing. White on a
+   shadow so it reads over the dark hero and over a white page alike. */
 .mob-nav-wrap {
-  position: sticky;
-  top: 0;
+  position: fixed;
+  top: calc(10px + var(--safe-top, 0px));
+  right: var(--gutter);
   z-index: var(--z-tabbar);
-  padding: 10px var(--gutter) 0;
 }
-.mob-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  height: 52px;
-  padding: 0 6px 0 10px;
-  border-radius: var(--r-pill);
-  background: var(--glass);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-  box-shadow: var(--sh-float);
-}
-.mob-brand { display: flex; align-items: center; gap: 8px; min-width: 0; color: var(--ink); }
-.mob-brand span {
-  font-size: 15px;
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-/* 44px square: the smallest a thumb should have to find (Apple's figure, Material's is 48dp). */
 .mob-menu-btn {
   display: grid;
   place-items: center;
   width: 44px;
   height: 44px;
-  flex: none;
   border-radius: 50%;
+  background: var(--surface);
   color: var(--ink);
+  box-shadow: var(--sh-float);
 }
-.mob-menu-btn:hover { background: var(--ink-06); }
+.mob-menu-btn:active { transform: scale(0.94); }
 .mob-scrim {
   position: fixed;
   inset: 0;
@@ -591,9 +570,11 @@
 }
 .mob-menu {
   position: absolute;
-  top: calc(100% + 6px);
-  left: var(--gutter);
-  right: var(--gutter);
+  top: calc(100% + 8px);
+  right: 0;
+  width: max-content;
+  min-width: 212px;
+  max-width: calc(100vw - var(--gutter) * 2);
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -607,7 +588,7 @@
   align-items: center;
   gap: 12px;
   min-height: 48px;
-  padding: 0 12px;
+  padding: 0 14px 0 12px;
   border-radius: var(--r-12);
   color: var(--ink);
   font-size: 16px;

@@ -11,7 +11,11 @@
   /* Champagne gold from "Baked by H": the button hover sweep. */
   --hero-accent: var(--coral);
   --hero-sheet: 24px;
-  --chrome-h: 146px;
+  /* What the hero gives back to the chrome below it. It used to budget for a bottom tab bar and
+     an Order-now bar stacked on top of each other; both are gone, so the hero runs further down
+     the screen. What is left is room for the studio's notice, which is fixed to the foot and
+     would otherwise bury the slide dots. */
+  --chrome-h: 104px;
   --hero-gutter: clamp(16px, 4vw, 48px);
   --hero-ease: cubic-bezier(0.26, 0.54, 0.32, 1);
   --hero-ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
