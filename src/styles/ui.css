@@ -565,12 +565,10 @@ button.row:active, a.row:active { background: var(--ink-06); }
  * Pointer devices keep the tight boxes, where a big invisible target would only cause mis-hits.
  */
 @media (pointer: coarse) {
-  .link,
-  .section-tab {
+  .link {
     position: relative;
   }
-  .link::after,
-  .section-tab::after {
+  .link::after {
     content: "";
     position: absolute;
     left: 50%;

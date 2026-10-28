@@ -1,6 +1,6 @@
 import { CakeSlice, CalendarClock, Clock, Gift, MapPin, MessageCircle, Phone, Sparkles, Truck, Wallet } from "lucide-react";
 import { InstagramIcon } from "../components/SocialIcons";
-import { AnimatePresence, motion } from "motion/react";
+import { motion } from "motion/react";
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AppIcon } from "../components/Brand";
@@ -28,14 +28,6 @@ import { fmtDate, money, weekdayLong } from "../lib/format";
 import { fromPriceOf, isQuoted } from "../lib/pricing";
 import { openStatus } from "../lib/schedule";
 import { spring } from "../motion";
-
-const SECTIONS = [
-  { id: "lookbook", label: "Gallery" },
-  { id: "about", label: "About" },
-  { id: "styles", label: "Menu" },
-  { id: "reviews", label: "Reviews" },
-  { id: "info", label: "Info" },
-] as const;
 
 const FEATURE_ICONS = { truck: Truck, sparkles: Sparkles, gift: Gift, cake: CakeSlice, wallet: Wallet, calendar: CalendarClock } as const;
 const STATEMENT =
@@ -107,7 +99,6 @@ function StudioPage() {
   const [saved, setSaved] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [category, setCategory] = useState<CategoryId | "featured">("featured");
-  const [active, setActive] = useState<string>("lookbook");
   const [showHeader, setShowHeader] = useState(false);
   const [reviewsOpen, setReviewsOpen] = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
@@ -138,21 +129,6 @@ function StudioPage() {
     [],
   );
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries.filter((e) => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-        if (visible[0]) setActive(visible[0].target.id);
-      },
-      { rootMargin: "-130px 0px -55% 0px" },
-    );
-    SECTIONS.forEach(({ id }) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
-    return () => observer.disconnect();
-  }, []);
-
   const share = async () => {
     const shareData = { title: STUDIO.name, text: `${STUDIO.name}: ${STUDIO.tagline} · ${STUDIO.area}`, url: window.location.href };
     try {
@@ -176,28 +152,6 @@ function StudioPage() {
 
   return (
     <main className="screen studio">
-      {/* Phone: sticky header that appears once the hero scrolls away (share and save float in the dock) */}
-      <div className="overlay-header mobile-only">
-        <AnimatePresence>
-          {showHeader && (
-            <motion.div className="overlay-header-inner" initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={spring.micro}>
-              <div className="inline" style={{ gap: 10, padding: "10px 16px 4px" }}>
-                <AppIcon size={30} />
-                <span className="t-title">{STUDIO.name}</span>
-              </div>
-              <nav className="section-tabs" aria-label="Studio sections">
-                {SECTIONS.map((s) => (
-                  <button key={s.id} className={`section-tab ${active === s.id ? "is-active" : ""}`} onClick={() => goTo(s.id)}>
-                    {s.label}
-                    {active === s.id && <motion.span layoutId="section-underline" className="section-underline" transition={spring.press} />}
-                  </button>
-                ))}
-              </nav>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-
       {/* The page's one h1. The hero's wordmark changes with the slide, so it cannot be the
           heading; this says what the page is, once, for readers and crawlers. */}
       <h1 className="sr-only">

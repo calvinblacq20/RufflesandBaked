@@ -1,37 +1,4 @@
 /* ---------- Studio (home) ---------- */
-.overlay-header {
-  position: sticky;
-  top: 0;
-  z-index: var(--z-sticky);
-  height: 0;
-  margin-inline: calc(var(--gutter) * -1);
-}
-.overlay-header-inner {
-  position: absolute;
-  inset: 0 0 auto 0;
-  background: var(--glass);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 1px 0 var(--ink-06);
-}
-.section-tabs {
-  display: flex;
-  gap: 20px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  padding-inline: var(--gutter);
-}
-.section-tabs::-webkit-scrollbar { display: none; }
-.section-tab {
-  position: relative;
-  flex: none;
-  padding: 10px 0 12px;
-  font-size: 14px;
-  color: var(--ink-50);
-  transition: color 0.2s;
-}
-.section-tab.is-active { color: var(--ink); font-weight: 500; }
-.section-underline { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; border-radius: 2px; background: var(--ink); }
 .anchor { scroll-margin-top: 112px; }
 
 /* ---------- Floating contact dock (home, ContactDock.tsx) ----------
