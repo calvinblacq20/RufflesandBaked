@@ -9,7 +9,7 @@
 .contact-dock {
   position: fixed;
   right: var(--gutter);
-  bottom: calc(96px + var(--safe-bottom));
+  bottom: calc(16px + var(--notice-h, 0px) + var(--safe-bottom));
   z-index: calc(var(--z-tabbar) + 5);
   display: flex;
   flex-direction: column;

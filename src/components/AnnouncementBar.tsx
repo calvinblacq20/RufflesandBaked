@@ -1,6 +1,6 @@
 import { X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAppData } from "../data/store";
 import { announceCta, announceKey, showAnnouncement } from "../lib/announce";
@@ -42,11 +42,33 @@ export function AnnouncementBar() {
   };
 
   const cta = live ? announceCta(notice) : null;
+  const up = live && !dismissed;
+
+  // Publish the bar's height so the hero's dots and the contact dock can sit above it. It is
+  // measured rather than assumed: the notice is two lines on a phone and one on a wide screen,
+  // and the owner can make it longer.
+  const ref = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const root = document.documentElement;
+    if (!up) {
+      root.style.removeProperty("--notice-h");
+      return;
+    }
+    const measure = () => root.style.setProperty("--notice-h", `${Math.round(ref.current?.offsetHeight ?? 0)}px`);
+    measure();
+    const observer = new ResizeObserver(measure);
+    if (ref.current) observer.observe(ref.current);
+    return () => {
+      observer.disconnect();
+      root.style.removeProperty("--notice-h");
+    };
+  }, [up]);
 
   return (
     <AnimatePresence>
-      {live && !dismissed && (
+      {up && (
         <motion.aside
+          ref={ref}
           className="notice"
           role="region"
           aria-label="Studio notice"
