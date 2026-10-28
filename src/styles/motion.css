@@ -599,15 +599,11 @@
   .ruled-row.is-link:hover .ruled-go { color: var(--ink); transform: translate(2px, -2px); }
 }
 
-/* The three studio facts read as one band rather than a stack, where there is room for it. */
-@media (min-width: 810px) {
-  .ruled.is-facts {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    border-left: 1px solid var(--ink-12);
-  }
-  .ruled.is-facts > li { border-right: 1px solid var(--ink-12); }
-  .ruled.is-facts .ruled-row { align-items: flex-start; min-height: 132px; padding: 20px; }
-  .ruled.is-facts .ruled-body { flex-direction: column; gap: 6px; }
-  .ruled.is-facts .ruled-icon { margin-bottom: 2px; }
+
+/* The map, framed by a hairline instead of floating on a card: same square corners and same
+   rule weight as the lists above it. */
+.mapboard {
+  overflow: hidden;
+  border: 1px solid var(--ink-12);
 }
+.mapboard-body { padding: 16px; }

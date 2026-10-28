@@ -32,11 +32,6 @@ import { spring } from "../motion";
 const FEATURE_ICONS = { truck: Truck, sparkles: Sparkles, gift: Gift, cake: CakeSlice, wallet: Wallet, calendar: CalendarClock } as const;
 const STATEMENT =
   "Ruffles and Baked by H is Hillary's studio in Kasoa. Bespoke handmade headpieces, hats, crowns and the whole bridal set from the workroom; celebration cakes, kids' themed cakes and pastries from the kitchen. Most people come for one and stay for both.";
-const HIGHLIGHTS = [
-  { icon: Sparkles, title: "Made for you", note: "No two headpieces the same" },
-  { icon: Truck, title: "Pickup or delivery", note: "Kasoa pickup, delivery across Accra" },
-  { icon: Wallet, title: "Clear cake prices", note: "Straight off the menu card" },
-];
 const OCCASION_TONES = ["sky", "blush", "charcoal", "sand", "lilac"] as const;
 /** The gallery field: every occasion as a link, then scenery to fill the far distance. */
 const GALLERY_PIECES: GalleryPiece[] = [
@@ -188,17 +183,6 @@ function StudioPage() {
           About the studio
         </Reveal>
         <ScrollRevealText className="statement is-display" text={STATEMENT} />
-        <ul className="ruled is-facts">
-          {HIGHLIGHTS.map((h, i) => (
-            <li key={h.title} className="ruled-row">
-              <Reveal y={20} delay={0.08 * i} className="ruled-body">
-                <h.icon size={18} strokeWidth={1.6} className="ruled-icon" />
-                <span className="ruled-title">{h.title}</span>
-                <span className="ruled-note">{h.note}</span>
-              </Reveal>
-            </li>
-          ))}
-        </ul>
         {aboutOpen && (
           <motion.p className="t-lead" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={spring.small} style={{ color: "var(--ink-75)" }}>
             {STUDIO.about}

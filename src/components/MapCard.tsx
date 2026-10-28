@@ -11,7 +11,7 @@ export function MapCard() {
   const [open, setOpen] = useState(false);
   const links = mapsLinks(STUDIO.mapsQuery);
   return (
-    <div className="card" style={{ overflow: "hidden" }}>
+    <div className="mapboard">
       <div className="map" aria-hidden="true">
         <svg viewBox="0 0 400 168" preserveAspectRatio="xMidYMid slice">
           <rect width="400" height="168" fill="#efe7e2" />
@@ -30,7 +30,7 @@ export function MapCard() {
           <span className="map-pin-stem" />
         </div>
       </div>
-      <div className="card-pad stack gap-8">
+      <div className="mapboard-body stack gap-8">
         <p className="t-title">{STUDIO.area}</p>
         <p className="muted">{STUDIO.directions}</p>
         <div>
